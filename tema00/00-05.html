@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entornos Virtuales | UT00 - Introducción a Python</title>
+  <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Programación en Python</div>
+
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="container">
+
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">Entornos Virtuales en Python</h1>
+                <p class="content-subtitle">Gestión y configuración de entornos aislados para proyectos Python</p>
+            </div>
+
+            <section class="lesson-section">
+                <h2 class="section-title">¿Qué son los Entornos Virtuales?</h2>
+                
+                <div class="text-content">
+                    <p>Un <strong>entorno virtual</strong> en Python es un directorio que contiene una instalación independiente de Python, junto con sus propios paquetes y dependencias. Esto permite tener proyectos completamente aislados unos de otros.</p>
+                    
+                    <h3>¿Por qué usar entornos virtuales?</h3>
+                    <ul>
+                        <li><strong>Aislamiento de dependencias:</strong> Cada proyecto tiene sus propias versiones de librerías</li>
+                        <li><strong>Evitar conflictos:</strong> Diferentes proyectos pueden usar diferentes versiones de la misma librería</li>
+                        <li><strong>Reproducibilidad:</strong> Facilita recrear el mismo entorno en diferentes máquinas</li>
+                        <li><strong>Limpieza:</strong> No contaminas el Python del sistema con paquetes de proyectos específicos</li>
+                        <li><strong>Experimentación segura:</strong> Puedes probar nuevas librerías sin riesgo</li>
+                    </ul>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Analogía útil</div>
+                    <p>Piensa en los entornos virtuales como "cajas separadas" para cada proyecto. Cada caja contiene solo las herramientas específicas que necesita ese proyecto, sin interferir con otras cajas.</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Problema sin entornos virtuales</h3>
+                    <p>Imagina que tienes dos proyectos:</p>
+                    <ul>
+                        <li><strong>Proyecto A:</strong> Necesita Django 3.2</li>
+                        <li><strong>Proyecto B:</strong> Necesita Django 4.2</li>
+                    </ul>
+                    <p>Sin entornos virtuales, solo podrías tener una versión de Django instalada globalmente, causando problemas de compatibilidad.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Herramientas para Entornos Virtuales</h2>
+                
+                <div class="text-content">
+                    <p>Python ofrece varias herramientas para crear y gestionar entornos virtuales:</p>
+                    
+                    <h3>1. venv (Recomendado - incluido en Python 3.3+)</h3>
+                    <ul>
+                        <li>Viene integrado con Python</li>
+                        <li>Simple y ligero</li>
+                        <li>Recomendado para la mayoría de casos</li>
+                    </ul>
+
+                    <h3>2. virtualenv</h3>
+                    <ul>
+                        <li>Versión más antigua y con más características</li>
+                        <li>Compatible con Python 2 y 3</li>
+                        <li>Más opciones de configuración</li>
+                    </ul>
+
+                    <h3>3. conda</h3>
+                    <ul>
+                        <li>Gestor de paquetes y entornos</li>
+                        <li>Especialmente popular en ciencia de datos</li>
+                        <li>Puede gestionar dependencias no-Python</li>
+                    </ul>
+
+                    <h3>4. pipenv</h3>
+                    <ul>
+                        <li>Combina pip y virtualenv</li>
+                        <li>Gestión automática de dependencias</li>
+                        <li>Archivo Pipfile para especificar dependencias</li>
+                    </ul>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">¿Cuál elegir?</div>
+                    <p>Para este curso y para empezar, recomendamos usar <strong>venv</strong> porque viene incluido con Python y es suficiente para la mayoría de proyectos. Una vez que te sientas cómodo, puedes explorar otras opciones.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Usando venv - Método Básico</h2>
+                
+                <div class="text-content">
+                    <p>venv es la herramienta estándar para crear entornos virtuales en Python 3.3+. Veamos cómo usarla:</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>En Windows</h3>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Crear y usar entorno virtual en Windows</span>
+                        <span class="language-badge">CMD/PowerShell</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Crear un entorno virtual:
+python -m venv mi_proyecto_env
+
+# Activar el entorno virtual:
+mi_proyecto_env\Scripts\activate
+
+# Tu prompt cambiará a algo como:
+(mi_proyecto_env) C:\ruta\del\proyecto>
+
+# Verificar que estás en el entorno virtual:
+where python
+pip list
+
+# Desactivar el entorno virtual:
+deactivate</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>En Linux/WSL</h3>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Crear y usar entorno virtual en Linux/WSL</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Crear un entorno virtual:
+python3 -m venv mi_proyecto_env
+
+# Activar el entorno virtual:
+source mi_proyecto_env/bin/activate
+
+# Tu prompt cambiará a algo como:
+(mi_proyecto_env) usuario@hostname:~/proyecto$
+
+# Verificar que estás en el entorno virtual:
+which python
+pip list
+
+# Desactivar el entorno virtual:
+deactivate</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-title">Importante sobre la activación</div>
+                    <p>Nota la diferencia en la activación: Windows usa <code>Scripts\activate</code>, mientras que Linux/WSL usa <code>bin/activate</code>. El comando de desactivación es el mismo en ambos sistemas.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Flujo de Trabajo Completo con venv</h2>
+                
+                <div class="text-content">
+                    <p>Veamos un flujo de trabajo completo para crear un proyecto Python con entorno virtual:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Flujo completo de proyecto</span>
+                        <span class="language-badge">Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># 1. Crear directorio del proyecto:
+mkdir mi_nuevo_proyecto
+cd mi_nuevo_proyecto
+
+# 2. Crear entorno virtual:
+python -m venv venv
+
+# 3. Activar entorno virtual:
+# En Windows:
+venv\Scripts\activate
+# En Linux/WSL:
+source venv/bin/activate
+
+# 4. Verificar que estamos en el entorno virtual:
+python --version
+pip --version
+
+# 5. Actualizar pip (recomendado):
+pip install --upgrade pip
+
+# 6. Instalar paquetes necesarios:
+pip install requests numpy pandas
+
+# 7. Crear archivo de requerimientos:
+pip freeze > requirements.txt
+
+# 8. Ver contenido del archivo:
+cat requirements.txt</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <p>El archivo <code>requirements.txt</code> contendrá algo similar a:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Ejemplo de requirements.txt</span>
+                        <span class="language-badge">Text</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>certifi==2023.7.22
+charset-normalizer==3.3.0
+idna==3.4
+numpy==1.25.2
+pandas==2.1.1
+python-dateutil==2.8.2
+pytz==2023.3
+requests==2.31.0
+six==1.16.0
+tzdata==2023.3
+urllib3==2.0.5</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Buenas prácticas</div>
+                    <p>Siempre crea el archivo <code>requirements.txt</code> para documentar las dependencias de tu proyecto. Esto facilita que otros desarrolladores (o tú mismo en el futuro) puedan recrear el mismo entorno.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Gestión de Dependencias</h2>
+                
+                <div class="text-content">
+                    <p>Una parte importante del trabajo con entornos virtuales es la gestión adecuada de las dependencias:</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Instalar desde requirements.txt</h3>
+                    <p>Cuando compartes un proyecto o trabajas en una nueva máquina:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Recrear entorno desde requirements.txt</span>
+                        <span class="language-badge">Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># 1. Clonar o descargar el proyecto
+# 2. Crear nuevo entorno virtual:
+python -m venv venv
+
+# 3. Activar entorno virtual:
+source venv/bin/activate  # Linux/WSL
+# o
+venv\Scripts\activate     # Windows
+
+# 4. Instalar todas las dependencias:
+pip install -r requirements.txt
+
+# 5. Verificar instalación:
+pip list</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Tipos de archivos de dependencias</h3>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Diferentes archivos de requirements</span>
+                        <span class="language-badge">Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># requirements.txt - Dependencias de producción:
+pip freeze > requirements.txt
+
+# requirements-dev.txt - Dependencias de desarrollo:
+pip install pytest black flake8  # herramientas de desarrollo
+pip freeze > requirements-dev.txt
+
+# requirements-base.txt - Solo dependencias principales (sin versiones fijas):
+echo "requests" > requirements-base.txt
+echo "numpy" >> requirements-base.txt
+echo "pandas" >> requirements-base.txt</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Actualizar dependencias</h3>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Mantener dependencias actualizadas</span>
+                        <span class="language-badge">Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Ver paquetes desactualizados:
+pip list --outdated
+
+# Actualizar un paquete específico:
+pip install --upgrade requests
+
+# Actualizar pip:
+pip install --upgrade pip
+
+# Actualizar todas las dependencias (¡cuidado!):
+pip freeze | cut -d'=' -f1 | xargs pip install --upgrade
+
+# Regenerar requirements.txt después de actualizar:
+pip freeze > requirements.txt</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-title">Cuidado con las actualizaciones</div>
+                    <p>Actualizar todas las dependencias a la vez puede romper tu proyecto. Es mejor actualizar de una en una y probar que todo sigue funcionando.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Estructura de Proyecto Recomendada</h2>
+                
+                <div class="text-content">
+                    <p>Una estructura de proyecto bien organizada facilita el trabajo con entornos virtuales:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Estructura de proyecto típica</span>
+                        <span class="language-badge">File Structure</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>mi_proyecto/
+├── venv/                    # Entorno virtual (no versionar)
+├── src/                     # Código fuente
+│   ├── __init__.py
+│   ├── main.py
+│   └── utils.py
+├── tests/                   # Pruebas
+│   ├── __init__.py
+│   └── test_main.py
+├── docs/                    # Documentación
+├── requirements.txt         # Dependencias de producción
+├── requirements-dev.txt     # Dependencias de desarrollo
+├── .gitignore              # Archivos a ignorar en git
+├── README.md               # Descripción del proyecto
+└── setup.py                # Configuración del paquete (opcional)</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Archivo .gitignore importante</h3>
+                    <p>Nunca versiones el directorio del entorno virtual. Crea un archivo <code>.gitignore</code>:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Contenido de .gitignore</span>
+                        <span class="language-badge">Git</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Entornos virtuales
+venv/
+env/
+ENV/
+.venv/
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Variables de entorno
+.env</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">¿Por qué no versionar venv/?</div>
+                    <p>El directorio del entorno virtual contiene rutas absolutas y archivos específicos del sistema. Es mejor que cada desarrollador cree su propio entorno usando <code>requirements.txt</code>.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Herramientas Avanzadas</h2>
+                
+                <div class="text-content">
+                    <p>Para proyectos más complejos, puedes usar herramientas más avanzadas:</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>pipenv - Combinando pip y virtualenv</h3>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Usando pipenv</span>
+                        <span class="language-badge">Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Instalar pipenv:
+pip install pipenv
+
+# Crear proyecto con pipenv:
+mkdir mi_proyecto_pipenv
+cd mi_proyecto_pipenv
+
+# Crear entorno e instalar paquetes:
+pipenv install requests numpy
+
+# Instalar dependencias de desarrollo:
+pipenv install pytest --dev
+
+# Activar entorno:
+pipenv shell
+
+# Instalar desde Pipfile:
+pipenv install
+
+# Generar requirements.txt:
+pipenv requirements > requirements.txt</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>conda - Para ciencia de datos</h3>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Usando conda</span>
+                        <span class="language-badge">Conda</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Crear entorno con conda:
+conda create --name mi_proyecto python=3.11
+
+# Activar entorno:
+conda activate mi_proyecto
+
+# Instalar paquetes:
+conda install numpy pandas matplotlib jupyter
+
+# Ver entornos:
+conda env list
+
+# Exportar entorno:
+conda env export > environment.yml
+
+# Crear entorno desde archivo:
+conda env create -f environment.yml</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Configuración de VS Code con Entornos Virtuales</h2>
+                
+                <div class="text-content">
+                    <p>Visual Studio Code tiene excelente soporte para entornos virtuales de Python:</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Configuración automática</h3>
+                    <ol>
+                        <li>Abre tu proyecto en VS Code</li>
+                        <li>Crea tu entorno virtual con <code>python -m venv venv</code></li>
+                        <li>VS Code detectará automáticamente el entorno virtual</li>
+                        <li>Selecciona el intérprete: Ctrl+Shift+P → "Python: Select Interpreter"</li>
+                        <li>Elige el Python de tu entorno virtual</li>
+                    </ol>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Configuración de VS Code (.vscode/settings.json)</span>
+                        <span class="language-badge">JSON</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>{
+    "python.defaultInterpreterPath": "./venv/bin/python",
+    "python.terminal.activateEnvironment": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "black",
+    "python.testing.pytestEnabled": true,
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/venv": true
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Terminal integrado</div>
+                    <p>Cuando VS Code está configurado correctamente, el terminal integrado activará automáticamente tu entorno virtual cuando abras una nueva terminal.</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
