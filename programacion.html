@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Programación didáctica | Programación en Python (Optativa) — 2.º DAM</title>
+    <script>
+        // Redirecciona si no está en un iframe
+        //if (window.self === window.top) {
+        //   window.location.href = 'https://digitechfp.com'; // O muestra página de error
+        //}
+    </script>
+<style>
+  :root{
+    --fg:#111; --bg:#fff; --muted:#555; --accent:#0b6efd;
+    --table-border:#d9d9d9; --hr:#e5e5e5; --note:#f9fbff;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+    font-size:16px;line-height:1.5;}
+  .doc{max-width:1000px;margin:0 auto;padding:24px 16px 64px;}
+  header h1{font-size:1.6rem;margin:0 0 4px;font-weight:700;}
+  header .subtitle{color:var(--muted);font-size:0.98rem;margin-bottom:12px;}
+  hr{border:0;border-top:1px solid var(--hr);margin:16px 0 24px;}
+  h2{font-size:1.15rem;margin:20px 0 8px;border-left:4px solid var(--accent);padding-left:8px;}
+  h3{font-size:1.02rem;margin:16px 0 6px;}
+  p{margin:8px 0;}
+  ul,ol{margin:8px 0 8px 20px;}
+  li{margin:4px 0;}
+  .small{font-size:0.95rem;}
+  .note{background:var(--note);border:1px solid #dceaff;border-left:4px solid var(--accent);
+    padding:10px 12px;margin:12px 0;border-radius:4px;}
+  .table-wrap{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.96rem;}
+  th,td{border:1px solid var(--table-border);padding:8px;vertical-align:top;}
+  th{background:#f7f7f7;text-align:left;}
+  @media (max-width:720px){
+    th,td{font-size:0.92rem;padding:6px;}
+    header h1{font-size:1.35rem;}
+  }
+  @media print{
+    .doc{padding:0;}
+    header h1{font-size:18pt;}
+    h2{font-size:14pt;}
+    h3{font-size:12pt;}
+    a{color:#000;text-decoration:none;}
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+  <header>
+    <h1>Programación en Python (Optativa) — 2.º DAM</h1>
+  </header>
+  <hr />
+
+  <h2>Índice de la programación</h2>
+  <ol class="small">
+    <li>Legislación vigente</li>
+    <li>Contextualización</li>
+    <li>Objetivos específicos del módulo</li>
+    <li>Competencias profesionales, personales y sociales</li>
+    <li>Materiales y recursos didácticos</li>
+    <li>Contenido
+      <ol>
+        <li>Unidades temáticas</li>
+        <li>Resultados de aprendizaje y criterios de evaluación (según RA aportados)</li>
+      </ol>
+    </li>
+    <li>Temporización</li>
+    <li>Calendario de evaluaciones</li>
+    <li>Correspondencia entre Contenidos, RA y Actividades</li>
+    <li>Procedimiento de evaluación
+      <ol>
+        <li>Criterios de calificación</li>
+        <li>Proceso de recuperación</li>
+      </ol>
+    </li>
+    <li>Metodología didáctica</li>
+    <li>Atención a la diversidad</li>
+    <li>Consideraciones finales</li>
+  </ol>
+
+  <h2>1. Legislación vigente</h2>
+  <ul>
+    <li>Ley Orgánica 3/2022, de 31 de marzo, de ordenación e integración de la Formación Profesional.</li>
+    <li>Real Decreto 450/2010, de 16 de abril, por el que se establece el título de Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) y se fijan sus enseñanzas mínimas (módulo “Programación”, código 0485).</li>
+    <li>Normativa autonómica de desarrollo curricular (Andalucía: Decreto 46/2011 y Orden de 5 de noviembre de 2012 para DAM).</li>
+  </ul>
+  <div class="note small">
+    Esta optativa adapta al lenguaje Python los Resultados de Aprendizaje (RA) y contenidos del módulo oficial de “Programación” (0485), sin modificar su alcance.
+  </div>
+
+  <h2>2. Contextualización</h2>
+  <p>La materia optativa traslada los RA oficiales de Programación al ecosistema Python, reforzando competencias de codificación, depuración, modularidad, estructuras de datos, entrada/salida de información y Programación Orientada a Objetos (POO). Se trabajará con la biblioteca estándar, pruebas básicas y buenas prácticas de estilo y documentación.</p>
+
+  <h2>3. Objetivos específicos del módulo</h2>
+  <ul>
+    <li>Reconocer la estructura de un programa y los elementos del lenguaje Python.</li>
+    <li>Escribir y depurar código utilizando estructuras de control y gestión de excepciones.</li>
+    <li>Aplicar programación modular con funciones (incluida recursividad cuando proceda).</li>
+    <li>Manipular información con tipos avanzados (cadenas, listas, tuplas y diccionarios).</li>
+    <li>Realizar operaciones de entrada/salida, uso de ficheros y sistema de archivos.</li>
+    <li>Desarrollar programas orientados a objetos aplicando encapsulación, herencia y polimorfismo.</li>
+  </ul>
+
+  <h2>4. Competencias profesionales, personales y sociales</h2>
+  <p>Contribuye a competencias del título DAM en: diseño y construcción de software, calidad y documentación, resolución de problemas, trabajo colaborativo y aprendizaje autónomo.</p>
+
+  <h2>5. Materiales y recursos didácticos</h2>
+  <h3>Infraestructura</h3>
+  <p>Red del aula con acceso a Internet y repositorio de clase en plataforma colaborativa.</p>
+  <h3>Hardware</h3>
+  <p>Equipos con 8–16 GB de RAM y soporte para entornos virtuales.</p>
+  <h3>Software</h3>
+  <ul>
+    <li>Python 3.10 o superior.</li>
+    <li>IDE/editores: VS Code (extensión Python) o PyCharm Community.</li>
+    <li>Herramientas: venv/pip, pytest (pruebas), black y flake8/ruff (estilo), pydoc/docstrings.</li>
+    <li>Control de versiones: Git.</li>
+  </ul>
+
+  <h2>6. Contenido</h2>
+    <h3>6.1. Unidades temáticas</h3>
+  <h3>UT01. Identificación de los elementos de un programa informático</h3>
+  <ul>
+    <li>Estructura y bloques fundamentales.</li>
+    <li>Variables y tipos de datos.</li>
+    <li>Literales y constantes.</li>
+    <li>Operadores y expresiones.</li>
+    <li>Conversiones de tipo (explícitas e implícitas).</li>
+    <li>Comentarios.</li>
+  </ul>
+
+  <h3>UT02. Uso de estructuras de control</h3>
+  <ul>
+    <li>Estructuras de selección.</li>
+    <li>Estructuras de repetición.</li>
+    <li>Estructuras de salto.</li>
+    <li>Control de excepciones.</li>
+  </ul>
+
+  <h3>UT03. Funciones</h3>
+  <ul>
+    <li>Definición de funciones definidas por el programador.</li>
+    <li>Recursividad.</li>
+  </ul>
+
+  <h3>UT04. Tipos avanzados</h3>
+  <ul>
+    <li>Cadenas de caracteres.</li>
+    <li>Listas.</li>
+    <li>Tuplas.</li>
+    <li>Diccionarios.</li>
+  </ul>
+
+  <h3>UT05. Lectura y escritura de información</h3>
+  <ul>
+    <li>Entrada desde teclado y salida a pantalla.</li>
+    <li>Ficheros de datos y registros.</li>
+    <li>Apertura y cierre de ficheros. Modos de acceso.</li>
+    <li>Escritura y lectura en ficheros.</li>
+    <li>Utilización de los sistemas de ficheros.</li>
+    <li>Creación y eliminación de ficheros y directorios.</li>
+  </ul>
+
+  <h3>UT06. Programación orientada a objetos</h3>
+  <ul>
+    <li>Encapsulación, herencia y polimorfismo.</li>
+  </ul>
+
+  <h3>6.2. Resultados de aprendizaje y criterios de evaluación</h3>
+  
+  <p><strong>RA1.</strong> Reconoce la estructura de un programa informático, identificando y relacionando los elementos propios del lenguaje de programación utilizado.</p>
+  <ul>
+    <li>a) Se han identificado los bloques que componen la estructura de un programa informático.</li>
+    <li>b) Se han creado proyectos de desarrollo de aplicaciones.</li>
+    <li>c) Se han utilizado entornos integrados de desarrollo.</li>
+    <li>d) Se han identificado los distintos tipos de variables y la utilidad específica de cada uno.</li>
+    <li>e) Se ha modificado el código de un programa para crear y utilizar variables.</li>
+    <li>f) Se han creado y utilizado constantes y literales. Se han clasificado, reconocido y utilizado en expresiones los operadores del lenguaje.</li>
+    <li>g) Se ha comprobado el funcionamiento de las conversiones de tipo explícitas e implícitas.</li>
+    <li>h) Se han introducido comentarios en el código.</li>
+  </ul>
+
+  <p><strong>RA2.</strong> Escribe y depura código, analizando y utilizando las estructuras de control del lenguaje.</p>
+  <ul>
+    <li>a) Se ha escrito y probado código que haga uso de estructuras de selección.</li>
+    <li>b) Se han utilizado estructuras de repetición.</li>
+    <li>c) Se han reconocido las posibilidades de las sentencias de salto.</li>
+    <li>d) Se ha escrito código utilizando control de excepciones.</li>
+    <li>e) Se han creado programas ejecutables utilizando diferentes estructuras de control.</li>
+    <li>f) Se han probado y depurado los programas. Se ha comentado y documentado el código.</li>
+  </ul>
+
+  <p><strong>RA3.</strong> Escribe código utilizando programación modular. Conoce la diferencia entre el paso de parámetros por valor y por referencia.</p>
+  <ul>
+    <li>a) Se han codificado funciones para resolver problemas de matemática elemental.</li>
+    <li>b) Se ha utilizado el concepto de iteración y recursividad.</li>
+  </ul>
+
+  <p><strong>RA4.</strong> Escribe programas que manipulen información, seleccionando y utilizando tipos avanzados de datos.</p>
+  <ul>
+    <li>a) Se han escrito programas que utilizan cadenas, listas y diccionarios.</li>
+  </ul>
+
+  <p><strong>RA5.</strong> Realiza operaciones de entrada y salida de información, utilizando procedimientos específicos del lenguaje y librerías de clases.</p>
+  <ul>
+    <li>a) Se ha utilizado la consola para realizar operaciones de entrada y salida de información.</li>
+    <li>b) Se han aplicado formatos en la visualización de la información.</li>
+    <li>c) Se han reconocido las posibilidades de entrada / salida del lenguaje y las librerías asociadas.</li>
+    <li>d) Se han utilizado ficheros para almacenar y recuperar información.</li>
+    <li>e) Se han creado programas que utilicen diversos métodos de acceso al contenido de los ficheros.</li>
+  </ul>
+
+  <p><strong>RA6.</strong> Desarrolla programas organizados en clases analizando y aplicando los principios de la programación orientada a objetos.</p>
+  <ul>
+    <li>a) Se ha reconocido la sintaxis, estructura y componentes típicos de una clase.</li>
+    <li>b) Se han definido clases.</li>
+    <li>c) Se han definido propiedades y métodos. Se han creado constructores.</li>
+    <li>d) Se han desarrollado programas que instancien y utilicen objetos de las clases creadas anteriormente. Se han utilizado mecanismos para controlar la visibilidad de las clases y de sus miembros.</li>
+    <li>e) Se han definido y utilizado clases heredadas.</li>
+  </ul>
+
+  <h2>7. Temporización</h2>
+    <p>Carga total: 60 horas. Ritmo: 3 horas/semana. Evaluaciones: 2.</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Evaluación</th>
+          <th>Periodo orientativo</th>
+          <th>Bloques/Unidades</th>
+                    <th>RA foco</th>
+          <th>Semanas (3 h/sem)</th>
+          <th>Horas</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1.ª</td>
+          <td>Septiembre – Diciembre</td>
+          <td>UT01, UT02, UT03</td>
+              <td>RA1, RA2, RA3</td>
+          <td>≈ 12</td>
+          <td>36 h</td>
+        </tr>
+        <tr>
+          <td>2.ª</td>
+          <td>Enero – Febrero</td>
+          <td>UT04, UT05, UT06</td>
+          <td>RA4, RA5, RA6</td>
+          <td>≈ 8</td>
+          <td>24 h</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="3" style="text-align:right;">Total</th>
+          <th>≈ 20</th>
+          <th>60 h</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <h2>8. Calendario de evaluaciones</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Evaluación</th>
+          <th>Semana de exámenes</th>
+          <th>Sesión de evaluación</th>
+          <th>Alcance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1.ª Evaluación</td>
+          <td>9 – 12 diciembre 2025</td>
+          <td>17 diciembre 2025</td>
+          <td>UT01, UT02, UT03</td>
+        </tr>
+        <tr>
+          <td>2.ª Evaluación (Final ordinaria)</td>
+          <td>2 – 6 marzo 2026</td>
+          <td>11 marzo 2026</td>
+          <td>UT04, UT05, UT06</td>
+        </tr>
+        <tr>
+          <td>Extraordinaria</td>
+          <td>15 – 19 junio 2026</td>
+          <td>19 junio 2026</td>
+          <td>Recuperación de RA mínimos no acreditados; nota máxima 5.</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  <h2>9. Correspondencia entre Contenidos, RA y Actividades</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Unidad</th>
+          <th>RA</th>
+          <th>Actividades propuestas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>UT01. Elementos del programa</td>
+          <td>RA1</td>
+          <td>Katas de sintaxis, proyectos iniciales con venv, ejercicios de tipos/operadores y conversiones; comentarios y docstrings.</td>
+        </tr>
+        <tr>
+          <td>UT02. Estructuras de control</td>
+          <td>RA2</td>
+          <td>Ejercicios con condicionales, bucles, saltos; manejo de excepciones; pruebas con pytest y depuración en el IDE.</td>
+        </tr>
+        <tr>
+          <td>UT03. Funciones</td>
+          <td>RA3</td>
+          <td>Resolución de problemas matemáticos; funciones y recursividad; análisis de paso de parámetros en Python.</td>
+        </tr>
+        <tr>
+          <td>UT04. Tipos avanzados</td>
+          <td>RA4</td>
+          <td>Procesamiento de texto; listas/tuplas/diccionarios; transformaciones y búsquedas.</td>
+        </tr>
+        <tr>
+          <td>UT05. E/S y ficheros</td>
+          <td>RA5</td>
+          <td>Gestión de ficheros y directorios con pathlib/os; lectura/escritura en distintos modos; pequeño gestor de datos (CSV/JSON).</td>
+        </tr>
+        <tr>
+          <td>UT06. POO</td>
+          <td>RA6</td>
+          <td>Diseño e implementación de clases; herencia y polimorfismo; mini-proyecto orientado a objetos.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>10. Procedimiento de evaluación</h2>
+  <ul>
+    <li>30%: Tareas y prácticas (repositorios Git con evidencias y documentación).</li>
+    <li>10%: Participación, asistencia y actitud.</li>
+    <li>60%: Pruebas teórico-prácticas presenciales por RA.</li>
+  </ul>
+
+  <h3>10.1. Criterios de calificación</h3>
+  <ul>
+    <li>Referidos a RA y criterios aportados. Calificación 0–10.</li>
+    <li>Se valora corrección funcional, claridad (PEP 8), pruebas, documentación y uso adecuado de la biblioteca estándar.</li>
+    <li>Penalización por retrasos salvo causa justificada.</li>
+  </ul>
+
+  <h3>10.2. Proceso de recuperación</h3>
+  <ul>
+    <li>Actividades de refuerzo por criterio no superado, con reentrega y defensa.</li>
+    <li>Pruebas de recuperación por RA en periodo ordinario.</li>
+    <li>Extraordinaria según normativa: acreditación de RA mínimos.</li>
+  </ul>
+
+  <h2>11. Metodología didáctica</h2>
+  <p>Metodología activa y práctica: explicación breve, ejercicios guiados y katas, trabajo por proyectos pequeños, revisión por pares, pruebas básicas y documentación continua. Uso de control de versiones desde el inicio.</p>
+
+  <h2>12. Atención a la diversidad</h2>
+  <ul>
+    <li>Ritmos más lentos: guías paso a paso, plantillas y descomposición de tareas.</li>
+    <li>Altas capacidades: retos con recursividad, análisis de complejidad y diseño OO.</li>
+    <li>Dificultades idiomáticas: glosarios y ejemplos autocontenidos; apoyo entre iguales.</li>
+  </ul>
+
+  <h2>13. Consideraciones finales</h2>
+  <p>La programación se alinea con los RA y CE oficiales del módulo y la normativa vigente, priorizando la práctica guiada y la verificación en entornos realistas.</p>
+</div>
+</body>
+</html>

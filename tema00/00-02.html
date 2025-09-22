@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalación en Windows | UT00 - Introducción a Python</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Programación en Python</div>
+            <div class="header-controls">
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <button class="nav-toggle" id="navToggle">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="container">
+    <div class="container">
+        <!-- Sidebar de navegación -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-content" id="navigation-content">
+                <!-- La navegación se genera dinámicamente -->
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">Instalación de Python en Windows</h1>
+                <p class="content-subtitle">Guía paso a paso para configurar Python en tu sistema Windows</p>
+            </div>
+
+            <section class="lesson-section" id="requisitos">
+                <h2 class="section-title">Requisitos del Sistema</h2>
+                
+                <div class="text-content">
+                    <p>Antes de instalar Python, asegúrate de que tu sistema cumple con los siguientes requisitos:</p>
+                    
+                    <ul>
+                        <li><strong>Sistema Operativo:</strong> Windows 7 SP1 o superior (recomendado Windows 10/11)</li>
+                        <li><strong>Arquitectura:</strong> 32-bit o 64-bit (recomendado 64-bit)</li>
+                        <li><strong>Espacio en disco:</strong> Al menos 100 MB de espacio libre</li>
+                        <li><strong>RAM:</strong> Mínimo 512 MB (recomendado 2 GB o más)</li>
+                    </ul>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Verificar la arquitectura de tu sistema</div>
+                    <p>Para conocer si tu Windows es de 32 o 64 bits, ve a <strong>Configuración > Sistema > Acerca de</strong> y busca "Tipo de sistema".</p>
+                </div>
+            </section>
+
+            <section class="lesson-section" id="descarga">
+                <h2 class="section-title">Paso 1: Descargar Python</h2>
+                
+                <div class="text-content">
+                    <p>El primer paso es descargar la versión más reciente de Python desde el sitio web oficial:</p>
+                    
+                    <ol>
+                        <li>Ve al sitio web oficial: <strong>https://www.python.org</strong></li>
+                        <li>Haz clic en <strong>"Downloads"</strong> en el menú principal</li>
+                        <li>La página detectará automáticamente tu sistema operativo y mostrará la versión recomendada</li>
+                        <li>Haz clic en el botón <strong>"Download Python 3.x.x"</strong> (donde x.x es la versión más reciente)</li>
+                    </ol>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Versiones de Python</div>
+                    <p>Te recomendamos descargar la versión estable más reciente de Python 3. Evita Python 2.7 ya que su soporte terminó en 2020.</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Tipos de instaladores disponibles</h3>
+                    <ul>
+                        <li><strong>Windows installer (64-bit):</strong> Para sistemas de 64 bits (recomendado)</li>
+                        <li><strong>Windows installer (32-bit):</strong> Para sistemas de 32 bits</li>
+                        <li><strong>Windows embeddable package:</strong> Versión portable de Python</li>
+                        <li><strong>Windows executable installer:</strong> Instalador ejecutable tradicional</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section" id="instalacion">
+                <h2 class="section-title">Paso 2: Ejecutar el Instalador</h2>
+                
+                <div class="text-content">
+                    <p>Una vez descargado el archivo, sigue estos pasos para instalar Python:</p>
+                    
+                    <ol>
+                        <li><strong>Ejecuta el instalador</strong> haciendo doble clic en el archivo descargado</li>
+                        <li><strong>¡IMPORTANTE!</strong> Marca la casilla <strong>"Add Python to PATH"</strong> en la parte inferior de la ventana</li>
+                        <li>Selecciona <strong>"Install Now"</strong> para una instalación rápida, o <strong>"Customize installation"</strong> para opciones avanzadas</li>
+                    </ol>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-title">¡Muy Importante!</div>
+                    <p>No olvides marcar la opción <strong>"Add Python to PATH"</strong>. Esto te permitirá ejecutar Python desde cualquier ubicación en la línea de comandos.</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Instalación Personalizada (Opcional)</h3>
+                    <p>Si eliges "Customize installation", podrás configurar:</p>
+                    
+                    <ul>
+                        <li><strong>Optional Features:</strong>
+                            <ul>
+                                <li>Documentation: Documentación offline de Python</li>
+                                <li>pip: Gestor de paquetes de Python (recomendado)</li>
+                                <li>tcl/tk and IDLE: Entorno de desarrollo integrado</li>
+                                <li>Python test suite: Suite de pruebas de Python</li>
+                                <li>py launcher: Lanzador de Python para Windows</li>
+                            </ul>
+                        </li>
+                        <li><strong>Advanced Options:</strong>
+                            <ul>
+                                <li>Install for all users: Instalar para todos los usuarios del sistema</li>
+                                <li>Associate files with Python: Asociar archivos .py con Python</li>
+                                <li>Create shortcuts for installed applications: Crear accesos directos</li>
+                                <li>Add Python to environment variables: Añadir Python al PATH</li>
+                                <li>Precompile standard library: Precompilar la biblioteca estándar</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Recomendación para principiantes</div>
+                    <p>Si eres nuevo en Python, te recomendamos usar "Install Now" que incluye todas las opciones necesarias por defecto.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section" id="verificacion">
+                <h2 class="section-title">Paso 3: Verificar la Instalación</h2>
+                
+                <div class="text-content">
+                    <p>Después de completar la instalación, es importante verificar que Python se instaló correctamente:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Verificar Python en CMD/PowerShell</span>
+                        <span class="language-badge">Command Line</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Abrir CMD o PowerShell y ejecutar:
+python --version
+
+# También puedes usar:
+python -V
+
+# Para verificar pip:
+pip --version</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <p>Si la instalación fue exitosa, deberías ver algo similar a:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Salida esperada</span>
+                        <span class="language-badge">Output</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>C:\Users\Usuario> python --version
+Python 3.11.5
+
+C:\Users\Usuario> pip --version
+pip 23.2.1 from C:\Users\Usuario\AppData\Local\Programs\Python\Python311\Lib\site-packages\pip (python 3.11)</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Probar el intérprete de Python</h3>
+                    <p>También puedes probar el intérprete interactivo de Python:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Ejecutar el intérprete de Python</span>
+                        <span class="language-badge">Interactive</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># En CMD o PowerShell, escribe:
+python
+
+# Esto abrirá el intérprete interactivo:
+Python 3.11.5 (tags/v3.11.5:cce6ba9, Aug 24 2023, 14:38:34) [MSC v.1936 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> print("¡Hola, Python!")
+¡Hola, Python!
+>>> exit()</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lesson-section" id="problemas-comunes">
+                <h2 class="section-title">Solución de Problemas Comunes</h2>
+                
+                <div class="text-content">
+                    <h3>Error: "python no se reconoce como comando"</h3>
+                    <p>Este error indica que Python no está en el PATH del sistema. Soluciones:</p>
+                    
+                    <ol>
+                        <li><strong>Reinstalar Python</strong> marcando la opción "Add Python to PATH"</li>
+                        <li><strong>Añadir manualmente al PATH:</strong>
+                            <ul>
+                                <li>Ve a <strong>Panel de Control > Sistema > Configuración avanzada del sistema</strong></li>
+                                <li>Haz clic en <strong>"Variables de entorno"</strong></li>
+                                <li>En "Variables del sistema", busca <strong>"Path"</strong> y haz clic en <strong>"Editar"</strong></li>
+                                <li>Añade la ruta de instalación de Python (ej: <code>C:\Users\Usuario\AppData\Local\Programs\Python\Python311\</code>)</li>
+                                <li>También añade la carpeta Scripts (ej: <code>C:\Users\Usuario\AppData\Local\Programs\Python\Python311\Scripts\</code>)</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="text-content">
+                    <h3>Múltiples versiones de Python</h3>
+                    <p>Si tienes varias versiones de Python instaladas, puedes usar el Python Launcher:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Usar Python Launcher</span>
+                        <span class="language-badge">py command</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Ver versiones disponibles:
+py -0
+
+# Ejecutar una versión específica:
+py -3.11
+py -3.10
+
+# Ejecutar la versión más reciente de Python 3:
+py -3</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Python Launcher</div>
+                    <p>El Python Launcher (py.exe) es una herramienta que viene con Python para Windows y facilita el manejo de múltiples versiones de Python en el mismo sistema.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section" id="editores">
+                <h2 class="section-title">Editores de Código Recomendados</h2>
+                
+                <div class="text-content">
+                    <p>Aunque Python viene con IDLE, existen editores más potentes para el desarrollo:</p>
+                    
+                    <h3>Para Principiantes</h3>
+                    <ul>
+                        <li><strong>IDLE:</strong> Viene incluido con Python, simple y fácil de usar</li>
+                        <li><strong>Thonny:</strong> Diseñado específicamente para aprender Python</li>
+                        <li><strong>Visual Studio Code:</strong> Editor gratuito con extensiones para Python</li>
+                    </ul>
+
+                    <h3>Para Desarrollo Profesional</h3>
+                    <ul>
+                        <li><strong>PyCharm:</strong> IDE completo para Python (Community Edition gratuito)</li>
+                        <li><strong>Visual Studio Code:</strong> Con extensión de Python</li>
+                        <li><strong>Sublime Text:</strong> Editor ligero y rápido</li>
+                        <li><strong>Atom:</strong> Editor de código abierto</li>
+                    </ul>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Recomendación</div>
+                    <p>Para este curso, recomendamos <strong>Visual Studio Code</strong> con la extensión de Python, ya que es gratuito, potente y ampliamente utilizado en la industria.</p>
+                </div>
+            </section>
+
+            <div class="page-navigation">
+                <a href="00-01-introduccion.html" class="nav-button">← Anterior</a>
+                <a href="00-03-instalacion-wsl.html" class="nav-button">Siguiente →</a>
+            </div>
+        </main>
+    </div>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>

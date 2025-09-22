@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia | UT00 - Introducción a Python</title>
+    <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Programación en Python</div>
+
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="container">
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">UT00. Introducción a Python</h1>
+                <p class="content-subtitle">Fundamentos y configuración del entorno de desarrollo</p>
+            </div>
+
+            <section class="lesson-section" id="historia">
+                <h2 class="section-title">Historia de Python</h2>
+                
+                <div class="text-content">
+                    <p>Python es un lenguaje de programación de alto nivel, interpretado y de propósito general, creado por <strong>Guido van Rossum</strong> a finales de los años 80 en el Centro para las Matemáticas y la Informática (CWI) en los Países Bajos.</p>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Origen del nombre</div>
+                    <p>El nombre "Python" no proviene de la serpiente, sino del grupo de comedia británico "Monty Python's Flying Circus", del cual Guido van Rossum era fanático.</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Cronología de Python</h3>
+                    <ul>
+                        <li><strong>1989:</strong> Guido van Rossum comienza el desarrollo de Python como sucesor del lenguaje ABC</li>
+                        <li><strong>1991:</strong> Se publica Python 0.9.0, que incluía clases con herencia, manejo de excepciones, funciones y módulos</li>
+                        <li><strong>1994:</strong> Python 1.0 introduce programación funcional con lambda, map, filter y reduce</li>
+                        <li><strong>2000:</strong> Python 2.0 añade comprensiones de listas y recolección de basura</li>
+                        <li><strong>2008:</strong> Python 3.0 (también conocido como "Python 3000") rompe la compatibilidad hacia atrás para corregir defectos fundamentales del lenguaje</li>
+                        <li><strong>2020:</strong> Fin del soporte para Python 2.7</li>
+                        <li><strong>Actualidad:</strong> Python sigue evolucionando con nuevas versiones anuales</li>
+                    </ul>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Filosofía de Python - El Zen de Python</div>
+                    <p>Python sigue una filosofía de diseño que enfatiza la legibilidad del código. Puedes verla ejecutando <code>import this</code> en el intérprete de Python.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section" id="diferencias-java">
+                <h2 class="section-title">Principales Diferencias con Java</h2>
+                
+                <div class="text-content">
+                    <p>Aunque tanto Python como Java son lenguajes orientados a objetos y multiplataforma, presentan diferencias fundamentales en su filosofía y sintaxis:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Comparación de Sintaxis</span>
+                        <span class="language-badge">Python vs Java</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Python - Hola Mundo
+print("¡Hola, mundo!")
+
+// Java - Hola Mundo
+public class HolaMundo {
+    public static void main(String[] args) {
+        System.out.println("¡Hola, mundo!");
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Diferencias Clave</h3>
+                    
+                    <h4>1. Tipado</h4>
+                    <ul>
+                        <li><strong>Python:</strong> Tipado dinámico - no necesitas declarar el tipo de las variables</li>
+                        <li><strong>Java:</strong> Tipado estático - debes declarar el tipo de cada variable</li>
+                    </ul>
+
+                    <h4>2. Compilación vs Interpretación</h4>
+                    <ul>
+                        <li><strong>Python:</strong> Interpretado - el código se ejecuta línea por línea</li>
+                        <li><strong>Java:</strong> Compilado a bytecode - se compila antes de ejecutar</li>
+                    </ul>
+
+                    <h4>3. Sintaxis</h4>
+                    <ul>
+                        <li><strong>Python:</strong> Usa indentación para delimitar bloques de código</li>
+                        <li><strong>Java:</strong> Usa llaves {} y punto y coma obligatorio</li>
+                    </ul>
+
+                    <h4>4. Velocidad</h4>
+                    <ul>
+                        <li><strong>Python:</strong> Generalmente más lento debido a su naturaleza interpretada</li>
+                        <li><strong>Java:</strong> Más rápido en ejecución gracias a la JVM</li>
+                    </ul>
+
+                    <h4>5. Curva de Aprendizaje</h4>
+                    <ul>
+                        <li><strong>Python:</strong> Más fácil de aprender, sintaxis más natural</li>
+                        <li><strong>Java:</strong> Más verboso, requiere más conceptos iniciales</li>
+                    </ul>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Ejemplo: Declaración de Variables</span>
+                        <span class="language-badge">Comparación</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Python
+nombre = "Juan"
+edad = 25
+altura = 1.75
+es_estudiante = True
+
+// Java
+String nombre = "Juan";
+int edad = 25;
+double altura = 1.75;
+boolean esEstudiante = true;</code></pre>
+                    </div>
+                </div>
+            </section>
+
+
+            
+        </main>
+    </div>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>
