@@ -6,6 +6,144 @@
     <title>Historia | UT00 - Introducción a Python</title>
     <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css">
+           <style>
+
+
+        /* Estilos de la tabla */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: var(--background-white);
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: white;
+        }
+
+        .comparison-table th {
+            padding: 1.5rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-bottom: 3px solid var(--secondary-blue);
+        }
+
+        .comparison-table th:first-child {
+            width: 25%;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
+        }
+
+        .comparison-table tbody tr {
+            transition: background-color 0.3s ease;
+        }
+
+        .comparison-table tbody tr:nth-child(odd) {
+            background-color: var(--light-blue);
+        }
+
+        .comparison-table tbody tr:nth-child(even) {
+            background-color: var(--background-white);
+        }
+
+        .comparison-table tbody tr:hover {
+            background-color: var(--light-purple);
+            transform: scale(1.01);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .comparison-table td {
+            padding: 1.5rem 1rem;
+            border-bottom: 1px solid var(--border-gray);
+            vertical-align: top;
+        }
+
+        .comparison-table td:first-child {
+            font-weight: 600;
+            color: var(--primary-purple);
+            background-color: var(--light-purple);
+            text-align: center;
+            border-right: 2px solid var(--secondary-purple);
+        }
+
+        /* Estilos para código en la tabla */
+        .code-inline {
+            background-color: var(--code-bg);
+            color: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .highlight-python {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        .highlight-java {
+            color: var(--primary-purple);
+            font-weight: 600;
+        }
+
+        /* Iconos para lenguajes */
+        .language-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+            border-radius: 3px;
+        }
+
+        .python-icon {
+            background: linear-gradient(45deg, #3776ab, #ffd43b);
+        }
+
+        .java-icon {
+            background: linear-gradient(45deg, #f89820, #ed1d25);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .content-title {
+                font-size: 2rem;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 1rem 0.5rem;
+            }
+
+            .comparison-table th:first-child,
+            .comparison-table td:first-child {
+                width: 30%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .comparison-table {
+                font-size: 0.8rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem 0.25rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -84,35 +222,60 @@ public class HolaMundo {
                 <div class="text-content">
                     <h3>Diferencias Clave</h3>
                     
-                    <h4>1. Tipado</h4>
-                    <ul>
-                        <li><strong>Python:</strong> Tipado dinámico - no necesitas declarar el tipo de las variables</li>
-                        <li><strong>Java:</strong> Tipado estático - debes declarar el tipo de cada variable</li>
-                    </ul>
-
-                    <h4>2. Compilación vs Interpretación</h4>
-                    <ul>
-                        <li><strong>Python:</strong> Interpretado - el código se ejecuta línea por línea</li>
-                        <li><strong>Java:</strong> Compilado a bytecode - se compila antes de ejecutar</li>
-                    </ul>
-
-                    <h4>3. Sintaxis</h4>
-                    <ul>
-                        <li><strong>Python:</strong> Usa indentación para delimitar bloques de código</li>
-                        <li><strong>Java:</strong> Usa llaves {} y punto y coma obligatorio</li>
-                    </ul>
-
-                    <h4>4. Velocidad</h4>
-                    <ul>
-                        <li><strong>Python:</strong> Generalmente más lento debido a su naturaleza interpretada</li>
-                        <li><strong>Java:</strong> Más rápido en ejecución gracias a la JVM</li>
-                    </ul>
-
-                    <h4>5. Curva de Aprendizaje</h4>
-                    <ul>
-                        <li><strong>Python:</strong> Más fácil de aprender, sintaxis más natural</li>
-                        <li><strong>Java:</strong> Más verboso, requiere más conceptos iniciales</li>
-                    </ul>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Aspecto</th>
+                    <th><span class="language-icon python-icon"></span>Python</th>
+                    <th><span class="language-icon java-icon"></span>Java</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tipado</td>
+                    <td><span class="highlight-python">Dinámico</span> - No necesitas declarar el tipo de las variables</td>
+                    <td><span class="highlight-java">Estático</span> - Debes declarar el tipo de cada variable</td>
+                </tr>
+                <tr>
+                    <td>Ejecución</td>
+                    <td><span class="highlight-python">Interpretado</span> - El código se ejecuta línea por línea</td>
+                    <td><span class="highlight-java">Pseudo-compilado</span> - Se compila a bytecode antes de ejecutar</td>
+                </tr>
+                <tr>
+                    <td>Sintaxis</td>
+                    <td>Usa <span class="code-inline">indentación</span> para delimitar bloques de código</td>
+                    <td>Usa <span class="code-inline">llaves {}</span> y punto y coma obligatorio</td>
+                </tr>
+                <tr>
+                    <td>Velocidad</td>
+                    <td><span class="highlight-python">Más lento</span> debido a su naturaleza interpretada</td>
+                    <td><span class="highlight-java">Más rápido</span> en ejecución gracias a la JVM</td>
+                </tr>
+                <tr>
+                    <td>Curva de Aprendizaje</td>
+                    <td><span class="highlight-python">Más fácil</span> de aprender, sintaxis más natural</td>
+                    <td><span class="highlight-java">Más verboso</span>, requiere más conceptos iniciales</td>
+                </tr>
+                <tr>
+                    <td>Hola Mundo</td>
+                    <td><span class="code-inline">print("¡Hola, mundo!")</span></td>
+                    <td><span class="code-inline">public class HolaMundo { public static void main(String[] args) { System.out.println("¡Hola, mundo!"); } }</span></td>
+                </tr>
+                <tr>
+                    <td>Declaración de Variables</td>
+                    <td>
+                        <span class="code-inline">nombre = "Juan"</span><br>
+                        <span class="code-inline">edad = 25</span><br>
+                        <span class="code-inline">altura = 1.75</span>
+                    </td>
+                    <td>
+                        <span class="code-inline">String nombre = "Juan";</span><br>
+                        <span class="code-inline">int edad = 25;</span><br>
+                        <span class="code-inline">double altura = 1.75;</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
                 </div>
 
                 <div class="code-container">
