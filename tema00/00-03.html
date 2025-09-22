@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalación de WSL | UT00 - Introducción a Python</title>
+    <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css">
+</head>
+<body>
+    <header class="header">
+  
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">Instalación de WSL</h1>
+                <p class="content-subtitle">Windows Subsystem for Linux - Un entorno Linux completo en Windows</p>
+            </div>
+
+            <section class="lesson-section">
+                <h2 class="section-title">¿Qué es WSL?</h2>
+                
+                <div class="text-content">
+                    <p><strong>Windows Subsystem for Linux (WSL)</strong> es una característica de Windows 10 y Windows 11 que permite ejecutar un entorno Linux directamente en Windows, sin necesidad de una máquina virtual tradicional o configuración de arranque dual.</p>
+                    
+                    <p>WSL te proporciona:</p>
+                    <ul>
+                        <li>Un <strong>kernel de Linux completo</strong> ejecutándose en Windows</li>
+                        <li>Acceso a <strong>herramientas y aplicaciones de línea de comandos de Linux</strong></li>
+                        <li><strong>Integración perfecta</strong> con el sistema de archivos de Windows</li>
+                        <li>Capacidad de ejecutar <strong>aplicaciones Linux nativas</strong></li>
+                        <li><strong>Mejor rendimiento</strong> que las máquinas virtuales tradicionales</li>
+                    </ul>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">¿Por qué usar WSL para Python?</div>
+                    <p>Muchas herramientas de desarrollo y librerías de Python están diseñadas para entornos Unix/Linux. WSL te permite usar estas herramientas en Windows con la máxima compatibilidad.</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>WSL 1 vs WSL 2</h3>
+                    <ul>
+                        <li><strong>WSL 1:</strong> Capa de compatibilidad que traduce llamadas del sistema Linux a Windows</li>
+                        <li><strong>WSL 2:</strong> Usa un kernel de Linux real en una máquina virtual ligera optimizada</li>
+                    </ul>
+                    <p>Para desarrollo con Python, <strong>recomendamos WSL 2</strong> por su mejor rendimiento y compatibilidad completa.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Requisitos del Sistema</h2>
+                
+                <div class="text-content">
+                    <p>Para instalar WSL 2, tu sistema debe cumplir con los siguientes requisitos:</p>
+                    
+                    <h3>Para Windows 10</h3>
+                    <ul>
+                        <li><strong>Versión:</strong> Windows 10 versión 1903 o superior, con Build 18362 o superior</li>
+                        <li>Para sistemas x64: <strong>Versión 1903</strong> o superior, con Build <strong>18362</strong> o superior</li>
+                        <li>Para sistemas ARM64: <strong>Versión 2004</strong> o superior, con Build <strong>19041</strong> o superior</li>
+                        <li><strong>Virtualización:</strong> Debe estar habilitada en la BIOS</li>
+                    </ul>
+
+                    <h3>Para Windows 11</h3>
+                    <ul>
+                        <li>WSL 2 está <strong>totalmente soportado</strong> en todas las versiones de Windows 11</li>
+                        <li><strong>Virtualización:</strong> Debe estar habilitada en la BIOS</li>
+                    </ul>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Verificar la versión de Windows</div>
+                    <p>Puedes verificar tu versión de Windows ejecutando <code>winver</code> en el menú Inicio o usando <code>Configuración > Sistema > Acerca de</code>.</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Verificar si la virtualización está habilitada</h3>
+                    <p>Para comprobar si la virtualización está habilitada:</p>
+                    <ol>
+                        <li>Abre el <strong>Administrador de tareas</strong> (Ctrl + Shift + Esc)</li>
+                        <li>Ve a la pestaña <strong>"Rendimiento"</strong></li>
+                        <li>Selecciona <strong>"CPU"</strong></li>
+                        <li>Busca <strong>"Virtualización: Habilitada"</strong> en la parte inferior derecha</li>
+                    </ol>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-title">Si la virtualización está deshabilitada</div>
+                    <p>Si la virtualización está deshabilitada, necesitarás habilitarla en la BIOS. El proceso varía según el fabricante de tu motherboard. Busca opciones como "Intel VT-x", "AMD-V", o "SVM" en la configuración de la BIOS.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Método 1: Instalación Simple (Windows 10 versión 2004+)</h2>
+                
+                <div class="text-content">
+                    <p>Si tienes Windows 10 versión 2004 o superior, o Windows 11, puedes instalar WSL con un solo comando:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Instalación con un comando</span>
+                        <span class="language-badge">PowerShell (Admin)</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Abre PowerShell como Administrador y ejecuta:
+wsl --install</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <p>Este comando:</p>
+                    <ul>
+                        <li>Habilita las características necesarias de Windows</li>
+                        <li>Descarga e instala el kernel de Linux más reciente</li>
+                        <li>Establece WSL 2 como versión predeterminada</li>
+                        <li>Instala Ubuntu como distribución predeterminada</li>
+                    </ul>
+                </div>
+
+                <div class="text-content">
+                    <h3>Instalar una distribución específica</h3>
+                    <p>Si prefieres una distribución diferente a Ubuntu:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Ver distribuciones disponibles</span>
+                        <span class="language-badge">PowerShell</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Ver distribuciones disponibles:
+wsl --list --online
+
+# Instalar una distribución específica:
+wsl --install -d Ubuntu-22.04
+wsl --install -d Debian
+wsl --install -d openSUSE-Leap-15.4</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Reinicio necesario</div>
+                    <p>Después de ejecutar <code>wsl --install</code>, necesitarás <strong>reiniciar tu computadora</strong> para completar la instalación.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Método 2: Instalación Manual (Windows 10 versiones anteriores)</h2>
+                
+                <div class="text-content">
+                    <p>Si tienes una versión anterior de Windows 10, necesitarás instalar WSL manualmente siguiendo estos pasos:</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Paso 1: Habilitar WSL</h3>
+                    <p>Abre PowerShell como Administrador y ejecuta:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Habilitar WSL</span>
+                        <span class="language-badge">PowerShell (Admin)</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Paso 2: Habilitar la característica de Máquina Virtual</h3>
+                    <p>Para WSL 2, también necesitas habilitar la plataforma de máquina virtual:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Habilitar Plataforma de Máquina Virtual</span>
+                        <span class="language-badge">PowerShell (Admin)</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Paso 3: Reiniciar el sistema</h3>
+                    <p><strong>Reinicia tu computadora</strong> para aplicar los cambios.</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Paso 4: Descargar el paquete de actualización del kernel de Linux</h3>
+                    <p>Descarga e instala el paquete de actualización del kernel de WSL 2:</p>
+                    <ul>
+                        <li>Ve a: <strong>https://aka.ms/wsl2kernel</strong></li>
+                        <li>Descarga el archivo <strong>"WSL2 Linux kernel update package for x64 machines"</strong></li>
+                        <li>Ejecuta el archivo descargado e instálalo</li>
+                    </ul>
+                </div>
+
+                <div class="text-content">
+                    <h3>Paso 5: Establecer WSL 2 como versión predeterminada</h3>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Configurar WSL 2 por defecto</span>
+                        <span class="language-badge">PowerShell</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>wsl --set-default-version 2</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Paso 6: Instalar una distribución de Linux</h3>
+                    <p>Puedes instalar una distribución desde Microsoft Store o usando PowerShell:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Instalar Ubuntu desde PowerShell</span>
+                        <span class="language-badge">PowerShell</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Ver distribuciones disponibles:
+wsl --list --online
+
+# Instalar Ubuntu (recomendado para principiantes):
+wsl --install -d Ubuntu</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Configuración Inicial de la Distribución</h2>
+                
+                <div class="text-content">
+                    <p>Después de instalar tu distribución de Linux, necesitarás configurarla:</p>
+                    
+                    <ol>
+                        <li><strong>Abrir la distribución:</strong> Busca el nombre de tu distribución en el menú Inicio (ej: "Ubuntu") y ábrela</li>
+                        <li><strong>Esperar la instalación:</strong> La primera vez tardará unos minutos en completar la instalación</li>
+                        <li><strong>Crear usuario:</strong> Se te pedirá crear un nombre de usuario y contraseña</li>
+                        <li><strong>Actualizar el sistema:</strong> Es recomendable actualizar los paquetes del sistema</li>
+                    </ol>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Configuración inicial de Ubuntu</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Actualizar la lista de paquetes:
+sudo apt update
+
+# Actualizar todos los paquetes instalados:
+sudo apt upgrade -y
+
+# Instalar herramientas esenciales:
+sudo apt install -y curl wget git build-essential</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Consejos para el usuario y contraseña</div>
+                    <p>El nombre de usuario no tiene que coincidir con tu usuario de Windows. La contraseña se usará para comandos <code>sudo</code>, así que asegúrate de recordarla.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Verificar la Instalación de WSL</h2>
+                
+                <div class="text-content">
+                    <p>Para verificar que WSL se instaló correctamente, puedes usar estos comandos:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Verificar WSL desde PowerShell</span>
+                        <span class="language-badge">PowerShell</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Ver todas las distribuciones instaladas:
+wsl --list --verbose
+
+# Ver la versión de WSL:
+wsl --version
+
+# Acceder a la distribución predeterminada:
+wsl</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <p>La salida de <code>wsl --list --verbose</code> debería mostrar algo similar a:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Salida esperada</span>
+                        <span class="language-badge">Output</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>  NAME      STATE           VERSION
+* Ubuntu    Running         2</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Verificar la versión</div>
+                    <p>Asegúrate de que la columna VERSION muestre "2". Si muestra "1", puedes convertir la distribución a WSL 2 con: <code>wsl --set-version Ubuntu 2</code></p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Comandos Útiles de WSL</h2>
+                
+                <div class="text-content">
+                    <p>Aquí tienes algunos comandos útiles para administrar WSL:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Comandos básicos de administración</span>
+                        <span class="language-badge">PowerShell</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Listar distribuciones instaladas:
+wsl --list
+
+# Iniciar una distribución específica:
+wsl -d Ubuntu
+
+# Apagar todas las distribuciones:
+wsl --shutdown
+
+# Apagar una distribución específica:
+wsl --terminate Ubuntu
+
+# Establecer distribución predeterminada:
+wsl --set-default Ubuntu
+
+# Desinstalar una distribución:
+wsl --unregister Ubuntu</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Acceso a archivos entre Windows y WSL</h3>
+                    <p>Una de las ventajas de WSL es la integración con el sistema de archivos de Windows:</p>
+                    
+                    <ul>
+                        <li><strong>Desde WSL acceder a Windows:</strong> Los discos de Windows están montados en <code>/mnt/</code> (ej: <code>/mnt/c/</code> para el disco C:)</li>
+                        <li><strong>Desde Windows acceder a WSL:</strong> Usa la ruta <code>\\wsl$\NombreDistribucion\</code> en el Explorador de archivos</li>
+                    </ul>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Ejemplos de navegación entre sistemas</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Desde WSL, acceder al escritorio de Windows:
+cd /mnt/c/Users/TuUsuario/Desktop
+
+# Ver el contenido del disco C: desde WSL:
+ls /mnt/c/
+
+# Crear un archivo en WSL que sea visible desde Windows:
+echo "Hola desde WSL" > ~/archivo_wsl.txt</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-title">Importante sobre los archivos</div>
+                    <p>Para mejor rendimiento, mantén los archivos del proyecto en el sistema de archivos de Linux (dentro de WSL) cuando trabajes principalmente desde Linux, y en Windows cuando trabajes desde Windows.</p>
+                </div>
+            </section>
+
+  
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
