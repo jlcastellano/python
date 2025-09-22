@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python en WSL | UT00 - Introducción a Python</title>
+    <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Programación en Python</div>
+
+        </div>
+    </header>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="container">
+
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">Python en WSL</h1>
+                <p class="content-subtitle">Instalación y configuración de Python en el entorno Linux de WSL</p>
+            </div>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Verificar Python Preinstalado</h2>
+                
+                <div class="text-content">
+                    <p>La mayoría de distribuciones de Linux vienen con Python preinstalado. Primero verificaremos qué versiones están disponibles en tu sistema WSL:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Verificar versiones de Python</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Verificar si Python 3 está instalado:
+python3 --version
+
+# Verificar si Python 2 está instalado (no recomendado):
+python --version
+
+# Ver la ubicación de Python 3:
+which python3
+
+# Ver todas las versiones disponibles:
+ls /usr/bin/python*</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <p>Si Python 3 está instalado, deberías ver una salida similar a:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Salida esperada</span>
+                        <span class="language-badge">Output</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>$ python3 --version
+Python 3.10.12
+
+$ which python3
+/usr/bin/python3</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Diferencia entre python y python3</div>
+                    <p>En muchas distribuciones Linux, <code>python</code> puede apuntar a Python 2.x y <code>python3</code> a Python 3.x. Siempre usa <code>python3</code> para asegurarte de usar Python 3.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Instalar Python 3 (si no está disponible)</h2>
+                
+                <div class="text-content">
+                    <p>Si Python 3 no está instalado o quieres instalar una versión más reciente, puedes hacerlo usando el gestor de paquetes de tu distribución:</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>En Ubuntu/Debian</h3>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Instalar Python en Ubuntu/Debian</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Actualizar la lista de paquetes:
+sudo apt update
+
+# Instalar Python 3 y herramientas esenciales:
+sudo apt install -y python3 python3-pip python3-venv python3-dev
+
+# Instalar una versión específica (ejemplo Python 3.11):
+sudo apt install -y python3.11 python3.11-venv python3.11-dev
+
+# Verificar la instalación:
+python3 --version
+pip3 --version</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>En otras distribuciones</h3>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Instalar Python en otras distribuciones</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># En CentOS/RHEL/Fedora:
+sudo dnf install python3 python3-pip python3-venv
+
+# En openSUSE:
+sudo zypper install python3 python3-pip python3-venv
+
+# En Arch Linux:
+sudo pacman -S python python-pip</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Paquetes recomendados</div>
+                    <p>Siempre instala junto con Python: <code>python3-pip</code> (gestor de paquetes), <code>python3-venv</code> (entornos virtuales) y <code>python3-dev</code> (headers para compilar extensiones).</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Configurar alias para Python</h2>
+                
+                <div class="text-content">
+                    <p>Para facilitar el uso de Python, es recomendable configurar alias que te permitan usar <code>python</code> en lugar de <code>python3</code>:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Crear alias temporales</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Crear alias temporal para la sesión actual:
+alias python=python3
+alias pip=pip3
+
+# Verificar que funciona:
+python --version
+pip --version</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <p>Para hacer estos alias permanentes, añádelos a tu archivo de configuración del shell:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Crear alias permanentes</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Editar el archivo .bashrc (para bash):
+nano ~/.bashrc
+
+# O editar .zshrc (si usas zsh):
+nano ~/.zshrc
+
+# Añadir al final del archivo:
+alias python=python3
+alias pip=pip3
+
+# Aplicar los cambios:
+source ~/.bashrc
+# o
+source ~/.zshrc</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-title">Cuidado con los alias</div>
+                    <p>Algunos scripts del sistema pueden depender del comando <code>python</code> apuntando a Python 2. Si experimentas problemas, puedes remover los alias temporalmente.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Instalar versiones específicas de Python</h2>
+                
+                <div class="text-content">
+                    <p>Para desarrollo profesional, es común necesitar versiones específicas de Python. Te mostraremos cómo instalar múltiples versiones:</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Método 1: Usando deadsnakes PPA (Ubuntu)</h3>
+                    <p>El repositorio deadsnakes contiene múltiples versiones de Python para Ubuntu:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Instalar desde deadsnakes PPA</span>
+                        <span class="language-badge">Ubuntu Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Añadir el repositorio deadsnakes:
+sudo add-apt-repository ppa:deadsnakes/ppa
+
+# Actualizar la lista de paquetes:
+sudo apt update
+
+# Instalar versiones específicas:
+sudo apt install python3.9 python3.9-venv python3.9-dev
+sudo apt install python3.10 python3.10-venv python3.10-dev
+sudo apt install python3.11 python3.11-venv python3.11-dev
+sudo apt install python3.12 python3.12-venv python3.12-dev
+
+# Verificar las instalaciones:
+python3.9 --version
+python3.10 --version
+python3.11 --version
+python3.12 --version</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Método 2: Compilar desde el código fuente</h3>
+                    <p>Para máximo control, puedes compilar Python desde el código fuente:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Compilar Python desde fuente</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Instalar dependencias de compilación:
+sudo apt update
+sudo apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev \
+    libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev \
+    wget libbz2-dev
+
+# Descargar Python (ejemplo: versión 3.11.5):
+cd /tmp
+wget https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tgz
+tar -xf Python-3.11.5.tgz
+
+# Compilar e instalar:
+cd Python-3.11.5
+./configure --enable-optimizations --prefix=/usr/local
+make -j $(nproc)
+sudo make altinstall
+
+# Verificar la instalación:
+python3.11 --version</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">make altinstall vs make install</div>
+                    <p>Usa <code>make altinstall</code> en lugar de <code>make install</code> para evitar sobrescribir el Python del sistema. Esto instala Python como <code>python3.11</code> en lugar de <code>python3</code>.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Gestión de versiones con pyenv</h2>
+                
+                <div class="text-content">
+                    <p><strong>pyenv</strong> es una herramienta que facilita la instalación y cambio entre múltiples versiones de Python:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Instalar pyenv</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Instalar dependencias:
+sudo apt update
+sudo apt install -y make build-essential libssl-dev zlib1g-dev \
+    libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
+    libffi-dev liblzma-dev
+
+# Descargar e instalar pyenv:
+curl https://pyenv.run | bash
+
+# Añadir pyenv al PATH (añadir al ~/.bashrc):
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+
+# Recargar el shell:
+exec $SHELL</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <p>Usar pyenv para instalar y gestionar versiones de Python:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Usar pyenv</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Ver versiones disponibles:
+pyenv install --list
+
+# Instalar versiones específicas:
+pyenv install 3.9.18
+pyenv install 3.10.13
+pyenv install 3.11.5
+pyenv install 3.12.0
+
+# Ver versiones instaladas:
+pyenv versions
+
+# Establecer versión global:
+pyenv global 3.11.5
+
+# Establecer versión local para un proyecto:
+mkdir mi_proyecto
+cd mi_proyecto
+pyenv local 3.10.13
+
+# Verificar versión activa:
+python --version</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Ventajas de pyenv</div>
+                    <p>pyenv permite cambiar fácilmente entre versiones de Python por proyecto, instalar versiones no disponibles en los repositorios oficiales, y mantener un entorno limpio sin interferir con el Python del sistema.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Configurar pip y herramientas de desarrollo</h2>
+                
+                <div class="text-content">
+                    <p>Una vez que tienes Python instalado, es importante configurar pip y instalar herramientas esenciales de desarrollo:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Actualizar pip y instalar herramientas</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Actualizar pip a la última versión:
+python3 -m pip install --upgrade pip
+
+# Instalar herramientas esenciales:
+pip3 install --upgrade setuptools wheel
+
+# Instalar herramientas de desarrollo recomendadas:
+pip3 install virtualenv virtualenvwrapper ipython jupyter
+
+# Verificar las instalaciones:
+pip3 --version
+virtualenv --version
+ipython --version</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Configurar virtualenvwrapper (opcional)</h3>
+                    <p>virtualenvwrapper facilita la gestión de entornos virtuales:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Configurar virtualenvwrapper</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Añadir al ~/.bashrc:
+echo 'export WORKON_HOME=$HOME/.virtualenvs' >> ~/.bashrc
+echo 'export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3' >> ~/.bashrc
+echo 'source /usr/local/bin/virtualenvwrapper.sh' >> ~/.bashrc
+
+# Recargar el shell:
+source ~/.bashrc
+
+# Crear un entorno virtual de prueba:
+mkvirtualenv test_env
+
+# Activar entorno:
+workon test_env
+
+# Desactivar entorno:
+deactivate
+
+# Listar entornos:
+lsvirtualenv</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Verificar la instalación completa</h2>
+                
+                <div class="text-content">
+                    <p>Para asegurarte de que todo está configurado correctamente, ejecuta estas verificaciones:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Script de verificación</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Crear un script de verificación:
+cat << 'EOF' > verificar_python.py
+#!/usr/bin/env python3
+
+import sys
+import platform
+import subprocess
+
+print("=== Verificación de Python en WSL ===")
+print(f"Versión de Python: {sys.version}")
+print(f"Plataforma: {platform.platform()}")
+print(f"Arquitectura: {platform.architecture()}")
+print(f"Ejecutable de Python: {sys.executable}")
+
+# Verificar pip
+try:
+    import pip
+    print(f"Versión de pip: {pip.__version__}")
+except ImportError:
+    print("pip no está disponible")
+
+# Verificar módulos importantes
+modules = ['venv', 'json', 'urllib', 'sqlite3', 'ssl']
+for module in modules:
+    try:
+        __import__(module)
+        print(f"✓ Módulo {module} disponible")
+    except ImportError:
+        print(f"✗ Módulo {module} NO disponible")
+
+print("\n=== Verificación completada ===")
+EOF
+
+# Ejecutar el script:
+python3 verificar_python.py</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <p>También puedes verificar que puedes crear y ejecutar un programa Python simple:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Programa de prueba</span>
+                        <span class="language-badge">Python</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Crear un programa de prueba:
+cat << 'EOF' > hola_wsl.py
+#!/usr/bin/env python3
+
+def main():
+    print("¡Hola desde Python en WSL!")
+    print("Python está funcionando correctamente.")
+    
+    # Prueba de importaciones básicas
+    import os
+    import datetime
+    
+    print(f"Sistema operativo: {os.name}")
+    print(f"Fecha y hora: {datetime.datetime.now()}")
+    
+    # Prueba de operaciones básicas
+    numeros = [1, 2, 3, 4, 5]
+    suma = sum(numeros)
+    print(f"Suma de {numeros} = {suma}")
+
+if __name__ == "__main__":
+    main()
+EOF
+
+# Ejecutar el programa:
+python3 hola_wsl.py</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Salida esperada</div>
+                    <p>Si todo está configurado correctamente, deberías ver información sobre tu sistema Python y confirmaciones de que los módulos esenciales están disponibles.</p>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Integración con editores de código</h2>
+                
+                <div class="text-content">
+                    <p>Para desarrollo productivo, es importante que tu editor de código pueda acceder al Python de WSL:</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Visual Studio Code con WSL</h3>
+                    <p>VS Code tiene excelente integración con WSL:</p>
+                    
+                    <ol>
+                        <li>Instala la extensión <strong>"Remote - WSL"</strong> en VS Code</li>
+                        <li>Abre WSL y navega a tu directorio de proyecto</li>
+                        <li>Ejecuta <code>code .</code> para abrir VS Code conectado a WSL</li>
+                        <li>Instala la extensión de Python dentro del entorno WSL</li>
+                    </ol>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Abrir VS Code desde WSL</span>
+                        <span class="language-badge">Linux Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Crear un directorio de proyecto:
+mkdir ~/mi_proyecto_python
+cd ~/mi_proyecto_python
+
+# Crear un archivo Python:
+echo 'print("Hola desde WSL con VS Code!")' > main.py
+
+# Abrir VS Code conectado a WSL:
+code .</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Configurar intérprete de Python en VS Code</div>
+                    <p>En VS Code conectado a WSL, presiona Ctrl+Shift+P, busca "Python: Select Interpreter" y selecciona la versión de Python que quieres usar para tu proyecto.</p>
+                </div>
+            </section>
+
+     
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
