@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jupyter Notebooks | UT00 - Introducción a Python</title>
+  <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/vs2015.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Programación en Python</div>
+
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="container">
+
+
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">Jupyter Notebooks</h1>
+                <p class="content-subtitle">Documentos interactivos para desarrollo, análisis y prototipado en Python</p>
+            </div>
+
+            <section class="lesson-section">
+                <h2 class="section-title">¿Qué son los Jupyter Notebooks?</h2>
+                
+                <div class="text-content">
+                    <p><strong>Jupyter Notebooks</strong> son documentos interactivos que combinan código ejecutable, texto explicativo, visualizaciones y otros elementos multimedia en un solo lugar. Son especialmente populares en ciencia de datos, investigación, educación y prototipado rápido.</p>
+                    
+                    <h3>¿Por qué usar Jupyter Notebooks?</h3>
+                    <ul>
+                        <li><strong>Interactividad:</strong> Ejecuta código celda por celda y ve los resultados inmediatamente</li>
+                        <li><strong>Documentación integrada:</strong> Combina código con explicaciones en texto enriquecido (Markdown)</li>
+                        <li><strong>Visualización:</strong> Ideal para mostrar gráficos, tablas y resultados de análisis</li>
+                        <li><strong>Prototipado rápido:</strong> Perfecto para experimentar y probar ideas paso a paso</li>
+                        <li><strong>Compartir resultados:</strong> Fácil de compartir análisis completos con otros</li>
+                        <li><strong>Reproducibilidad:</strong> Documenta todo el proceso de análisis de principio a fin</li>
+                    </ul>
+                </div>
+
+                <div class="info-box note">
+                    <div class="info-box-title">Casos de uso comunes</div>
+                    <p>Jupyter es especialmente útil para análisis de datos, machine learning, visualización, investigación científica, educación, prototipado de algoritmos y creación de reportes interactivos.</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Estructura de un Notebook</h3>
+                    <p>Un Jupyter Notebook está compuesto por <strong>celdas</strong> que pueden contener:</p>
+                    <ul>
+                        <li><strong>Código Python:</strong> Que se ejecuta y muestra resultados</li>
+                        <li><strong>Texto Markdown:</strong> Para documentación, explicaciones y títulos</li>
+                        <li><strong>HTML crudo:</strong> Para elementos más avanzados</li>
+                        <li><strong>Salidas:</strong> Resultados de ejecución, gráficos, tablas, etc.</li>
+                    </ul>
+                </div>
+
+                <div class="text-content">
+                    <h3>Diferencias entre herramientas Jupyter</h3>
+                    <ul>
+                        <li><strong>Jupyter Notebook:</strong> Interfaz clásica, simple y enfocada en un solo notebook</li>
+                        <li><strong>JupyterLab:</strong> Interfaz moderna tipo IDE con pestañas, explorador de archivos y extensiones</li>
+                        <li><strong>VS Code + Jupyter:</strong> Extensión que integra notebooks en VS Code con todas sus ventajas</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Instalación de Jupyter en Windows</h2>
+                
+                <div class="text-content">
+                    <p>Existen varias formas de usar Jupyter en Windows. Te mostraremos las opciones más populares:</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Método 1: Extensión de Jupyter para VS Code (Recomendado)</h3>
+                    <p>La forma más moderna y conveniente de usar Jupyter es a través de Visual Studio Code:</p>
+                    
+                    <ol>
+                        <li><strong>Instalar VS Code:</strong> Descarga desde <a href="https://code.visualstudio.com/">code.visualstudio.com</a></li>
+                        <li><strong>Instalar la extensión Python:</strong> Busca "Python" en el marketplace de extensiones</li>
+                        <li><strong>Instalar la extensión Jupyter:</strong> Busca "Jupyter" en el marketplace de extensiones</li>
+                        <li><strong>Configurar el intérprete de Python:</strong> Ctrl+Shift+P → "Python: Select Interpreter"</li>
+                    </ol>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Instalar Jupyter desde PowerShell</span>
+                        <span class="language-badge">PowerShell</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># 1. Crear y activar entorno virtual:
+python -m venv jupyter_env
+jupyter_env\Scripts\activate
+
+# 2. Actualizar pip:
+python -m pip install --upgrade pip
+
+# 3. Instalar Jupyter:
+pip install jupyter jupyterlab
+
+# 4. Instalar paquetes útiles para ciencia de datos:
+pip install numpy pandas matplotlib seaborn plotly
+
+# 5. Verificar la instalación:
+jupyter --version</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Crear tu primer Notebook en VS Code</h3>
+                    <ol>
+                        <li>Abre VS Code</li>
+                        <li>Crea un nuevo archivo con extensión <code>.ipynb</code> (ej: <code>mi_notebook.ipynb</code>)</li>
+                        <li>VS Code detectará automáticamente que es un Jupyter Notebook</li>
+                        <li>Selecciona el kernel de Python (tu entorno virtual)</li>
+                        <li>¡Empieza a escribir código en las celdas!</li>
+                    </ol>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Ventajas de VS Code + Jupyter</div>
+                    <p>VS Code con Jupyter ofrece las mejores características de ambos mundos: la potencia de un IDE moderno con la interactividad de los notebooks, incluyendo IntelliSense, debugging, control de versiones integrado y más.</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Método 2: Instalación tradicional de Jupyter</h3>
+                    <p>También puedes usar Jupyter en el navegador web de forma tradicional:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Instalar y ejecutar Jupyter tradicional</span>
+                        <span class="language-badge">PowerShell</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Con el entorno virtual activado:
+pip install jupyter
+
+# Iniciar Jupyter Notebook:
+jupyter notebook
+
+# O iniciar JupyterLab (interfaz moderna):
+pip install jupyterlab
+jupyter lab
+
+# El navegador se abrirá automáticamente en http://localhost:8888</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Instalación de Jupyter en WSL</h2>
+                
+                <div class="text-content">
+                    <p>Usar Jupyter en WSL te permite aprovechar el entorno Linux para análisis de datos mientras mantienes la comodidad de Windows:</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Configuración de Jupyter Server en WSL</h3>
+                    <p>Esta configuración te permite ejecutar Jupyter en WSL y acceder desde Windows:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Instalar Jupyter en WSL</span>
+                        <span class="language-badge">WSL Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># 1. Actualizar el sistema:
+sudo apt update && sudo apt upgrade -y
+
+# 2. Crear entorno virtual:
+python3 -m venv jupyter_env
+source jupyter_env/bin/activate
+
+# 3. Instalar Jupyter y dependencias:
+pip install --upgrade pip
+pip install jupyter jupyterlab
+pip install numpy pandas matplotlib seaborn plotly scikit-learn
+
+# 4. Verificar instalación:
+jupyter --version</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Configurar Jupyter para acceso desde Windows</h3>
+                    <p>Para acceder al servidor Jupyter de WSL desde Windows, necesitas configurar algunos parámetros:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Generar configuración de Jupyter</span>
+                        <span class="language-badge">WSL Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Generar archivo de configuración:
+jupyter notebook --generate-config
+
+# El archivo se creará en ~/.jupyter/jupyter_notebook_config.py
+
+# Generar contraseña (opcional pero recomendado):
+jupyter notebook password</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <p>Editar el archivo de configuración para permitir acceso desde Windows:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Configurar acceso remoto</span>
+                        <span class="language-badge">WSL Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Editar archivo de configuración:
+nano ~/.jupyter/jupyter_notebook_config.py
+
+# Añadir o modificar estas líneas:
+c.NotebookApp.ip = '0.0.0.0'
+c.NotebookApp.port = 8888
+c.NotebookApp.open_browser = False
+c.NotebookApp.allow_remote_access = True</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Iniciar Jupyter Server</h3>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Ejecutar Jupyter en WSL</span>
+                        <span class="language-badge">WSL Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Activar entorno virtual:
+source jupyter_env/bin/activate
+
+# Iniciar Jupyter Notebook:
+jupyter notebook
+
+# O iniciar JupyterLab:
+jupyter lab
+
+# Acceder desde Windows navegando a:
+# http://localhost:8888</code></pre>
+                    </div>
+                </div>
+
+                <div class="info-box warning">
+                    <div class="info-box-title">Seguridad importante</div>
+                    <p>Si planeas acceder a Jupyter desde otras máquinas en tu red, asegúrate de configurar una contraseña fuerte y considera usar HTTPS. Para uso local, la configuración básica es suficiente.</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Usar VS Code con Jupyter en WSL</h3>
+                    <p>La mejor experiencia es combinar VS Code con WSL y Jupyter:</p>
+                    
+                    <ol>
+                        <li><strong>Instalar extensión Remote-WSL</strong> en VS Code</li>
+                        <li><strong>Conectar VS Code a WSL:</strong> Ctrl+Shift+P → "Remote-WSL: New WSL Window"</li>
+                        <li><strong>Instalar extensiones Python y Jupyter</strong> en el entorno WSL</li>
+                        <li><strong>Crear notebooks</strong> que se ejecutarán en el entorno Linux</li>
+                    </ol>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Abrir VS Code desde WSL</span>
+                        <span class="language-badge">WSL Terminal</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Desde el directorio de tu proyecto en WSL:
+mkdir mi_proyecto_jupyter
+cd mi_proyecto_jupyter
+
+# Activar entorno virtual:
+source ~/jupyter_env/bin/activate
+
+# Abrir VS Code conectado a WSL:
+code .</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Primeros pasos con Jupyter Notebooks</h2>
+                
+                <div class="text-content">
+                    <p>Una vez que tengas Jupyter configurado, es importante conocer los conceptos básicos para trabajar eficientemente:</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Tipos de celdas</h3>
+                    <ul>
+                        <li><strong>Code:</strong> Contiene código Python ejecutable</li>
+                        <li><strong>Markdown:</strong> Texto formateado con sintaxis Markdown</li>
+                        <li><strong>Raw:</strong> Texto sin procesar</li>
+                    </ul>
+                </div>
+
+                <div class="text-content">
+                    <h3>Atajos de teclado importantes</h3>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Atajos en modo comando (Esc)</span>
+                        <span class="language-badge">Keyboard Shortcuts</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>A          - Insertar celda arriba
+B          - Insertar celda abajo
+DD         - Eliminar celda
+M          - Cambiar a Markdown
+Y          - Cambiar a Code
+C          - Copiar celda
+V          - Pegar celda
+Shift+↑/↓  - Seleccionar múltiples celdas</code></pre>
+                    </div>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Atajos en modo edición (Enter)</span>
+                        <span class="language-badge">Keyboard Shortcuts</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>Shift+Enter - Ejecutar celda y pasar a la siguiente
+Ctrl+Enter  - Ejecutar celda sin cambiar selección
+Alt+Enter   - Ejecutar celda e insertar nueva abajo
+Tab         - Autocompletar
+Shift+Tab   - Mostrar documentación</code></pre>
+                    </div>
+                </div>
+
+                <div class="text-content">
+                    <h3>Ejemplo práctico: Tu primer notebook</h3>
+                    <p>Crea un nuevo notebook y prueba estos ejemplos:</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Celda 1: Importar librerías</span>
+                        <span class="language-badge">Python (Code Cell)</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Importar librerías básicas
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+print("¡Jupyter está funcionando!")
+print(f"NumPy versión: {np.__version__}")
+print(f"Pandas versión: {pd.__version__}")</code></pre>
+                    </div>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>Celda 2: Crear datos y visualizar</span>
+                        <span class="language-badge">Python (Code Cell)</span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code># Crear datos de ejemplo
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+# Crear gráfico
+plt.figure(figsize=(10, 6))
+plt.plot(x, y, 'b-', linewidth=2, label='sin(x)')
+plt.xlabel('x')
+plt.ylabel('sin(x)')
+plt.title('Gráfico de la función seno')
+plt.grid(True, alpha=0.3)
+plt.legend()
+plt.show()</code></pre>
+                    </div>
+                </div>
+
+            <section class="lesson-section">
+                <h2 class="section-title">Buenas Prácticas para Jupyter Notebooks</h2>
+                
+                <div class="text-content">
+                    <p>Para trabajar eficientemente con Jupyter Notebooks, sigue estas recomendaciones:</p>
+                </div>
+
+                <div class="text-content">
+                    <h3>Estructura y organización</h3>
+                    <ul>
+                        <li><strong>Títulos claros:</strong> Usa celdas Markdown para crear secciones bien definidas</li>
+                        <li><strong>Explicaciones:</strong> Documenta tu código con texto explicativo</li>
+                        <li><strong>Celdas pequeñas:</strong> Mantén las celdas de código cortas y enfocadas</li>
+                        <li><strong>Orden lógico:</strong> Estructura el notebook de forma que pueda ejecutarse de arriba a abajo</li>
+                    </ul>
+                </div>
+
+
+            <section class="lesson-section">
+                <h2 class="section-title">Herramientas Adicionales</h2>
+                <div class="text-content">
+                    <h3>Compartir notebooks online</h3>
+                    <ul>
+                        <li><strong>GitHub:</strong> Renderiza automáticamente los notebooks</li>
+                        <li><strong>NBViewer:</strong> Servicio gratuito para visualizar notebooks públicos</li>
+                        <li><strong>Google Colab:</strong> Ejecutar notebooks en la nube gratuitamente</li>
+                        <li><strong>Kaggle Notebooks:</strong> Para competencias de ciencia de datos</li>
+                        <li><strong>Azure Notebooks:</strong> Servicio en la nube de Microsoft</li>
+                    </ul>
+                </div>
+
+                <div class="info-box tip">
+                    <div class="info-box-title">Google Colab como alternativa</div>
+                    <p>Si no puedes instalar Jupyter localmente, Google Colab ofrece un entorno Jupyter gratuito en la nube con GPU y TPU disponibles para machine learning.</p>
+                </div>
+            </section>
+
+
+        </main>
+    </div>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
