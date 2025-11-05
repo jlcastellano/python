@@ -1,3 +1,14 @@
 tema00/00-06 - full.html
 tema01/00-ejercicios-logicos copy.ipynb
 tema02/tema02 - Estructuras de Control.ipynb
+tema07/calculadora.py
+tema07/__pycache__/calculadora.cpython-310.pyc
+tema07/utilidades_texto.py
+tema07/utilidades/__init__.py
+tema07/utilidades/matematicas.py
+tema07/utilidades/texto.py
+tema07/utilidades/validaciones/__init__.py
+tema07/utilidades/validaciones/email.py
+tema07/utilidades/validaciones/telefono.py
+tema07/utilidades/__pycache__/matematicas.cpython-310.pyc
+tema07/utilidades/__pycache__/__init__.cpython-310.pyc
