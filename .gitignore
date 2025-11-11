@@ -13,3 +13,17 @@ tema07/utilidades/validaciones/telefono.py
 tema07/utilidades/__pycache__/matematicas.cpython-310.pyc
 tema07/utilidades/__pycache__/__init__.cpython-310.pyc
 tema06/ejercicios-decoradores - soluciones.ipynb
+tema07/paquete_utilidades/dist/utilidades-0.1-py3-none-any.whl
+tema07/__pycache__/utilidades_texto.cpython-310.pyc
+tema07/paquete_utilidades/dist/utilidades-0.1.tar.gz
+tema07/paquete_utilidades/utilidades/__init__.py
+tema07/paquete_utilidades/utilidades/matematicas.py
+tema07/paquete_utilidades/utilidades/texto.py
+tema07/paquete_utilidades/utilidades/validaciones/__init__.py
+tema07/paquete_utilidades/utilidades/validaciones/email.py
+tema07/paquete_utilidades/utilidades/validaciones/telefono.py
+tema07/paquete_utilidades/utilidades.egg-info/dependency_links.txt
+tema07/paquete_utilidades/utilidades.egg-info/PKG-INFO
+tema07/paquete_utilidades/utilidades.egg-info/SOURCES.txt
+tema07/paquete_utilidades/utilidades.egg-info/top_level.txt
+tema07/paquete_utilidades/setup.py
