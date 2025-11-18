@@ -38,3 +38,6 @@ tema07/mi_proyecto/pyproject.toml
 tema11/instalar-mongodb.html
 tema11/MongoDb y Pinecone.ipynb
 tema12/PyQt-PySide.ipynb
+tema11/inventario.db
+tema11/mi_base_datos.db
+tema11/sqlalchemy_ejemplo.db
