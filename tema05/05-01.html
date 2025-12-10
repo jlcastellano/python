@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 05: Diccionarios y Conjuntos</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Tema 05: Diccionarios y Conjuntos</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Diccionarios y Conjuntos</h1>
+        <h2>Teoría y Ejemplos</h2>
+
+        <h2>1. ¿Qué son los Diccionarios?</h2>
+        <p>Un <strong>diccionario</strong> es una colección <strong>no ordenada</strong> de pares <strong>clave-valor</strong>.</p>
+
+        <h3>Características:</h3>
+        <ul>
+            <li>Almacenan datos en pares <strong>clave: valor</strong></li>
+            <li>Las <strong>claves</strong> deben ser únicas e inmutables (strings, números, tuplas)</li>
+            <li>Los <strong>valores</strong> pueden ser de cualquier tipo</li>
+            <li>Son <strong>mutables</strong> (se pueden modificar)</li>
+            <li>No están ordenados (antes de Python 3.7)</li>
+            <li>Desde Python 3.7+ mantienen el orden de inserción</li>
+            <li>Se definen con <strong>llaves</strong> <code>{}</code></li>
+        </ul>
+
+        <h3>Sintaxis:</h3>
+        <pre><code class="language-python">diccionario = {
+    clave1: valor1,
+    clave2: valor2,
+    clave3: valor3
+}</code></pre>
+
+        <h3>En la vida real:</h3>
+        <ul>
+            <li>Agenda de contactos: nombre → teléfono</li>
+            <li>Diccionario español-inglés: palabra → traducción</li>
+            <li>Base de datos de productos: código → información</li>
+            <li>Configuración de aplicación: opción → valor</li>
+        </ul>
+
+        <h2>2. Crear Diccionarios</h2>
+
+        <pre><code class="language-python"># Diccionario vacío
+diccionario_vacio = {}
+print("Vacío:", diccionario_vacio)
+print("Tipo:", type(diccionario_vacio))</code></pre>
+
+        <pre><code class="language-python"># Diccionario con datos iniciales
+persona = {
+    "nombre": "Juan",
+    "edad": 25,
+    "ciudad": "Madrid",
+    "profesion": "Programador"
+}
+
+print("Persona:", persona)</code></pre>
+
+        <pre><code class="language-python"># Diferentes tipos de claves y valores
+mixto = {
+    "nombre": "Python",
+    123: "número como clave",
+    (1, 2): "tupla como clave",
+    "lista": [1, 2, 3],
+    "booleano": True
+}
+
+print("Mixto:", mixto)</code></pre>
+
+        <pre><code class="language-python"># Crear con dict()
+persona = dict(nombre="Ana", edad=30, ciudad="Barcelona")
+print("Con dict():", persona)</code></pre>
+
+        <pre><code class="language-python"># Crear desde listas de tuplas
+pares = [("a", 1), ("b", 2), ("c", 3)]
+diccionario = dict(pares)
+print("Desde tuplas:", diccionario)</code></pre>
+
+        <h2>3. Acceder a Valores en Diccionarios</h2>
+        <p>Para acceder a un valor, usamos su <strong>clave</strong> en lugar de un índice.</p>
+
+        <pre><code class="language-python"># Acceder con corchetes []
+persona = {
+    "nombre": "Juan",
+    "edad": 25,
+    "ciudad": "Madrid"
+}
+
+print("Nombre:", persona["nombre"])
+print("Edad:", persona["edad"])
+print("Ciudad:", persona["ciudad"])</code></pre>
+
+        <pre><code class="language-python"># ⚠️ Error si la clave no existe
+persona = {"nombre": "Juan", "edad": 25}
+
+# print(persona["telefono"])  # KeyError: 'telefono'</code></pre>
+
+        <pre><code class="language-python"># ✅ Método get() - más seguro
+persona = {"nombre": "Juan", "edad": 25}
+
+print("Nombre:", persona.get("nombre"))
+print("Teléfono:", persona.get("telefono"))  # Devuelve None si no existe
+
+# Con valor por defecto
+print("Teléfono:", persona.get("telefono", "No disponible"))</code></pre>
+
+        <h2>4. Modificar Diccionarios</h2>
+
+        <h3>4.1. Agregar o Modificar Elementos</h3>
+
+        <pre><code class="language-python"># Agregar nuevos pares clave-valor
+persona = {"nombre": "Juan", "edad": 25}
+print("Antes:", persona)
+
+persona["ciudad"] = "Madrid"
+persona["profesion"] = "Ingeniero"
+print("Después:", persona)</code></pre>
+
+        <pre><code class="language-python"># Modificar valores existentes
+persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+print("Antes:", persona)
+
+persona["edad"] = 26
+persona["ciudad"] = "Barcelona"
+print("Después:", persona)</code></pre>
+
+        <h3>4.2. Eliminar Elementos</h3>
+
+        <pre><code class="language-python"># del - eliminar clave específica
+persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+print("Antes:", persona)
+
+del persona["ciudad"]
+print("Después:", persona)</code></pre>
+
+        <pre><code class="language-python"># pop() - eliminar y devolver el valor
+persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+print("Antes:", persona)
+
+ciudad_eliminada = persona.pop("ciudad")
+print("Ciudad eliminada:", ciudad_eliminada)
+print("Después:", persona)</code></pre>
+
+        <pre><code class="language-python"># pop() con valor por defecto si la clave no existe
+persona = {"nombre": "Juan", "edad": 25}
+
+telefono = persona.pop("telefono", "No tiene teléfono")
+print("Teléfono:", telefono)
+print("Persona:", persona)</code></pre>
+
+        <pre><code class="language-python"># popitem() - eliminar el último par clave-valor (Python 3.7+)
+persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+print("Antes:", persona)
+
+ultimo_par = persona.popitem()
+print("Último par eliminado:", ultimo_par)
+print("Después:", persona)</code></pre>
+
+        <pre><code class="language-python"># clear() - vaciar el diccionario
+persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+print("Antes:", persona)
+
+persona.clear()
+print("Después:", persona)</code></pre>
+
+        <h2>5. Métodos Importantes de Diccionarios</h2>
+
+        <h3>5.1. keys() - Obtener todas las claves</h3>
+
+        <pre><code class="language-python">persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+
+claves = persona.keys()
+print("Claves:", claves)
+print("Tipo:", type(claves))
+
+# Convertir a lista
+lista_claves = list(claves)
+print("Lista de claves:", lista_claves)</code></pre>
+
+        <h3>5.2. values() - Obtener todos los valores</h3>
+
+        <pre><code class="language-python">persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+
+valores = persona.values()
+print("Valores:", valores)
+
+# Convertir a lista
+lista_valores = list(valores)
+print("Lista de valores:", lista_valores)</code></pre>
+
+        <h3>5.3. items() - Obtener pares clave-valor</h3>
+
+        <pre><code class="language-python">persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+
+items = persona.items()
+print("Items:", items)
+
+# Convertir a lista de tuplas
+lista_items = list(items)
+print("Lista de items:", lista_items)</code></pre>
+
+        <h3>5.4. update() - Actualizar con otro diccionario</h3>
+
+        <pre><code class="language-python"># update() agrega/modifica múltiples elementos
+persona = {"nombre": "Juan", "edad": 25}
+print("Antes:", persona)
+
+persona.update({"ciudad": "Madrid", "profesion": "Ingeniero"})
+print("Después:", persona)</code></pre>
+
+        <pre><code class="language-python"># update() también modifica valores existentes
+persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+print("Antes:", persona)
+
+persona.update({"edad": 26, "ciudad": "Barcelona"})
+print("Después:", persona)</code></pre>
+
+        <h3>5.5. copy() - Copiar un diccionario</h3>
+
+        <pre><code class="language-python"># ❌ Asignación simple NO crea copia
+persona1 = {"nombre": "Juan", "edad": 25}
+persona2 = persona1  # Apunta al mismo diccionario
+
+persona2["edad"] = 30
+print("persona1:", persona1)  # ¡También se modifica!
+print("persona2:", persona2)</code></pre>
+
+        <pre><code class="language-python"># ✅ copy() crea una copia independiente
+persona1 = {"nombre": "Juan", "edad": 25}
+persona2 = persona1.copy()
+
+persona2["edad"] = 30
+print("persona1:", persona1)  # No se modifica
+print("persona2:", persona2)</code></pre>
+
+        <h3>5.6. setdefault() - Obtener o establecer valor</h3>
+
+        <pre><code class="language-python"># setdefault() devuelve el valor si existe, si no lo crea
+persona = {"nombre": "Juan", "edad": 25}
+
+# La clave existe
+nombre = persona.setdefault("nombre", "Desconocido")
+print("Nombre:", nombre)
+
+# La clave NO existe - la crea con el valor por defecto
+ciudad = persona.setdefault("ciudad", "Madrid")
+print("Ciudad:", ciudad)
+print("Persona:", persona)</code></pre>
+
+        <h2>6. Recorrer Diccionarios</h2>
+
+        <h3>6.1. Recorrer solo las claves</h3>
+
+        <pre><code class="language-python"># Por defecto, recorre las claves
+persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+
+print("Claves:")
+for clave in persona:
+    print(clave)</code></pre>
+
+        <pre><code class="language-python"># Explícitamente con keys()
+persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+
+for clave in persona.keys():
+    print(f"Clave: {clave}")</code></pre>
+
+        <h3>6.2. Recorrer solo los valores</h3>
+
+        <pre><code class="language-python"># Recorrer valores con values()
+persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+
+print("Valores:")
+for valor in persona.values():
+    print(valor)</code></pre>
+
+        <h3>6.3. Recorrer claves y valores juntos</h3>
+
+        <pre><code class="language-python"># items() devuelve tuplas (clave, valor)
+persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+
+print("Clave-Valor:")
+for clave, valor in persona.items():
+    print(f"{clave}: {valor}")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo práctico: mostrar información formateada
+estudiante = {
+    "nombre": "Ana",
+    "edad": 20,
+    "carrera": "Informática",
+    "promedio": 8.5
+}
+
+print("=== INFORMACIÓN DEL ESTUDIANTE ===")
+for campo, valor in estudiante.items():
+    print(f"{campo.capitalize()}: {valor}")</code></pre>
+
+        <h2>7. Verificar Existencia de Claves</h2>
+
+        <pre><code class="language-python"># Operador 'in' verifica si una clave existe
+persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+
+if "nombre" in persona:
+    print(f"El nombre es: {persona['nombre']}")
+
+if "telefono" not in persona:
+    print("No hay teléfono registrado")</code></pre>
+
+        <pre><code class="language-python"># Verificar valor (menos común)
+persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+
+if "Madrid" in persona.values():
+    print("La persona vive en Madrid")</code></pre>
+
+        <h2>8. Operaciones Útiles con Diccionarios</h2>
+
+        <h3>8.1. len() - Longitud del diccionario</h3>
+
+        <pre><code class="language-python"># len() devuelve el número de pares clave-valor
+persona = {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"}
+
+print(f"El diccionario tiene {len(persona)} elementos")</code></pre>
+
+        <h3>8.2. Combinar diccionarios</h3>
+
+        <pre><code class="language-python"># Operador | (Python 3.9+)
+dict1 = {"a": 1, "b": 2}
+dict2 = {"c": 3, "d": 4}
+
+combinado = dict1 | dict2
+print("Combinado:", combinado)</code></pre>
+
+        <pre><code class="language-python"># Con update() (cualquier versión de Python)
+dict1 = {"a": 1, "b": 2}
+dict2 = {"c": 3, "d": 4}
+
+dict1.update(dict2)
+print("dict1 actualizado:", dict1)</code></pre>
+
+        <pre><code class="language-python"># Si hay claves duplicadas, prevalece el segundo
+dict1 = {"a": 1, "b": 2}
+dict2 = {"b": 20, "c": 3}
+
+combinado = dict1 | dict2
+print("Con duplicados:", combinado)  # b será 20</code></pre>
+
+        <h2>9. Dictionary Comprehension</h2>
+        <p>Similar a list comprehension, pero para crear diccionarios de forma concisa.</p>
+
+        <p><strong>Sintaxis:</strong></p>
+        <pre><code class="language-python">{clave: valor for elemento in iterable}</code></pre>
+
+        <pre><code class="language-python"># Crear diccionario de cuadrados
+cuadrados = {x: x**2 for x in range(1, 6)}
+print("Cuadrados:", cuadrados)</code></pre>
+
+        <pre><code class="language-python"># Convertir lista de palabras a diccionario con longitudes
+palabras = ["python", "java", "javascript", "ruby"]
+longitudes = {palabra: len(palabra) for palabra in palabras}
+print("Longitudes:", longitudes)</code></pre>
+
+        <pre><code class="language-python"># Con condición: solo números pares
+pares = {x: x**2 for x in range(1, 11) if x % 2 == 0}
+print("Cuadrados de pares:", pares)</code></pre>
+
+        <pre><code class="language-python"># Invertir claves y valores
+original = {"a": 1, "b": 2, "c": 3}
+invertido = {valor: clave for clave, valor in original.items()}
+print("Original:", original)
+print("Invertido:", invertido)</code></pre>
+
+        <h2>10. Diccionarios Anidados</h2>
+        <p>Los diccionarios pueden contener otros diccionarios como valores.</p>
+
+        <pre><code class="language-python"># Diccionario de estudiantes
+estudiantes = {
+    "est001": {
+        "nombre": "Ana",
+        "edad": 20,
+        "notas": [8, 9, 7]
+    },
+    "est002": {
+        "nombre": "Juan",
+        "edad": 22,
+        "notas": [7, 8, 9]
+    },
+    "est003": {
+        "nombre": "María",
+        "edad": 21,
+        "notas": [9, 10, 9]
+    }
+}
+
+print("Estudiantes:", estudiantes)</code></pre>
+
+        <pre><code class="language-python"># Acceder a datos anidados
+print("Nombre del estudiante 1:", estudiantes["est001"]["nombre"])
+print("Edad de María:", estudiantes["est003"]["edad"])
+print("Notas de Juan:", estudiantes["est002"]["notas"])</code></pre>
+
+        <pre><code class="language-python"># Recorrer diccionario anidado
+print("=== INFORMACIÓN DE ESTUDIANTES ===")
+for id_estudiante, datos in estudiantes.items():
+    print(f"\nID: {id_estudiante}")
+    print(f"  Nombre: {datos['nombre']}")
+    print(f"  Edad: {datos['edad']}")
+    print(f"  Promedio: {sum(datos['notas']) / len(datos['notas']):.2f}")</code></pre>
+
+        <pre><code class="language-python"># Modificar datos anidados
+estudiantes["est001"]["edad"] = 21
+estudiantes["est002"]["notas"].append(10)
+
+print("Nueva edad de Ana:", estudiantes["est001"]["edad"])
+print("Notas actualizadas de Juan:", estudiantes["est002"]["notas"])</code></pre>
+
+        <h2>11. Conjuntos (Sets)</h2>
+        <p>Un <strong>conjunto</strong> es una colección <strong>no ordenada</strong> de elementos <strong>únicos</strong>.</p>
+
+        <h3>Características:</h3>
+        <ul>
+            <li>No permiten <strong>elementos duplicados</strong></li>
+            <li>No están <strong>ordenados</strong> (no tienen índices)</li>
+            <li>Son <strong>mutables</strong> (se pueden modificar)</li>
+            <li>Solo pueden contener elementos <strong>inmutables</strong> (números, strings, tuplas)</li>
+            <li>Se definen con <strong>llaves</strong> <code>{}</code> o <code>set()</code></li>
+            <li>Muy rápidos para verificar pertenencia</li>
+        </ul>
+
+        <h3>Sintaxis:</h3>
+        <pre><code class="language-python">conjunto = {elemento1, elemento2, elemento3}</code></pre>
+
+        <h3>En la vida real:</h3>
+        <ul>
+            <li>Eliminar duplicados de una lista</li>
+            <li>Encontrar elementos comunes entre grupos</li>
+            <li>Verificar membresía rápidamente</li>
+            <li>Operaciones matemáticas de conjuntos</li>
+        </ul>
+
+        <h2>12. Crear Conjuntos</h2>
+
+        <pre><code class="language-python"># Conjunto con elementos
+numeros = {1, 2, 3, 4, 5}
+print("Números:", numeros)
+print("Tipo:", type(numeros))</code></pre>
+
+        <pre><code class="language-python"># Los duplicados se eliminan automáticamente
+numeros = {1, 2, 3, 2, 4, 3, 5, 1}
+print("Con duplicados:", numeros)  # Solo aparece cada número una vez</code></pre>
+
+        <pre><code class="language-python"># ⚠️ Conjunto vacío NO se crea con {}
+vacio = {}  # Esto crea un diccionario vacío
+print("Tipo de {}:", type(vacio))
+
+# ✅ Conjunto vacío con set()
+conjunto_vacio = set()
+print("Tipo de set():", type(conjunto_vacio))</code></pre>
+
+        <pre><code class="language-python"># Crear conjunto desde lista
+lista = [1, 2, 3, 2, 4, 3, 5]
+conjunto = set(lista)
+print("Conjunto desde lista:", conjunto)</code></pre>
+
+        <pre><code class="language-python"># Crear conjunto desde cadena
+letras = set("python")
+print("Letras únicas:", letras)</code></pre>
+
+        <h2>13. Operaciones Básicas con Conjuntos</h2>
+
+        <h3>13.1. Agregar elementos</h3>
+
+        <pre><code class="language-python"># add() - agregar un elemento
+numeros = {1, 2, 3}
+print("Antes:", numeros)
+
+numeros.add(4)
+numeros.add(5)
+print("Después:", numeros)
+
+# Agregar duplicado no tiene efecto
+numeros.add(3)
+print("Después de agregar 3 de nuevo:", numeros)</code></pre>
+
+        <pre><code class="language-python"># update() - agregar múltiples elementos
+numeros = {1, 2, 3}
+print("Antes:", numeros)
+
+numeros.update([4, 5, 6])
+print("Después:", numeros)</code></pre>
+
+        <h3>13.2. Eliminar elementos</h3>
+
+        <pre><code class="language-python"># remove() - eliminar elemento (error si no existe)
+numeros = {1, 2, 3, 4, 5}
+print("Antes:", numeros)
+
+numeros.remove(3)
+print("Después:", numeros)
+
+# numeros.remove(10)  # KeyError si no existe</code></pre>
+
+        <pre><code class="language-python"># discard() - eliminar elemento (NO da error si no existe)
+numeros = {1, 2, 3, 4, 5}
+print("Antes:", numeros)
+
+numeros.discard(3)
+print("Después:", numeros)
+
+numeros.discard(10)  # No da error
+print("Después de discard(10):", numeros)</code></pre>
+
+        <pre><code class="language-python"># pop() - eliminar y devolver un elemento aleatorio
+numeros = {1, 2, 3, 4, 5}
+print("Antes:", numeros)
+
+elemento = numeros.pop()
+print("Elemento eliminado:", elemento)
+print("Después:", numeros)</code></pre>
+
+        <pre><code class="language-python"># clear() - vaciar el conjunto
+numeros = {1, 2, 3, 4, 5}
+print("Antes:", numeros)
+
+numeros.clear()
+print("Después:", numeros)</code></pre>
+
+        <h3>13.3. Operaciones de consulta</h3>
+
+        <pre><code class="language-python"># Verificar pertenencia con 'in'
+frutas = {"manzana", "banana", "naranja"}
+
+if "banana" in frutas:
+    print("Sí, tenemos bananas")
+
+if "pera" not in frutas:
+    print("No tenemos peras")</code></pre>
+
+        <pre><code class="language-python"># len() - tamaño del conjunto
+numeros = {1, 2, 3, 4, 5}
+print(f"El conjunto tiene {len(numeros)} elementos")</code></pre>
+
+        <h2>14. Operaciones Matemáticas con Conjuntos</h2>
+
+        <h3>14.1. Unión - Todos los elementos de ambos conjuntos</h3>
+
+        <pre><code class="language-python"># Operador |
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+union = a | b
+print("A:", a)
+print("B:", b)
+print("A | B:", union)</code></pre>
+
+        <pre><code class="language-python"># Método union()
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+union = a.union(b)
+print("Unión:", union)</code></pre>
+
+        <h3>14.2. Intersección - Elementos comunes</h3>
+
+        <pre><code class="language-python"># Operador &
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+interseccion = a & b
+print("A:", a)
+print("B:", b)
+print("A & B:", interseccion)</code></pre>
+
+        <pre><code class="language-python"># Método intersection()
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+interseccion = a.intersection(b)
+print("Intersección:", interseccion)</code></pre>
+
+        <h3>14.3. Diferencia - Elementos en A pero no en B</h3>
+
+        <pre><code class="language-python"># Operador -
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+diferencia = a - b
+print("A:", a)
+print("B:", b)
+print("A - B:", diferencia)
+print("B - A:", b - a)</code></pre>
+
+        <pre><code class="language-python"># Método difference()
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+diferencia = a.difference(b)
+print("Diferencia A-B:", diferencia)</code></pre>
+
+        <h3>14.4. Diferencia Simétrica - Elementos en A o B, pero no en ambos</h3>
+
+        <pre><code class="language-python"># Operador ^
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+diff_simetrica = a ^ b
+print("A:", a)
+print("B:", b)
+print("A ^ B:", diff_simetrica)</code></pre>
+
+        <pre><code class="language-python"># Método symmetric_difference()
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+diff_simetrica = a.symmetric_difference(b)
+print("Diferencia simétrica:", diff_simetrica)</code></pre>
+
+        <h3>14.5. Subconjuntos y Superconjuntos</h3>
+
+        <pre><code class="language-python"># issubset() - verificar si es subconjunto
+a = {1, 2}
+b = {1, 2, 3, 4, 5}
+
+print("A es subconjunto de B:", a.issubset(b))
+print("B es subconjunto de A:", b.issubset(a))</code></pre>
+
+        <pre><code class="language-python"># issuperset() - verificar si es superconjunto
+a = {1, 2}
+b = {1, 2, 3, 4, 5}
+
+print("B es superconjunto de A:", b.issuperset(a))
+print("A es superconjunto de B:", a.issuperset(b))</code></pre>
+
+        <pre><code class="language-python"># isdisjoint() - verificar si son disjuntos (sin elementos comunes)
+a = {1, 2, 3}
+b = {4, 5, 6}
+c = {3, 4, 5}
+
+print("A y B son disjuntos:", a.isdisjoint(b))
+print("A y C son disjuntos:", a.isdisjoint(c))</code></pre>
+
+        <h2>15. Recorrer Conjuntos</h2>
+
+        <pre><code class="language-python"># Recorrer con for (orden no garantizado)
+frutas = {"manzana", "banana", "naranja", "pera"}
+
+print("Frutas:")
+for fruta in frutas:
+    print(f"- {fruta}")</code></pre>
+
+        <pre><code class="language-python"># Set comprehension
+cuadrados = {x**2 for x in range(1, 6)}
+print("Cuadrados:", cuadrados)
+
+# Con condición
+pares = {x for x in range(1, 11) if x % 2 == 0}
+print("Pares:", pares)</code></pre>
+
+        <h2>16. Comparación de Estructuras de Datos</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Característica</th>
+                    <th>Lista</th>
+                    <th>Tupla</th>
+                    <th>Diccionario</th>
+                    <th>Conjunto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Sintaxis</strong></td>
+                    <td><code>[]</code></td>
+                    <td><code>()</code></td>
+                    <td><code>{k:v}</code></td>
+                    <td><code>{}</code> o <code>set()</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Ordenada</strong></td>
+                    <td>Sí</td>
+                    <td>Sí</td>
+                    <td>Sí (3.7+)</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td><strong>Mutable</strong></td>
+                    <td>Sí</td>
+                    <td>No</td>
+                    <td>Sí</td>
+                    <td>Sí</td>
+                </tr>
+                <tr>
+                    <td><strong>Duplicados</strong></td>
+                    <td>Sí</td>
+                    <td>Sí</td>
+                    <td>Claves únicas</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td><strong>Indexable</strong></td>
+                    <td>Sí</td>
+                    <td>Sí</td>
+                    <td>Por clave</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td><strong>Uso típico</strong></td>
+                    <td>Colecciones dinámicas</td>
+                    <td>Datos fijos</td>
+                    <td>Pares clave-valor</td>
+                    <td>Valores únicos</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>¿Cuándo usar cada una?</h3>
+
+        <p><strong>Lista:</strong></p>
+        <ul>
+            <li>Colección ordenada que puede cambiar</li>
+            <li>Necesitas acceso por índice</li>
+            <li>Permites duplicados</li>
+        </ul>
+
+        <p><strong>Tupla:</strong></p>
+        <ul>
+            <li>Datos que no deben cambiar</li>
+            <li>Coordenadas, fechas, configuración</li>
+            <li>Mayor rendimiento que listas</li>
+        </ul>
+
+        <p><strong>Diccionario:</strong></p>
+        <ul>
+            <li>Necesitas asociar claves con valores</li>
+            <li>Búsquedas rápidas por clave</li>
+            <li>Datos estructurados</li>
+        </ul>
+
+        <p><strong>Conjunto:</strong></p>
+        <ul>
+            <li>Valores únicos</li>
+            <li>Operaciones matemáticas de conjuntos</li>
+            <li>Verificar pertenencia rápidamente</li>
+            <li>Eliminar duplicados</li>
+        </ul>
+
+        <h2>17. Ejemplos Prácticos Completos</h2>
+
+        <pre><code class="language-python"># Ejemplo 1: Agenda de contactos
+print("=== AGENDA DE CONTACTOS ===")
+agenda = {}
+
+# Agregar contactos
+agenda["Juan"] = "555-1234"
+agenda["Ana"] = "555-5678"
+agenda["María"] = "555-9012"
+
+# Buscar contacto
+nombre = "Ana"
+if nombre in agenda:
+    print(f"Teléfono de {nombre}: {agenda[nombre]}")
+else:
+    print(f"{nombre} no está en la agenda")
+
+# Mostrar todos los contactos
+print("\nTodos los contactos:")
+for nombre, telefono in agenda.items():
+    print(f"{nombre}: {telefono}")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 2: Contar frecuencia de palabras
+texto = "python es genial python es poderoso python es versátil"
+palabras = texto.split()
+
+frecuencias = {}
+for palabra in palabras:
+    frecuencias[palabra] = frecuencias.get(palabra, 0) + 1
+
+print("Frecuencia de palabras:")
+for palabra, freq in frecuencias.items():
+    print(f"{palabra}: {freq}")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 3: Eliminar duplicados manteniendo orden
+numeros = [1, 2, 3, 2, 4, 1, 5, 3, 6, 4]
+print("Original:", numeros)
+
+# Usar diccionario para mantener orden (dict mantiene orden desde Python 3.7)
+sin_duplicados = list(dict.fromkeys(numeros))
+print("Sin duplicados:", sin_duplicados)</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 4: Estudiantes en común entre cursos
+curso_python = {"Ana", "Juan", "María", "Carlos", "Lucía"}
+curso_java = {"Juan", "Pedro", "María", "Laura", "Carlos"}
+
+# Estudiantes en ambos cursos
+en_ambos = curso_python & curso_java
+print("Estudiantes en ambos cursos:", en_ambos)
+
+# Solo en Python
+solo_python = curso_python - curso_java
+print("Solo en Python:", solo_python)
+
+# Solo en Java
+solo_java = curso_java - curso_python
+print("Solo en Java:", solo_java)
+
+# Todos los estudiantes
+todos = curso_python | curso_java
+print("Todos los estudiantes:", todos)</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 5: Inventario de tienda
+inventario = {
+    "manzanas": {"precio": 1.50, "stock": 50},
+    "bananas": {"precio": 0.80, "stock": 100},
+    "naranjas": {"precio": 1.20, "stock": 75}
+}
+
+# Mostrar inventario
+print("=== INVENTARIO ===")
+for producto, info in inventario.items():
+    print(f"{producto.capitalize()}:")
+    print(f"  Precio: ${info['precio']:.2f}")
+    print(f"  Stock: {info['stock']} unidades")
+    print(f"  Valor total: ${info['precio'] * info['stock']:.2f}")
+    print()
+
+# Calcular valor total del inventario
+valor_total = sum(info['precio'] * info['stock'] for info in inventario.values())
+print(f"Valor total del inventario: ${valor_total:.2f}")</code></pre>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

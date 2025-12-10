@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 06: Funciones</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Tema 06: Funciones</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Funciones</h1>
+        <h2>Teoría y Ejemplos</h2>
+
+        <h2>1. ¿Qué son las Funciones?</h2>
+        <p>Una <strong>función</strong> es un bloque de código reutilizable que realiza una tarea específica.</p>
+
+        <h3>Ventajas de usar funciones:</h3>
+        <ul>
+            <li><strong>Reutilización:</strong> Escribes el código una vez y lo usas muchas veces</li>
+            <li><strong>Organización:</strong> Divides problemas complejos en partes más pequeñas</li>
+            <li><strong>Mantenimiento:</strong> Es más fácil encontrar y corregir errores</li>
+            <li><strong>Legibilidad:</strong> El código es más claro y fácil de entender</li>
+            <li><strong>Testing:</strong> Puedes probar partes individuales del código</li>
+        </ul>
+
+        <h3>Analogía:</h3>
+        <p>Una función es como una <strong>receta de cocina</strong>:</p>
+        <ul>
+            <li>Tiene un <strong>nombre</strong> (ej: "hacer pizza")</li>
+            <li>Puede necesitar <strong>ingredientes</strong> (parámetros)</li>
+            <li>Tiene <strong>instrucciones</strong> (código)</li>
+            <li>Produce un <strong>resultado</strong> (valor de retorno)</li>
+        </ul>
+
+        <h3>Sintaxis básica:</h3>
+        <pre><code class="language-python">def nombre_funcion(parametros):
+    """Documentación de la función"""
+    # Código de la función
+    return resultado</code></pre>
+
+        <h2>2. Definir y Llamar Funciones</h2>
+
+        <h3>2.1. Función Simple sin Parámetros</h3>
+
+        <pre><code class="language-python"># Definir una función
+def saludar():
+    print("¡Hola, mundo!")
+    print("Bienvenido a Python")
+
+# Llamar a la función
+saludar()
+saludar()  # Se puede llamar múltiples veces</code></pre>
+
+        <h3>2.2. Función con Parámetros</h3>
+
+        <pre><code class="language-python"># Función con un parámetro
+def saludar_persona(nombre):
+    print(f"¡Hola, {nombre}!")
+    print(f"Bienvenido/a {nombre}")
+
+# Llamar con diferentes argumentos
+saludar_persona("Ana")
+saludar_persona("Juan")
+saludar_persona("María")</code></pre>
+
+        <pre><code class="language-python"># Función con múltiples parámetros
+def presentar(nombre, edad, ciudad):
+    print(f"Me llamo {nombre}")
+    print(f"Tengo {edad} años")
+    print(f"Vivo en {ciudad}")
+    
+
+# Llamar con argumentos posicionales
+presentar("Carlos", 25, "Madrid")</code></pre>
+
+        <pre><code class="language-python"># Argumentos con nombre (keyword arguments)
+presentar(nombre="Ana", edad=30, ciudad="Barcelona")
+
+# Se puede cambiar el orden con argumentos con nombre
+presentar(ciudad="Valencia", nombre="Pedro", edad=28)</code></pre>
+
+        <h3>2.3. Función con Valor de Retorno</h3>
+
+        <pre><code class="language-python"># Función que retorna un valor
+def sumar(a, b):
+    resultado = a + b
+    return resultado
+
+# Usar el valor retornado
+suma = sumar(5, 3)
+print(f"La suma es: {suma}")
+
+# Se puede usar directamente
+print(f"10 + 20 = {sumar(10, 20)}")</code></pre>
+
+        <pre><code class="language-python"># Función que retorna múltiples valores
+def operaciones(a, b):
+    suma = a + b
+    resta = a - b
+    multiplicacion = a * b
+    division = a / b if b != 0 else None
+    return suma, resta, multiplicacion, division
+
+# Desempaquetar los valores retornados
+s, r, m, d = operaciones(10, 5)
+print(f"Suma: {s}")
+print(f"Resta: {r}")
+print(f"Multiplicación: {m}")
+print(f"División: {d}")</code></pre>
+
+        <pre><code class="language-python"># return sin valor (retorna None)
+def verificar_edad(edad):
+    if edad < 18:
+        print("Eres menor de edad")
+        return  # Sale de la función aquí
+    print("Eres mayor de edad")
+
+verificar_edad(15)
+print("---")
+verificar_edad(25)</code></pre>
+
+        <h2>3. Parámetros por Defecto</h2>
+        <p>Los parámetros pueden tener valores por defecto que se usan si no se proporciona un argumento.</p>
+
+        <pre><code class="language-python"># Función con parámetro por defecto
+def saludar(nombre, saludo="Hola"):
+    print(f"{saludo}, {nombre}!")
+
+# Llamar sin el segundo argumento (usa el valor por defecto)
+saludar("Ana")
+
+# Llamar con el segundo argumento
+saludar("Juan", "Buenos días")
+saludar("María", "Buenas tardes")</code></pre>
+
+        <pre><code class="language-python"># Múltiples parámetros por defecto
+def crear_usuario(nombre, edad=18, ciudad="Madrid", activo=True):
+    return {
+        "nombre": nombre,
+        "edad": edad,
+        "ciudad": ciudad,
+        "activo": activo
+    }
+
+# Diferentes formas de llamar
+usuario1 = crear_usuario("Ana")
+print("Usuario 1:", usuario1)
+
+usuario2 = crear_usuario("Juan", 25)
+print("Usuario 2:", usuario2)
+
+usuario3 = crear_usuario("María", ciudad="Barcelona")
+print("Usuario 3:", usuario3)
+
+usuario4 = crear_usuario("Carlos", 30, "Valencia", False)
+print("Usuario 4:", usuario4)</code></pre>
+
+        <pre><code class="language-python"># ⚠️ IMPORTANTE: No usar listas/diccionarios mutables como valores por defecto
+# ❌ MAL - Puede causar problemas
+def agregar_elemento_mal(elemento, lista=[]):
+    lista.append(elemento)
+    return lista
+
+print(agregar_elemento_mal(1))  # [1]
+print(agregar_elemento_mal(2))  # [1, 2] - ¡Problema!
+print(agregar_elemento_mal(3))  # [1, 2, 3] - ¡La lista se mantiene!
+
+print("\n--- Forma correcta ---\n")
+
+# ✅ BIEN
+def agregar_elemento_bien(elemento, lista=None):
+    if lista is None:
+        lista = []
+    lista.append(elemento)
+    return lista
+
+print(agregar_elemento_bien(1))  # [1]
+print(agregar_elemento_bien(2))  # [2] - Correcto
+print(agregar_elemento_bien(3))  # [3] - Correcto</code></pre>
+
+        <h2>4. Argumentos Arbitrarios (*args y **kwargs)</h2>
+
+        <h3>4.1. *args - Argumentos Posicionales Arbitrarios</h3>
+
+        <pre><code class="language-python"># *args permite pasar cualquier número de argumentos posicionales
+def sumar_todos(*numeros):
+    print(f"Tipo de numeros: {type(numeros)}")
+    print(f"Números recibidos: {numeros}")
+    return sum(numeros)
+
+# Diferentes números de argumentos
+print("Suma de 2 números:", sumar_todos(1, 2))
+print("Suma de 5 números:", sumar_todos(1, 2, 3, 4, 5))
+print("Suma de 10 números:", sumar_todos(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))</code></pre>
+
+        <pre><code class="language-python"># Combinar parámetros normales con *args
+def presentar_equipo(lider, *miembros):
+    print(f"Líder del equipo: {lider}")
+    print("Miembros del equipo:")
+    for i, miembro in enumerate(miembros, 1):
+        print(f"  {i}. {miembro}")
+
+presentar_equipo("Ana", "Juan", "María", "Carlos", "Lucía")</code></pre>
+
+        <h3>4.2. **kwargs - Argumentos con Nombre Arbitrarios</h3>
+
+        <pre><code class="language-python"># **kwargs permite pasar cualquier número de argumentos con nombre
+def mostrar_info(**datos):
+    print(f"Tipo de datos: {type(datos)}")
+    print("Información recibida:")
+    for clave, valor in datos.items():
+        print(f"  {clave}: {valor}")
+
+# Diferentes argumentos con nombre
+mostrar_info(nombre="Ana", edad=25, ciudad="Madrid")
+print()
+mostrar_info(producto="Laptop", precio=899.99, marca="Dell", stock=15)</code></pre>
+
+        <pre><code class="language-python"># Combinar parámetros normales, *args y **kwargs
+def crear_reporte(titulo, *secciones, **metadatos):
+    print(f"=== {titulo} ===")
+    print("\nSecciones:")
+    for seccion in secciones:
+        print(f"  - {seccion}")
+    print("\nMetadatos:")
+    for clave, valor in metadatos.items():
+        print(f"  {clave}: {valor}")
+
+crear_reporte(
+    "Informe Anual",
+    "Introducción",
+    "Desarrollo",
+    "Conclusiones",
+    autor="Juan Pérez",
+    fecha="2024-11-04",
+    version="1.0"
+)</code></pre>
+
+        <h3>4.3. Orden de los Parámetros</h3>
+        <p>El orden correcto es:</p>
+        <ol>
+            <li>Parámetros posicionales normales</li>
+            <li>*args</li>
+            <li>Parámetros con nombre (keyword)</li>
+            <li>**kwargs</li>
+        </ol>
+
+        <pre><code class="language-python">def funcion(param1, param2, *args, param3=valor, **kwargs):
+    pass</code></pre>
+
+        <pre><code class="language-python"># Ejemplo completo del orden
+def funcion_completa(a, b, *args, c=10, d=20, **kwargs):
+    print(f"a = {a}")
+    print(f"b = {b}")
+    print(f"args = {args}")
+    print(f"c = {c}")
+    print(f"d = {d}")
+    print(f"kwargs = {kwargs}")
+
+funcion_completa(1, 2, 3, 4, 5, c=100, e=500, f=600)</code></pre>
+
+        <h2>5. Scope (Alcance) de Variables</h2>
+        <p>El <strong>scope</strong> determina dónde una variable es accesible en el código.</p>
+
+        <h3>5.1. Variables Locales vs Globales</h3>
+
+        <pre><code class="language-python"># Variable global
+x = 100
+
+def mi_funcion():
+    # Variable local
+    y = 50
+    print(f"Dentro de la función:")
+    print(f"  x (global) = {x}")
+    print(f"  y (local) = {y}")
+
+mi_funcion()
+
+print(f"\nFuera de la función:")
+print(f"  x (global) = {x}")
+# print(f"  y (local) = {y}")  # ❌ Error: y no existe aquí</code></pre>
+
+        <pre><code class="language-python"># Variable local con el mismo nombre que una global
+nombre = "Global"
+
+def cambiar_nombre():
+    nombre = "Local"  # Esta es una variable diferente
+    print(f"Dentro de la función: {nombre}")
+
+cambiar_nombre()
+print(f"Fuera de la función: {nombre}")  # No cambia la global</code></pre>
+
+        <h3>5.2. Modificar Variables Globales</h3>
+
+        <pre><code class="language-python"># Usar 'global' para modificar una variable global
+contador = 0
+
+def incrementar():
+    global contador  # Declara que usaremos la variable global
+    contador += 1
+    print(f"Contador: {contador}")
+
+print(f"Antes: {contador}")
+incrementar()
+incrementar()
+incrementar()
+print(f"Después: {contador}")</code></pre>
+
+        <pre><code class="language-python"># ⚠️ Mejor práctica: evitar modificar variables globales
+# En su lugar, usar parámetros y valores de retorno
+
+def incrementar_valor(valor):
+    return valor + 1
+
+contador = 0
+print(f"Antes: {contador}")
+contador = incrementar_valor(contador)
+contador = incrementar_valor(contador)
+contador = incrementar_valor(contador)
+print(f"Después: {contador}")</code></pre>
+
+        <h3>5.3. Regla LEGB</h3>
+        <p>Python busca variables en este orden:</p>
+        <ol>
+            <li><strong>L</strong>ocal - dentro de la función actual</li>
+            <li><strong>E</strong>nclosing - en funciones contenedoras</li>
+            <li><strong>G</strong>lobal - en el módulo</li>
+            <li><strong>B</strong>uilt-in - nombres predefinidos de Python</li>
+        </ol>
+
+        <pre><code class="language-python"># Ejemplo de LEGB
+x = "global"
+
+def externa():
+    x = "enclosing"
+    
+    def interna():
+        x = "local"
+        print(f"Interna: {x}")  # Local
+    
+    interna()
+    print(f"Externa: {x}")  # Enclosing
+
+externa()
+print(f"Global: {x}")  # Global</code></pre>
+
+        <h2>6. Funciones Lambda</h2>
+        <p>Las funciones <strong>lambda</strong> son funciones anónimas pequeñas que se definen en una sola línea.</p>
+
+        <p><strong>Sintaxis:</strong></p>
+        <pre><code class="language-python">lambda argumentos: expresión</code></pre>
+
+        <pre><code class="language-python"># Función normal
+def cuadrado(x):
+    return x ** 2
+
+print(cuadrado(5))
+
+# Equivalente con lambda
+cuadrado_lambda = lambda x: x ** 2
+print(cuadrado_lambda(5))</code></pre>
+
+        <pre><code class="language-python"># Lambda con múltiples argumentos
+suma = lambda a, b: a + b
+print(suma(3, 5))
+
+# Lambda con más operaciones
+area_rectangulo = lambda base, altura: base * altura
+print(f"Área: {area_rectangulo(5, 3)}")</code></pre>
+
+        <pre><code class="language-python"># Lambda con condicionales
+es_par = lambda x: "Par" if x % 2 == 0 else "Impar"
+print(es_par(4))
+print(es_par(7))
+
+maximo = lambda a, b: a if a > b else b
+print(f"Máximo entre 10 y 15: {maximo(10, 15)}")</code></pre>
+
+        <pre><code class="language-python"># Uso común: con map(), filter() y sorted()
+
+# map() - aplicar función a cada elemento
+numeros = [1, 2, 3, 4, 5]
+cuadrados = list(map(lambda x: x**2, numeros))
+print(f"Cuadrados: {cuadrados}")
+
+# filter() - filtrar elementos
+pares = list(filter(lambda x: x % 2 == 0, numeros))
+print(f"Pares: {pares}")
+
+# sorted() - ordenar con criterio personalizado
+palabras = ["python", "es", "genial", "y", "poderoso"]
+ordenadas = sorted(palabras, key=lambda x: len(x))
+print(f"Ordenadas por longitud: {ordenadas}")</code></pre>
+
+        <pre><code class="language-python"># Lambda con diccionarios
+estudiantes = [
+    {"nombre": "Ana", "nota": 8.5},
+    {"nombre": "Juan", "nota": 7.0},
+    {"nombre": "María", "nota": 9.5}
+]
+
+# Ordenar por nota
+por_nota = sorted(estudiantes, key=lambda e: e["nota"], reverse=True)
+print("Ordenados por nota:")
+for est in por_nota:
+    print(f"  {est['nombre']}: {est['nota']}")</code></pre>
+
+        <h2>7. Documentar Funciones (Docstrings)</h2>
+        <p>Los <strong>docstrings</strong> son cadenas de documentación que describen qué hace una función.</p>
+
+        <p><strong>Buenas prácticas:</strong></p>
+        <ul>
+            <li>Usar triple comillas <code>"""</code></li>
+            <li>Explicar qué hace la función</li>
+            <li>Describir los parámetros</li>
+            <li>Describir el valor de retorno</li>
+            <li>Incluir ejemplos si es útil</li>
+        </ul>
+
+        <pre><code class="language-python"># Docstring simple
+def saludar(nombre):
+    """Imprime un saludo personalizado."""
+    print(f"¡Hola, {nombre}!")
+
+# Acceder al docstring
+print(saludar.__doc__)
+
+# También funciona con help()
+help(saludar)</code></pre>
+
+        <pre><code class="language-python"># Docstring completo
+def calcular_area_circulo(radio):
+    """
+    Calcula el área de un círculo dado su radio.
+    
+    Parámetros:
+        radio (float): El radio del círculo.
+    
+    Retorna:
+        float: El área del círculo.
+    
+    Ejemplo:
+        >>> calcular_area_circulo(5)
+        78.53981633974483
+    """
+    import math
+    return math.pi * radio ** 2
+
+help(calcular_area_circulo)</code></pre>
+
+        <pre><code class="language-python"># Formato estándar de Google
+def dividir(dividendo, divisor):
+    """
+    Divide dos números y maneja división por cero.
+    
+    Args:
+        dividendo (float): El número a dividir.
+        divisor (float): El número por el cual dividir.
+    
+    Returns:
+        float: El resultado de la división.
+        None: Si el divisor es cero.
+    
+    Raises:
+        TypeError: Si los argumentos no son números.
+    
+    Examples:
+        >>> dividir(10, 2)
+        5.0
+        >>> dividir(10, 0)
+        None
+    """
+    if divisor == 0:
+        print("Error: No se puede dividir por cero")
+        return None
+    return dividendo / divisor
+
+help(dividir)</code></pre>
+
+        <h2>8. Funciones como Objetos de Primera Clase</h2>
+        <p>En Python, las funciones son <strong>objetos de primera clase</strong>, lo que significa que:</p>
+        <ul>
+            <li>Se pueden asignar a variables</li>
+            <li>Se pueden pasar como argumentos</li>
+            <li>Se pueden retornar desde otras funciones</li>
+            <li>Se pueden almacenar en estructuras de datos</li>
+        </ul>
+
+        <pre><code class="language-python"># Asignar función a variable
+def saludar():
+    return "¡Hola!"
+
+mi_saludo = saludar  # Sin paréntesis
+print(mi_saludo())   # Llamar a través de la variable</code></pre>
+
+        <pre><code class="language-python"># Pasar función como argumento
+def aplicar_operacion(a, b, operacion):
+    return operacion(a, b)
+
+def sumar(x, y):
+    return x + y
+
+def multiplicar(x, y):
+    return x * y
+
+print(aplicar_operacion(5, 3, sumar))        # 8
+print(aplicar_operacion(5, 3, multiplicar))  # 15</code></pre>
+
+        <pre><code class="language-python"># Retornar función desde otra función
+def crear_multiplicador(n):
+    def multiplicar(x):
+        return x * n
+    return multiplicar
+
+duplicar = crear_multiplicador(2)
+triplicar = crear_multiplicador(3)
+
+print(duplicar(5))   # 10
+print(triplicar(5))  # 15</code></pre>
+
+        <pre><code class="language-python"># Almacenar funciones en estructuras de datos
+def sumar(a, b):
+    return a + b
+
+def restar(a, b):
+    return a - b
+
+def multiplicar(a, b):
+    return a * b
+
+def dividir(a, b):
+    return a / b if b != 0 else None
+
+# Diccionario de operaciones
+operaciones = {
+    "+": sumar,
+    "-": restar,
+    "*": multiplicar,
+    "/": dividir
+}
+
+# Usar el diccionario
+print(operaciones["+"](10, 5))  # 15
+print(operaciones["*"](10, 5))  # 50</code></pre>
+
+        <h2>9. Recursión</h2>
+        <p>Una función <strong>recursiva</strong> es una función que se llama a sí misma.</p>
+
+        <p><strong>Elementos importantes:</strong></p>
+        <ul>
+            <li><strong>Caso base:</strong> Condición que detiene la recursión</li>
+            <li><strong>Caso recursivo:</strong> La función se llama a sí misma</li>
+        </ul>
+
+        <pre><code class="language-python"># Ejemplo clásico: Factorial
+def factorial(n):
+    # Caso base
+    if n == 0 or n == 1:
+        return 1
+    # Caso recursivo
+    else:
+        return n * factorial(n - 1)
+
+print(f"5! = {factorial(5)}")
+print(f"10! = {factorial(10)}")</code></pre>
+
+        <pre><code class="language-python"># Fibonacci recursivo
+def fibonacci(n):
+    """Retorna el n-ésimo número de Fibonacci."""
+    # Casos base
+    if n <= 1:
+        return n
+    # Caso recursivo
+    else:
+        return fibonacci(n - 1) + fibonacci(n - 2)
+
+# Primeros 10 números de Fibonacci
+print("Secuencia de Fibonacci:")
+for i in range(10):
+    print(fibonacci(i), end=" ")</code></pre>
+
+        <pre><code class="language-python"># Suma de lista recursiva
+def sumar_lista(lista):
+    # Caso base: lista vacía
+    if not lista:
+        return 0
+    # Caso recursivo
+    else:
+        return lista[0] + sumar_lista(lista[1:])
+
+numeros = [1, 2, 3, 4, 5]
+print(f"Suma: {sumar_lista(numeros)}")</code></pre>
+
+        <pre><code class="language-python"># Contar regresivo
+def cuenta_regresiva(n):
+    if n <= 0:
+        print("¡Despegue!")
+    else:
+        print(n)
+        cuenta_regresiva(n - 1)
+
+cuenta_regresiva(5)</code></pre>
+
+        <h2>10. Decoradores</h2>
+        <p>Los decoradores son funciones que modifican el comportamiento de otras funciones. Son una característica muy poderosa de Python.</p>
+
+        <h3>10.1 ¿Qué es un Decorador?</h3>
+        <p>Un decorador es una función que:</p>
+        <ol>
+            <li>Recibe una función como argumento</li>
+            <li>Define una nueva función que "envuelve" a la original</li>
+            <li>Retorna la función envuelta</li>
+        </ol>
+
+        <pre><code class="language-python"># Decorador básico
+def mi_decorador(funcion):
+    def envoltorio():
+        print("Algo antes de la función")
+        funcion()
+        print("Algo después de la función")
+    return envoltorio
+
+# Forma tradicional de aplicar un decorador
+def saludar():
+    print("¡Hola!")
+
+saludar_decorada = mi_decorador(saludar)
+saludar_decorada()</code></pre>
+
+        <pre><code class="language-python"># Forma moderna con @ (azúcar sintáctica)
+@mi_decorador
+def despedir():
+    print("¡Adiós!")
+
+despedir()</code></pre>
+
+        <h3>10.2 Decoradores con Argumentos</h3>
+        <p>Para decorar funciones que reciben argumentos, usamos <code>*args</code> y <code>**kwargs</code>:</p>
+
+        <pre><code class="language-python">def decorador_con_args(funcion):
+    def envoltorio(*args, **kwargs):
+        print(f"Llamando a {funcion.__name__}")
+        print(f"Argumentos: {args}")
+        print(f"Kwargs: {kwargs}")
+        resultado = funcion(*args, **kwargs)
+        print(f"Resultado: {resultado}")
+        return resultado
+    return envoltorio
+
+@decorador_con_args
+def sumar(a, b):
+    return a + b
+
+@decorador_con_args
+def saludar(nombre, saludo="Hola"):
+    return f"{saludo}, {nombre}!"
+
+print("\n=== Suma ===")
+sumar(5, 3)
+
+print("\n=== Saludo ===")
+saludar("Ana", saludo="Buenos días")</code></pre>
+
+        <h3>10.3 Decoradores Útiles Comunes</h3>
+
+        <h4>Decorador para medir tiempo de ejecución</h4>
+
+        <pre><code class="language-python">import time
+
+def medir_tiempo(funcion):
+    """Decorador que mide el tiempo de ejecución de una función."""
+    def envoltorio(*args, **kwargs):
+        inicio = time.time()
+        resultado = funcion(*args, **kwargs)
+        fin = time.time()
+        print(f"⏱️  {funcion.__name__} tardó {fin - inicio:.4f} segundos")
+        return resultado
+    return envoltorio
+
+@medir_tiempo
+def proceso_lento():
+    """Simula un proceso que tarda tiempo."""
+    time.sleep(1)
+    return "Proceso completado"
+
+@medir_tiempo
+def calcular_fibonacci(n):
+    """Calcula el n-ésimo número de Fibonacci."""
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(n - 1):
+        a, b = b, a + b
+    return b
+
+print(proceso_lento())
+print(f"Fibonacci(30) = {calcular_fibonacci(30)}")</code></pre>
+
+        <h4>Decorador de registro (logging)</h4>
+
+        <pre><code class="language-python">def registrar_llamadas(funcion):
+    """Decorador que registra las llamadas a una función."""
+    def envoltorio(*args, **kwargs):
+        print(f"📝 Llamando a: {funcion.__name__}")
+        print(f"   Args: {args}")
+        print(f"   Kwargs: {kwargs}")
+        
+        try:
+            resultado = funcion(*args, **kwargs)
+            print(f"✅ Éxito: {resultado}")
+            return resultado
+        except Exception as e:
+            print(f"❌ Error: {e}")
+            raise
+    return envoltorio
+
+@registrar_llamadas
+def dividir(a, b):
+    return a / b
+
+print(dividir(10, 2))
+print("\nIntentando dividir por cero:")
+try:
+    dividir(10, 0)
+except ZeroDivisionError:
+    print("División por cero capturada")</code></pre>
+
+        <h4>Decorador de validación de tipos</h4>
+
+        <pre><code class="language-python">def validar_tipos(*tipos_esperados):
+    """Decorador que valida los tipos de los argumentos."""
+    def decorador(funcion):
+        def envoltorio(*args):
+            # Validar tipos
+            for arg, tipo_esperado in zip(args, tipos_esperados):
+                if not isinstance(arg, tipo_esperado):
+                    raise TypeError(
+                        f"Argumento {arg} debe ser {tipo_esperado.__name__}, "
+                        f"no {type(arg).__name__}"
+                    )
+            return funcion(*args)
+        return envoltorio
+    return decorador
+
+@validar_tipos(int, int)
+def multiplicar(a, b):
+    return a * b
+
+print(multiplicar(5, 3))  # Funciona
+
+try:
+    print(multiplicar(5, "3"))  # Error de tipo
+except TypeError as e:
+    print(f"Error: {e}")</code></pre>
+
+        <h3>10.4 Decoradores con Parámetros</h3>
+        <p>Para crear decoradores que acepten parámetros, necesitamos una función adicional:</p>
+
+        <pre><code class="language-python">def repetir(veces):
+    """Decorador que ejecuta una función varias veces."""
+    def decorador(funcion):
+        def envoltorio(*args, **kwargs):
+            resultados = []
+            for i in range(veces):
+                print(f"\nEjecución {i + 1}/{veces}:")
+                resultado = funcion(*args, **kwargs)
+                resultados.append(resultado)
+            return resultados
+        return envoltorio
+    return decorador
+
+@repetir(veces=3)
+def saludar(nombre):
+    mensaje = f"¡Hola, {nombre}!"
+    print(mensaje)
+    return mensaje
+
+resultados = saludar("Ana")
+print(f"\nResultados: {resultados}")</code></pre>
+
+        <h4>Decorador de reintentos</h4>
+
+        <pre><code class="language-python">import random
+
+def reintentar(max_intentos=3, espera=1):
+    """Decorador que reintenta una función si falla."""
+    def decorador(funcion):
+        def envoltorio(*args, **kwargs):
+            for intento in range(1, max_intentos + 1):
+                try:
+                    print(f"Intento {intento}/{max_intentos}")
+                    resultado = funcion(*args, **kwargs)
+                    print("✅ Éxito")
+                    return resultado
+                except Exception as e:
+                    print(f"❌ Error: {e}")
+                    if intento < max_intentos:
+                        print(f"Reintentando en {espera} segundos...")
+                        time.sleep(espera)
+                    else:
+                        print("Se agotaron los intentos")
+                        raise
+        return envoltorio
+    return decorador
+
+@reintentar(max_intentos=5, espera=0.5)
+def operacion_inestable():
+    """Función que falla aleatoriamente."""
+    if random.random() < 0.7:  # 70% de probabilidad de fallo
+        raise ConnectionError("Conexión fallida")
+    return "Operación exitosa"
+
+try:
+    resultado = operacion_inestable()
+    print(f"\nResultado final: {resultado}")
+except ConnectionError:
+    print("\nLa operación falló definitivamente")</code></pre>
+
+        <h3>10.5 Decorador de Caché (Memoization)</h3>
+        <p>Un decorador muy útil para optimizar funciones costosas:</p>
+
+        <pre><code class="language-python">def cache(funcion):
+    """Decorador que cachea los resultados de una función."""
+    cache_resultados = {}
+    
+    def envoltorio(*args):
+        if args in cache_resultados:
+            print(f"💾 Resultado desde caché para {args}")
+            return cache_resultados[args]
+        
+        print(f"🔄 Calculando resultado para {args}")
+        resultado = funcion(*args)
+        cache_resultados[args] = resultado
+        return resultado
+    
+    return envoltorio
+
+@cache
+def fibonacci_recursivo(n):
+    """Calcula Fibonacci recursivamente (ineficiente sin caché)."""
+    if n <= 1:
+        return n
+    return fibonacci_recursivo(n - 1) + fibonacci_recursivo(n - 2)
+
+print("Primera llamada:")
+print(f"fib(10) = {fibonacci_recursivo(10)}")
+
+print("\nSegunda llamada (desde caché):")
+print(f"fib(10) = {fibonacci_recursivo(10)}")
+
+print("\nNueva llamada:")
+print(f"fib(15) = {fibonacci_recursivo(15)}")</code></pre>
+
+        <h3>10.6 Usar functools.wraps</h3>
+        <p>Es importante preservar los metadatos de la función original:</p>
+
+        <pre><code class="language-python">from functools import wraps
+
+# Sin functools.wraps
+def decorador_sin_wraps(funcion):
+    def envoltorio(*args, **kwargs):
+        """Documentación del envoltorio"""
+        return funcion(*args, **kwargs)
+    return envoltorio
+
+# Con functools.wraps
+def decorador_con_wraps(funcion):
+    @wraps(funcion)
+    def envoltorio(*args, **kwargs):
+        """Documentación del envoltorio"""
+        return funcion(*args, **kwargs)
+    return envoltorio
+
+@decorador_sin_wraps
+def funcion_sin(x):
+    """Documentación de funcion_sin"""
+    return x * 2
+
+@decorador_con_wraps
+def funcion_con(x):
+    """Documentación de funcion_con"""
+    return x * 2
+
+print("Sin @wraps:")
+print(f"  Nombre: {funcion_sin.__name__}")
+print(f"  Doc: {funcion_sin.__doc__}")
+
+print("\nCon @wraps:")
+print(f"  Nombre: {funcion_con.__name__}")
+print(f"  Doc: {funcion_con.__doc__}")</code></pre>
+
+        <h3>10.7 Apilar Múltiples Decoradores</h3>
+        <p>Se pueden aplicar varios decoradores a la misma función:</p>
+
+        <pre><code class="language-python">from functools import wraps
+import time
+
+def medir_tiempo(funcion):
+    @wraps(funcion)
+    def envoltorio(*args, **kwargs):
+        inicio = time.time()
+        resultado = funcion(*args, **kwargs)
+        fin = time.time()
+        print(f"⏱️  Tiempo: {fin - inicio:.4f}s")
+        return resultado
+    return envoltorio
+
+def imprimir_resultado(funcion):
+    @wraps(funcion)
+    def envoltorio(*args, **kwargs):
+        resultado = funcion(*args, **kwargs)
+        print(f"📊 Resultado: {resultado}")
+        return resultado
+    return envoltorio
+
+# Los decoradores se aplican de abajo hacia arriba
+@medir_tiempo
+@imprimir_resultado
+def calcular_potencia(base, exponente):
+    time.sleep(0.1)  # Simular cálculo
+    return base ** exponente
+
+calcular_potencia(2, 10)</code></pre>
+
+        <h3>10.8 Decoradores de Clase</h3>
+        <p>También podemos crear decoradores usando clases:</p>
+
+        <pre><code class="language-python">class ContadorLlamadas:
+    """Decorador que cuenta cuántas veces se llama una función."""
+    
+    def __init__(self, funcion):
+        self.funcion = funcion
+        self.llamadas = 0
+    
+    def __call__(self, *args, **kwargs):
+        self.llamadas += 1
+        print(f"🔢 Llamada #{self.llamadas} a {self.funcion.__name__}")
+        return self.funcion(*args, **kwargs)
+    
+    def obtener_llamadas(self):
+        return self.llamadas
+
+@ContadorLlamadas
+def saludar(nombre):
+    return f"Hola, {nombre}"
+
+print(saludar("Ana"))
+print(saludar("Juan"))
+print(saludar("María"))
+print(f"\nTotal de llamadas: {saludar.obtener_llamadas()}")</code></pre>
+
+        <h3>10.9 Ejemplo Práctico: Sistema de Autenticación</h3>
+
+        <pre><code class="language-python">from functools import wraps
+
+# Base de datos simulada de usuarios
+usuarios_autorizados = {
+    'admin': {'rol': 'administrador'},
+    'usuario1': {'rol': 'usuario'},
+    'invitado': {'rol': 'invitado'}
+}
+
+# Usuario actual (simulado)
+usuario_actual = None
+
+def requiere_autenticacion(funcion):
+    """Decorador que requiere que el usuario esté autenticado."""
+    @wraps(funcion)
+    def envoltorio(*args, **kwargs):
+        if usuario_actual is None:
+            print("❌ Acceso denegado: Debes iniciar sesión")
+            return None
+        print(f"✅ Usuario autenticado: {usuario_actual}")
+        return funcion(*args, **kwargs)
+    return envoltorio
+
+def requiere_rol(rol_requerido):
+    """Decorador que requiere un rol específico."""
+    def decorador(funcion):
+        @wraps(funcion)
+        def envoltorio(*args, **kwargs):
+            if usuario_actual is None:
+                print("❌ Acceso denegado: Debes iniciar sesión")
+                return None
+            
+            rol_usuario = usuarios_autorizados.get(usuario_actual, {}).get('rol')
+            if rol_usuario != rol_requerido:
+                print(f"❌ Acceso denegado: Se requiere rol '{rol_requerido}'")
+                return None
+            
+            print(f"✅ Acceso permitido para {usuario_actual} ({rol_usuario})")
+            return funcion(*args, **kwargs)
+        return envoltorio
+    return decorador
+
+@requiere_autenticacion
+def ver_perfil():
+    return f"Perfil de {usuario_actual}"
+
+@requiere_rol('administrador')
+def eliminar_usuario(usuario):
+    return f"Usuario {usuario} eliminado"
+
+# Pruebas
+print("=== Sin autenticación ===")
+print(ver_perfil())
+
+print("\n=== Como usuario normal ===")
+usuario_actual = 'usuario1'
+print(ver_perfil())
+print(eliminar_usuario('otro_usuario'))
+
+print("\n=== Como administrador ===")
+usuario_actual = 'admin'
+print(ver_perfil())
+print(eliminar_usuario('usuario1'))</code></pre>
+
+        <h3>📝 Resumen de Decoradores</h3>
+
+        <p><strong>Conceptos clave:</strong></p>
+        <ul>
+            <li>Los decoradores modifican el comportamiento de funciones</li>
+            <li>Usar <code>@</code> para aplicar decoradores</li>
+            <li><code>*args</code> y <code>**kwargs</code> para funciones con argumentos</li>
+            <li><code>@wraps</code> para preservar metadatos</li>
+            <li>Se pueden apilar múltiples decoradores</li>
+            <li>Útiles para: logging, timing, caché, validación, autenticación</li>
+        </ul>
+
+        <p><strong>Casos de uso comunes:</strong></p>
+        <ul>
+            <li>⏱️ Medir tiempos de ejecución</li>
+            <li>📝 Registrar llamadas (logging)</li>
+            <li>💾 Implementar caché</li>
+            <li>🔄 Reintentar operaciones fallidas</li>
+            <li>✅ Validar entrada/salida</li>
+            <li>🔐 Control de acceso y autenticación</li>
+        </ul>
+
+        <h2>11. Buenas Prácticas</h2>
+
+        <h3>11.1. Nombres Descriptivos</h3>
+
+        <pre><code class="language-python"># ❌ MAL - Nombres poco descriptivos
+def f(x, y):
+    return x * y
+
+# ✅ BIEN - Nombres descriptivos
+def calcular_area_rectangulo(base, altura):
+    return base * altura</code></pre>
+
+        <h3>11.2. Una Función, Una Responsabilidad</h3>
+
+        <pre><code class="language-python"># ❌ MAL - Hace demasiadas cosas
+def procesar_usuario_mal(nombre, edad):
+    # Valida
+    if not nombre or edad < 0:
+        return None
+    # Formatea
+    nombre = nombre.strip().title()
+    # Crea usuario
+    usuario = {"nombre": nombre, "edad": edad}
+    # Guarda en base de datos
+    print(f"Guardando {usuario}...")
+    return usuario
+
+# ✅ BIEN - Dividido en funciones específicas
+def validar_usuario(nombre, edad):
+    return nombre and edad >= 0
+
+def formatear_nombre(nombre):
+    return nombre.strip().title()
+
+def crear_usuario(nombre, edad):
+    return {"nombre": nombre, "edad": edad}
+
+def guardar_usuario(usuario):
+    print(f"Guardando {usuario}...")
+
+def procesar_usuario_bien(nombre, edad):
+    if not validar_usuario(nombre, edad):
+        return None
+    nombre = formatear_nombre(nombre)
+    usuario = crear_usuario(nombre, edad)
+    guardar_usuario(usuario)
+    return usuario</code></pre>
+
+        <h3>11.3. Usar Type Hints (Pistas de Tipo)</h3>
+
+        <pre><code class="language-python"># Type hints ayudan a entender qué espera la función
+def sumar_numeros(a: int, b: int) -> int:
+    """Suma dos números enteros."""
+    return a + b
+
+def saludar_persona(nombre: str, edad: int) -> str:
+    """Retorna un saludo personalizado."""
+    return f"Hola {nombre}, tienes {edad} años"
+
+# Con tipos complejos
+from typing import List, Dict, Optional
+
+def procesar_lista(numeros: List[int]) -> float:
+    """Calcula el promedio de una lista de números."""
+    return sum(numeros) / len(numeros) if numeros else 0.0
+
+def buscar_usuario(id: int) -> Optional[Dict[str, str]]:
+    """Busca un usuario por ID. Retorna None si no existe."""
+    # Simulación
+    if id == 1:
+        return {"nombre": "Ana", "email": "ana@example.com"}
+    return None</code></pre>
+
+        <h3>11.4. Evitar Efectos Secundarios</h3>
+
+        <pre><code class="language-python"># ❌ MAL - Modifica la lista original
+def duplicar_lista_mal(lista):
+    for i in range(len(lista)):
+        lista[i] *= 2
+    return lista
+
+numeros = [1, 2, 3]
+print(f"Original: {numeros}")
+resultado = duplicar_lista_mal(numeros)
+print(f"Resultado: {resultado}")
+print(f"Original después: {numeros}")  # ¡Se modificó!
+
+print("\n--- Forma correcta ---\n")
+
+# ✅ BIEN - Retorna una nueva lista
+def duplicar_lista_bien(lista):
+    return [x * 2 for x in lista]
+
+numeros = [1, 2, 3]
+print(f"Original: {numeros}")
+resultado = duplicar_lista_bien(numeros)
+print(f"Resultado: {resultado}")
+print(f"Original después: {numeros}")  # No se modificó</code></pre>
+
+        <h3>11.5. Manejo de Errores</h3>
+
+        <pre><code class="language-python"># Manejar errores apropiadamente
+def dividir_seguro(a: float, b: float) -> Optional[float]:
+    """
+    Divide dos números de forma segura.
+    
+    Returns:
+        El resultado de la división o None si hay error.
+    """
+    try:
+        return a / b
+    except ZeroDivisionError:
+        print("Error: División por cero")
+        return None
+    except TypeError:
+        print("Error: Los argumentos deben ser números")
+        return None
+
+print(dividir_seguro(10, 2))   # 5.0
+print(dividir_seguro(10, 0))   # None
+print(dividir_seguro(10, "a")) # None</code></pre>
+
+        <h2>12. Ejemplos Prácticos Completos</h2>
+
+        <pre><code class="language-python"># Ejemplo 1: Calculadora completa
+def calculadora():
+    """
+    Calculadora interactiva simple.
+    """
+    def sumar(a, b):
+        return a + b
+    
+    def restar(a, b):
+        return a - b
+    
+    def multiplicar(a, b):
+        return a * b
+    
+    def dividir(a, b):
+        if b == 0:
+            return "Error: División por cero"
+        return a / b
+    
+    operaciones = {
+        "+": sumar,
+        "-": restar,
+        "*": multiplicar,
+        "/": dividir
+    }
+    
+    print("=== CALCULADORA ===")
+    print("Operaciones: +, -, *, /")
+    
+    a = float(input("Primer número: "))
+    operador = input("Operación: ")
+    b = float(input("Segundo número: "))
+    
+    if operador in operaciones:
+        resultado = operaciones[operador](a, b)
+        print(f"\nResultado: {a} {operador} {b} = {resultado}")
+    else:
+        print("Operación no válida")
+
+# calculadora()  # Descomenta para probar</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 2: Sistema de gestión de estudiantes
+def sistema_estudiantes():
+    """
+    Sistema simple de gestión de estudiantes.
+    """
+    estudiantes = {}
+    
+    def agregar_estudiante(id_est, nombre, notas):
+        """Agrega un estudiante al sistema."""
+        estudiantes[id_est] = {
+            "nombre": nombre,
+            "notas": notas
+        }
+        print(f"Estudiante {nombre} agregado")
+    
+    def calcular_promedio(notas):
+        """Calcula el promedio de una lista de notas."""
+        return sum(notas) / len(notas) if notas else 0
+    
+    def mostrar_estudiante(id_est):
+        """Muestra información de un estudiante."""
+        if id_est in estudiantes:
+            est = estudiantes[id_est]
+            promedio = calcular_promedio(est["notas"])
+            print(f"\nID: {id_est}")
+            print(f"Nombre: {est['nombre']}")
+            print(f"Notas: {est['notas']}")
+            print(f"Promedio: {promedio:.2f}")
+        else:
+            print("Estudiante no encontrado")
+    
+    def mostrar_todos():
+        """Muestra todos los estudiantes."""
+        print("\n=== TODOS LOS ESTUDIANTES ===")
+        for id_est, datos in estudiantes.items():
+            promedio = calcular_promedio(datos["notas"])
+            print(f"{id_est}: {datos['nombre']} - Promedio: {promedio:.2f}")
+    
+    # Agregar algunos estudiantes de prueba
+    agregar_estudiante("001", "Ana", [8, 9, 7])
+    agregar_estudiante("002", "Juan", [6, 7, 8])
+    agregar_estudiante("003", "María", [9, 10, 9])
+    
+    # Mostrar información
+    mostrar_estudiante("001")
+    mostrar_todos()
+
+sistema_estudiantes()</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 3: Validador de contraseñas
+def validar_contrasena(contrasena: str) -> tuple[bool, list[str]]:
+    """
+    Valida una contraseña según varios criterios.
+    
+    Returns:
+        Una tupla (es_valida, lista_de_errores)
+    """
+    errores = []
+    
+    # Verificar longitud
+    if len(contrasena) < 8:
+        errores.append("Debe tener al menos 8 caracteres")
+    
+    # Verificar mayúsculas
+    if not any(c.isupper() for c in contrasena):
+        errores.append("Debe contener al menos una mayúscula")
+    
+    # Verificar minúsculas
+    if not any(c.islower() for c in contrasena):
+        errores.append("Debe contener al menos una minúscula")
+    
+    # Verificar números
+    if not any(c.isdigit() for c in contrasena):
+        errores.append("Debe contener al menos un número")
+    
+    # Verificar caracteres especiales
+    caracteres_especiales = "!@#$%^&*()-_=+[]{}|;:,.<>?"
+    if not any(c in caracteres_especiales for c in contrasena):
+        errores.append("Debe contener al menos un carácter especial")
+    
+    es_valida = len(errores) == 0
+    return es_valida, errores
+
+# Probar el validador
+contrasenas = [
+    "123456",
+    "password",
+    "Password123",
+    "P@ssw0rd123"
+]
+
+for pwd in contrasenas:
+    valida, errores = validar_contrasena(pwd)
+    print(f"\nContraseña: {pwd}")
+    if valida:
+        print("✅ Válida")
+    else:
+        print("❌ Inválida")
+        for error in errores:
+            print(f"  - {error}")</code></pre>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

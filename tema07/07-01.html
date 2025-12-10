@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 07: Módulos y Paquetes</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Tema 07: Módulos y Paquetes</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Módulos y Paquetes</h1>
+        <h2>Teoría y Ejemplos</h2>
+
+        <h2>1. ¿Qué son los Módulos?</h2>
+        <p>Un <strong>módulo</strong> es un archivo Python (<code>.py</code>) que contiene definiciones y declaraciones.</p>
+
+        <h3>¿Por qué usar módulos?</h3>
+        <ul>
+            <li><strong>Organización:</strong> Divide el código en partes lógicas</li>
+            <li><strong>Reutilización:</strong> Usa el mismo código en múltiples proyectos</li>
+            <li><strong>Namespace:</strong> Evita conflictos de nombres</li>
+            <li><strong>Mantenibilidad:</strong> Código más fácil de mantener</li>
+            <li><strong>Colaboración:</strong> Diferentes personas trabajan en diferentes módulos</li>
+        </ul>
+
+        <h3>Tipos de módulos:</h3>
+        <ol>
+            <li><strong>Módulos incorporados (built-in):</strong> Ya vienen con Python</li>
+            <li><strong>Módulos de la biblioteca estándar:</strong> Incluidos con Python</li>
+            <li><strong>Módulos de terceros:</strong> Instalados con pip</li>
+            <li><strong>Módulos propios:</strong> Los que tú creas</li>
+        </ol>
+
+        <h2>2. Importar Módulos</h2>
+        <p>Hay varias formas de importar módulos en Python.</p>
+
+        <h3>2.1. Importar un Módulo Completo</h3>
+
+        <pre><code class="language-python"># Importar el módulo math completo
+import math
+
+# Usar funciones del módulo con la sintaxis: modulo.funcion()
+print(f"Pi: {math.pi}")
+print(f"Raíz cuadrada de 16: {math.sqrt(16)}")
+print(f"Seno de 90 grados: {math.sin(math.radians(90))}")
+print(f"Factorial de 5: {math.factorial(5)}")</code></pre>
+
+        <pre><code class="language-python"># Importar múltiples módulos
+import random
+import datetime
+
+print(f"Número aleatorio: {random.randint(1, 100)}")
+print(f"Fecha actual: {datetime.datetime.now()}")</code></pre>
+
+        <h3>2.2. Importar con Alias (as)</h3>
+
+        <pre><code class="language-python"># Usar un alias más corto
+import datetime as dt
+
+ahora = dt.datetime.now()
+print(f"Ahora: {ahora}")
+print(f"Solo fecha: {dt.date.today()}")</code></pre>
+
+        <pre><code class="language-python"># Alias comunes en ciencia de datos
+# import numpy as np
+# import pandas as pd
+# import matplotlib.pyplot as plt
+
+# Por ahora, ejemplo con módulo estándar
+import statistics as stats
+
+numeros = [1, 2, 3, 4, 5]
+print(f"Media: {stats.mean(numeros)}")
+print(f"Mediana: {stats.median(numeros)}")</code></pre>
+
+        <h3>2.3. Importar Elementos Específicos</h3>
+
+        <pre><code class="language-python"># Importar solo funciones específicas
+from math import pi, sqrt, pow
+
+# Ahora se usan directamente, sin el prefijo math.
+print(f"Pi: {pi}")
+print(f"Raíz de 25: {sqrt(25)}")
+print(f"2 elevado a 3: {pow(2, 3)}")</code></pre>
+
+        <pre><code class="language-python"># Importar con alias
+from datetime import datetime as dt, timedelta as td
+
+ahora = dt.now()
+manana = ahora + td(days=1)
+
+print(f"Ahora: {ahora}")
+print(f"Mañana: {manana}")</code></pre>
+
+        <pre><code class="language-python"># ⚠️ Importar todo (NO RECOMENDADO en código de producción)
+from random import *
+
+# Ahora todas las funciones están disponibles directamente
+print(randint(1, 10))
+print(choice(["rojo", "verde", "azul"]))
+
+# Problema: No está claro de dónde vienen las funciones
+# Puede causar conflictos de nombres</code></pre>
+
+        <h2>3. Módulos de la Biblioteca Estándar</h2>
+        <p>Python viene con una "batería incluida" - muchos módulos útiles ya instalados.</p>
+
+        <h3>3.1. math - Operaciones Matemáticas</h3>
+
+        <pre><code class="language-python">import math
+
+# Constantes
+print(f"π = {math.pi}")
+print(f"e = {math.e}")
+print(f"τ = {math.tau}")  # tau = 2π
+print(f"∞ = {math.inf}")
+
+print("\n--- Funciones básicas ---")
+# Redondeo y valor absoluto
+print(f"ceil(4.3) = {math.ceil(4.3)}")    # Redondeo hacia arriba
+print(f"floor(4.7) = {math.floor(4.7)}")  # Redondeo hacia abajo
+print(f"fabs(-5) = {math.fabs(-5)}")      # Valor absoluto
+
+print("\n--- Potencias y raíces ---")
+print(f"sqrt(16) = {math.sqrt(16)}")
+print(f"pow(2, 3) = {math.pow(2, 3)}")
+print(f"exp(2) = {math.exp(2)}")  # e^2
+print(f"log(100, 10) = {math.log(100, 10)}")  # Logaritmo base 10
+
+print("\n--- Trigonometría ---")
+print(f"sin(π/2) = {math.sin(math.pi/2)}")
+print(f"cos(π) = {math.cos(math.pi)}")
+print(f"tan(π/4) = {math.tan(math.pi/4)}")
+
+# Convertir grados a radianes
+print(f"sin(90°) = {math.sin(math.radians(90))}")</code></pre>
+
+        <h3>3.2. random - Números Aleatorios</h3>
+
+        <pre><code class="language-python">import random
+
+# Número aleatorio flotante entre 0 y 1
+print(f"random(): {random.random()}")</code></pre>
+
+        <pre><code class="language-python"># Número entero aleatorio en un rango
+print(f"\nrandint(1, 10): {random.randint(1, 10)}")
+print(f"randrange(0, 100, 5): {random.randrange(0, 100, 5)}")  # De 0 a 100, de 5 en 5</code></pre>
+
+        <pre><code class="language-python"># Número flotante en un rango
+print(f"\nuniform(1.0, 10.0): {random.uniform(1.0, 10.0)}")</code></pre>
+
+        <pre><code class="language-python"># Elegir elemento aleatorio
+colores = ["rojo", "verde", "azul", "amarillo"]
+print(f"\nchoice(colores): {random.choice(colores)}")</code></pre>
+
+        <pre><code class="language-python"># Elegir múltiples elementos (con repetición)
+print(f"choices(colores, k=3): {random.choices(colores, k=3)}")</code></pre>
+
+        <pre><code class="language-python"># Elegir múltiples elementos (sin repetición)
+print(f"sample(colores, k=2): {random.sample(colores, k=2)}")</code></pre>
+
+        <pre><code class="language-python"># Mezclar una lista
+numeros = [1, 2, 3, 4, 5]
+random.shuffle(numeros)
+print(f"\nLista mezclada: {numeros}")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo práctico: Lanzar dados
+def lanzar_dado():
+    return random.randint(1, 6)
+
+def lanzar_dos_dados():
+    return lanzar_dado(), lanzar_dado()
+
+print("Lanzar un dado:")
+for _ in range(5):
+    print(f"  🎲 {lanzar_dado()}")
+
+print("\nLanzar dos dados:")
+for _ in range(5):
+    d1, d2 = lanzar_dos_dados()
+    print(f"  🎲🎲 {d1} + {d2} = {d1 + d2}")</code></pre>
+
+        <h3>3.3. datetime - Manejo de Fechas y Tiempos</h3>
+
+        <pre><code class="language-python">from datetime import datetime, date, time, timedelta
+
+# Fecha y hora actual
+ahora = datetime.now()
+print(f"Ahora: {ahora}")
+print(f"Año: {ahora.year}")
+print(f"Mes: {ahora.month}")
+print(f"Día: {ahora.day}")
+print(f"Hora: {ahora.hour}")
+print(f"Minuto: {ahora.minute}")
+print(f"Segundo: {ahora.second}")</code></pre>
+
+        <pre><code class="language-python"># Solo fecha
+hoy = date.today()
+print(f"\nHoy: {hoy}")</code></pre>
+
+        <pre><code class="language-python"># Solo hora
+hora_actual = datetime.now().time()
+print(f"Hora actual: {hora_actual}")</code></pre>
+
+        <pre><code class="language-python"># Crear fecha específica
+navidad = date(2024, 12, 25)
+print(f"\nNavidad 2024: {navidad}")</code></pre>
+
+        <pre><code class="language-python"># Crear datetime específico
+reunion = datetime(2024, 11, 15, 14, 30)  # 15 nov 2024, 14:30
+print(f"Reunión: {reunion}")</code></pre>
+
+        <h4>Operaciones con Timedelta</h4>
+
+        <pre><code class="language-python"># Operaciones con timedelta
+from datetime import timedelta
+
+hoy = date.today()
+print(f"Hoy: {hoy}")</code></pre>
+
+        <pre><code class="language-python"># Agregar/restar días
+manana = hoy + timedelta(days=1)
+ayer = hoy - timedelta(days=1)
+print(f"Mañana: {manana}")
+print(f"Ayer: {ayer}")</code></pre>
+
+        <pre><code class="language-python"># Una semana después
+proxima_semana = hoy + timedelta(weeks=1)
+print(f"Próxima semana: {proxima_semana}")</code></pre>
+
+        <pre><code class="language-python"># Agregar horas, minutos
+ahora = datetime.now()
+en_dos_horas = ahora + timedelta(hours=2)
+print(f"\nAhora: {ahora}")
+print(f"En 2 horas: {en_dos_horas}")</code></pre>
+
+        <pre><code class="language-python"># Diferencia entre fechas
+fecha1 = date(2024, 1, 1)
+fecha2 = date(2024, 12, 31)
+diferencia = fecha2 - fecha1
+print(f"\nDías entre {fecha1} y {fecha2}: {diferencia.days}")</code></pre>
+
+        <h4>Formateo de fechas</h4>
+
+        <pre><code class="language-python"># Formatear fechas
+ahora = datetime.now()</code></pre>
+
+        <pre><code class="language-python"># Diferentes formatos
+print("Formatos de fecha:")
+print(f"ISO: {ahora.isoformat()}")
+print(f"strftime('%d/%m/%Y'): {ahora.strftime('%d/%m/%Y')}")
+print(f"strftime('%Y-%m-%d %H:%M:%S'): {ahora.strftime('%Y-%m-%d %H:%M:%S')}")
+print(f"strftime('%A, %d de %B de %Y'): {ahora.strftime('%A, %d de %B de %Y')}")
+print(f"strftime('%I:%M %p'): {ahora.strftime('%I:%M %p')}")</code></pre>
+
+        <pre><code class="language-python"># Parsear string a datetime
+fecha_str = "2024-12-25"
+fecha = datetime.strptime(fecha_str, '%Y-%m-%d')
+print(f"\nString '{fecha_str}' convertido a: {fecha}")</code></pre>
+
+        <h3>3.4. os - Interacción con el Sistema Operativo</h3>
+
+        <pre><code class="language-python">import os
+
+# Directorio actual
+print(f"Directorio actual: {os.getcwd()}")
+
+# Variables de entorno
+print(f"\nUsuario: {os.getenv('USER', 'Desconocido')}")
+print(f"Home: {os.getenv('HOME', 'Desconocido')}")
+
+# Información del sistema
+print(f"\nSistema operativo: {os.name}")
+print(f"Separador de ruta: '{os.sep}'")
+print(f"Separador de línea: {repr(os.linesep)}")
+
+# Construcción de rutas
+ruta = os.path.join("carpeta", "subcarpeta", "archivo.txt")
+print(f"\nRuta construida: {ruta}")
+
+# Información de ruta
+print(f"Nombre del archivo: {os.path.basename(ruta)}")
+print(f"Directorio: {os.path.dirname(ruta)}")
+print(f"Separar ruta: {os.path.split(ruta)}")
+print(f"Separar extensión: {os.path.splitext(ruta)}")</code></pre>
+
+        <h3>3.5. sys - Parámetros y Funciones del Sistema</h3>
+
+        <pre><code class="language-python">import sys
+
+# Versión de Python
+print(f"Versión de Python: {sys.version}")
+print(f"Versión (tuple): {sys.version_info}")
+
+# Plataforma
+print(f"\nPlataforma: {sys.platform}")
+
+# Rutas de búsqueda de módulos
+print("\nPrimeras 3 rutas de búsqueda:")
+for ruta in sys.path[:3]:
+    print(f"  {ruta}")
+
+# Tamaño de objetos
+lista = [1, 2, 3, 4, 5]
+print(f"\nTamaño de la lista: {sys.getsizeof(lista)} bytes")</code></pre>
+
+        <h3>3.6. json - Trabajar con JSON</h3>
+
+        <pre><code class="language-python">import json
+
+# Diccionario Python
+persona = {
+    "nombre": "Ana",
+    "edad": 25,
+    "ciudad": "Madrid",
+    "hobbies": ["leer", "programar", "viajar"]
+}
+
+# Convertir a JSON (string)
+json_string = json.dumps(persona, indent=2, ensure_ascii=False)
+print("JSON:")
+print(json_string)
+
+# Convertir de JSON a diccionario
+persona_desde_json = json.loads(json_string)
+print(f"\nNombre: {persona_desde_json['nombre']}")
+print(f"Hobbies: {persona_desde_json['hobbies']}")</code></pre>
+
+        <pre><code class="language-python"># Guardar en archivo JSON
+datos = {
+    "usuarios": [
+        {"id": 1, "nombre": "Ana", "email": "ana@example.com"},
+        {"id": 2, "nombre": "Juan", "email": "juan@example.com"}
+    ]
+}
+
+# Guardar
+with open('usuarios.json', 'w', encoding='utf-8') as f:
+    json.dump(datos, f, indent=2, ensure_ascii=False)
+
+print("Datos guardados en usuarios.json")
+
+# Leer
+with open('usuarios.json', 'r', encoding='utf-8') as f:
+    datos_leidos = json.load(f)
+
+print("\nDatos leídos:")
+for usuario in datos_leidos['usuarios']:
+    print(f"  {usuario['nombre']}: {usuario['email']}")</code></pre>
+
+        <h3>3.7. collections - Estructuras de Datos Especializadas</h3>
+
+        <pre><code class="language-python">from collections import Counter, defaultdict, namedtuple, deque
+
+# Counter - Contar elementos
+palabras = ["python", "java", "python", "c++", "python", "java"]
+contador = Counter(palabras)
+print("Counter:")
+print(f"  Conteo: {contador}")
+print(f"  Más común: {contador.most_common(2)}")</code></pre>
+
+        <pre><code class="language-python"># defaultdict - Diccionario con valor por defecto
+grupos = defaultdict(list)
+grupos['frutas'].append('manzana')
+grupos['frutas'].append('pera')
+grupos['verduras'].append('lechuga')
+print("\ndefaultdict:")
+print(f"  {dict(grupos)}")</code></pre>
+
+        <pre><code class="language-python"># namedtuple - Tupla con nombres
+Punto = namedtuple('Punto', ['x', 'y'])
+p1 = Punto(10, 20)
+print("\nnamedtuple:")
+print(f"  Punto: {p1}")
+print(f"  x: {p1.x}, y: {p1.y}")</code></pre>
+
+        <pre><code class="language-python"># deque - Cola de doble extremo
+cola = deque([1, 2, 3])
+cola.append(4)      # Agregar al final
+cola.appendleft(0)  # Agregar al inicio
+print("\ndeque:")
+print(f"  Cola: {cola}")
+print(f"  Pop derecha: {cola.pop()}")
+print(f"  Pop izquierda: {cola.popleft()}")
+print(f"  Cola final: {cola}")</code></pre>
+
+        <h3>3.8. itertools - Herramientas de Iteración</h3>
+
+        <pre><code class="language-python">import itertools
+
+# combinations - Combinaciones
+letras = ['A', 'B', 'C']
+combinaciones = list(itertools.combinations(letras, 2))
+print(f"Combinaciones de 2: {combinaciones}")</code></pre>
+
+        <pre><code class="language-python"># permutations - Permutaciones
+permutaciones = list(itertools.permutations(letras, 2))
+print(f"Permutaciones de 2: {permutaciones}")</code></pre>
+
+        <pre><code class="language-python"># product - Producto cartesiano
+colores = ['rojo', 'azul']
+tallas = ['S', 'M', 'L']
+producto = list(itertools.product(colores, tallas))
+print(f"\nProducto cartesiano: {producto}")</code></pre>
+
+        <pre><code class="language-python"># chain - Concatenar iterables
+lista1 = [1, 2, 3]
+lista2 = [4, 5, 6]
+concatenado = list(itertools.chain(lista1, lista2))
+print(f"\nConcatenado: {concatenado}")</code></pre>
+
+        <pre><code class="language-python"># count - Contador infinito
+contador = itertools.count(start=10, step=2)
+print("\nPrimeros 5 números del contador:")
+for _ in range(5):
+    print(f"  {next(contador)}")</code></pre>
+
+        <pre><code class="language-python"># cycle - Ciclar sobre una secuencia
+colores_ciclo = itertools.cycle(['rojo', 'verde', 'azul'])
+print("\nPrimeros 7 del ciclo:")
+for _ in range(7):
+    print(f"  {next(colores_ciclo)}")</code></pre>
+
+        <h2>4. Crear Módulos Propios</h2>
+        <p>Puedes crear tus propios módulos para organizar tu código.</p>
+
+        <h3>4.1. Estructura Básica de un Módulo</h3>
+
+        <p><strong>Archivo: <code>calculadora.py</code></strong></p>
+        <pre><code class="language-python">"""
+Módulo de operaciones matemáticas básicas.
+"""
+
+# Variables del módulo
+VERSION = "1.0"
+AUTOR = "Tu Nombre"
+
+# Funciones del módulo
+def sumar(a, b):
+    """Suma dos números."""
+    return a + b
+
+def restar(a, b):
+    """Resta dos números."""
+    return a - b
+
+def multiplicar(a, b):
+    """Multiplica dos números."""
+    return a * b
+
+def dividir(a, b):
+    """Divide dos números."""
+    if b == 0:
+        raise ValueError("No se puede dividir por cero")
+    return a / b
+
+# Código que se ejecuta solo si el módulo se ejecuta directamente
+if __name__ == "__main__":
+    # Pruebas del módulo
+    print("Pruebas del módulo calculadora")
+    print(f"5 + 3 = {sumar(5, 3)}")
+    print(f"10 - 4 = {restar(10, 4)}")
+    print(f"6 * 7 = {multiplicar(6, 7)}")
+    print(f"15 / 3 = {dividir(15, 3)}")</code></pre>
+
+        <p><strong>Usar el módulo:</strong></p>
+        <pre><code class="language-python">import calculadora
+
+resultado = calculadora.sumar(5, 3)
+print(f"Resultado: {resultado}")
+print(f"Versión: {calculadora.VERSION}")</code></pre>
+
+        <pre><code class="language-python">import calculadora
+
+resultado = calculadora.sumar(5, 3)
+print(f"Resultado: {resultado}")
+print(f"Versión: {calculadora.VERSION}")</code></pre>
+
+        <h3>4.2. Variables Especiales de Módulos</h3>
+        <p>Python define algunas variables especiales en cada módulo:</p>
+
+        <pre><code class="language-python"># __name__ - Nombre del módulo
+print(f"Nombre del módulo actual: {__name__}")
+
+# En un script, __name__ es "__main__" cuando se ejecuta directamente
+if __name__ == "__main__":
+    print("Este código se ejecuta solo cuando el script se ejecuta directamente")
+
+# __file__ - Ruta del archivo (no disponible en notebooks)
+# print(f"Archivo: {__file__}")</code></pre>
+
+        <h3>4.3. Ejemplo de Módulo Completo</h3>
+
+        <p><strong>Archivo: <code>utilidades_texto.py</code></strong></p>
+        <pre><code class="language-python">"""
+Utilidades para procesamiento de texto.
+"""
+
+def contar_palabras(texto):
+    """Cuenta las palabras en un texto."""
+    return len(texto.split())
+
+def contar_vocales(texto):
+    """Cuenta las vocales en un texto."""
+    vocales = 'aeiouAEIOUáéíóúÁÉÍÓÚ'
+    return sum(1 for char in texto if char in vocales)
+
+def invertir_texto(texto):
+    """Invierte un texto."""
+    return texto[::-1]
+
+def es_palindromo(texto):
+    """Verifica si un texto es palíndromo."""
+    texto_limpio = ''.join(texto.lower().split())
+    return texto_limpio == texto_limpio[::-1]
+
+def capitalizar_palabras(texto):
+    """Capitaliza la primera letra de cada palabra."""
+    return texto.title()
+
+class AnalizadorTexto:
+    """Clase para analizar texto."""
+    
+    def __init__(self, texto):
+        self.texto = texto
+    
+    def analizar(self):
+        """Retorna un análisis completo del texto."""
+        return {
+            'caracteres': len(self.texto),
+            'palabras': contar_palabras(self.texto),
+            'vocales': contar_vocales(self.texto),
+            'es_palindromo': es_palindromo(self.texto)
+        }
+
+if __name__ == "__main__":
+    # Pruebas
+    texto = "Python es genial"
+    print(f"Palabras: {contar_palabras(texto)}")
+    print(f"Vocales: {contar_vocales(texto)}")
+    print(f"Invertido: {invertir_texto(texto)}")</code></pre>
+
+        <h2>5. Paquetes (Packages)</h2>
+        <p>Un <strong>paquete</strong> es una colección de módulos organizados en directorios.</p>
+
+        <h3>5.1. Estructura de un Paquete</h3>
+
+        <pre><code class="language-bash">mi_paquete/
+│
+├── __init__.py          # Hace que el directorio sea un paquete
+├── modulo1.py
+├── modulo2.py
+│
+└── subpaquete/
+    ├── __init__.py
+    ├── modulo3.py
+    └── modulo4.py</code></pre>
+
+        <p><strong>Archivo: <code>mi_paquete/__init__.py</code></strong></p>
+        <pre><code class="language-python">"""
+Mi Paquete - Colección de utilidades.
+"""
+
+# Versión del paquete
+__version__ = "1.0.0"
+__author__ = "Tu Nombre"
+
+# Importar funciones principales para facilitar el acceso
+from .modulo1 import funcion_importante
+from .modulo2 import otra_funcion
+
+# Definir qué se exporta con "from mi_paquete import *"
+__all__ = ['funcion_importante', 'otra_funcion']</code></pre>
+
+        <h3>5.2. Ejemplo Completo de Paquete</h3>
+
+        <p><strong>Estructura:</strong></p>
+        <pre><code class="language-bash">utilidades/
+│
+├── __init__.py
+├── matematicas.py
+├── texto.py
+│
+└── validaciones/
+    ├── __init__.py
+    ├── email.py
+    └── telefono.py</code></pre>
+
+        <p><strong><code>utilidades/__init__.py</code>:</strong></p>
+        <pre><code class="language-python">"""Paquete de utilidades."""
+__version__ = "1.0.0"</code></pre>
+
+        <p><strong><code>utilidades/matematicas.py</code>:</strong></p>
+        <pre><code class="language-python">"""Utilidades matemáticas."""
+
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
+def es_primo(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True</code></pre>
+
+        <p><strong><code>utilidades/texto.py</code>:</strong></p>
+        <pre><code class="language-python">"""Utilidades de texto."""
+
+def limpiar_espacios(texto):
+    return ' '.join(texto.split())
+
+def contar_palabras(texto):
+    return len(texto.split())</code></pre>
+
+        <p><strong><code>utilidades/validaciones/__init__.py</code>:</strong></p>
+        <pre><code class="language-python">"""Módulo de validaciones."""
+from .email import validar_email
+from .telefono import validar_telefono
+
+__all__ = ['validar_email', 'validar_telefono']</code></pre>
+
+        <p><strong><code>utilidades/validaciones/email.py</code>:</strong></p>
+        <pre><code class="language-python">"""Validación de emails."""
+
+def validar_email(email):
+    return '@' in email and '.' in email.split('@')[1]</code></pre>
+
+        <h3>5.4. Usar el Paquete</h3>
+
+        <pre><code class="language-python"># Opción 1: Importar módulos completos
+from utilidades import matematicas
+print(matematicas.factorial(5))  # 120
+
+# Opción 2: Importar funciones específicas
+from utilidades.matematicas import es_primo
+print(es_primo(17))  # True
+
+# Opción 3: Importar desde subpaquete
+from utilidades.validaciones import validar_email
+print(validar_email("usuario@example.com"))  # True
+
+# Opción 4: Importar todo el paquete
+import utilidades
+print(utilidades.__version__)  # 1.0.0</code></pre>
+
+        <h3>5.5. Hacer un Paquete Instalable</h3>
+        <p>Para que tu paquete se pueda instalar con <code>pip</code>, necesitas agregar algunos archivos de configuración.</p>
+
+        <h4>Estructura Básica del Proyecto</h4>
+
+        <pre><code class="language-bash">mi_proyecto/
+│
+├── pyproject.toml       # Configuración principal (OBLIGATORIO)
+├── README.md            # Documentación básica (RECOMENDADO)
+├── LICENSE              # Licencia del proyecto (RECOMENDADO)
+│
+└── utilidades/          # Tu paquete
+    ├── __init__.py
+    ├── matematicas.py
+    └── texto.py</code></pre>
+
+        <h4>Archivo: <code>pyproject.toml</code> (OBLIGATORIO)</h4>
+        <p>Este es el archivo de configuración moderno y recomendado en Python.</p>
+
+        <pre><code class="language-toml">[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "utilidades"
+version = "1.0.0"
+description = "Paquete de utilidades para Python"
+readme = "README.md"
+requires-python = ">=3.7"
+authors = [
+    {name = "Tu Nombre", email = "tu.email@example.com"}
+]
+
+# Dependencias (paquetes que necesita tu proyecto)
+dependencies = [
+    # Ejemplo: "requests>=2.28.0",
+]
+
+# Información adicional
+[project.urls]
+Homepage = "https://github.com/tuusuario/utilidades"</code></pre>
+
+        <h4>Explicación de <code>pyproject.toml</code></h4>
+
+        <pre><code class="language-python"># Campos importantes en pyproject.toml
+
+campos = {
+    "name": "Nombre del paquete (debe ser único en PyPI)",
+    "version": "Versión del paquete (ej: 1.0.0)",
+    "description": "Descripción breve del paquete",
+    "readme": "Archivo README con documentación",
+    "requires-python": "Versión mínima de Python requerida",
+    "dependencies": "Lista de paquetes que necesita tu proyecto",
+}
+
+print("Campos básicos de pyproject.toml:")
+print("=" * 60)
+for campo, descripcion in campos.items():
+    print(f"{campo:20} → {descripcion}")</code></pre>
+
+        <h4>Archivo: <code>README.md</code> (RECOMENDADO)</h4>
+        <p>Documentación básica del proyecto.</p>
+
+        <pre><code class="language-markdown"># Utilidades
+
+Paquete de utilidades para Python.
+
+## Instalación
+
+```bash
+pip install utilidades
+```
+
+## Uso
+
+```python
+from utilidades import matematicas
+
+print(matematicas.factorial(5))  # 120
+```
+
+## Licencia
+
+MIT</code></pre>
+
+        <h3>5.6. Instalar el Paquete Localmente</h3>
+
+        <h4>Instalación en Modo Desarrollo (Recomendado para desarrollo)</h4>
+
+        <pre><code class="language-bash"># Desde el directorio que contiene pyproject.toml
+pip install -e .</code></pre>
+
+        <p><strong>Ventaja</strong>: Los cambios en el código se aplican inmediatamente sin reinstalar.</p>
+
+        <h4>Instalación Normal</h4>
+
+        <pre><code class="language-bash"># Instalar desde el directorio local
+pip install .</code></pre>
+
+        <h4>Verificar la Instalación</h4>
+
+        <pre><code class="language-python"># Verificar que el paquete está instalado
+import subprocess
+
+# Ver paquetes instalados
+resultado = subprocess.run(['pip', 'show', 'utilidades'], 
+                          capture_output=True, text=True)
+
+if resultado.returncode == 0:
+    print("✓ Paquete instalado correctamente")
+    print(resultado.stdout)
+else:
+    print("✗ Paquete no encontrado")</code></pre>
+
+        <pre><code class="language-python"># Probar la importación
+try:
+    import utilidades
+    print("✓ Paquete importado correctamente")
+except ImportError as e:
+    print(f"✗ Error al importar: {e}")</code></pre>
+
+        <h4>Desinstalar</h4>
+
+        <pre><code class="language-bash">pip uninstall utilidades</code></pre>
+
+        <h3>5.7. Crear Distribución del Paquete</h3>
+        <p>Para compartir tu paquete, necesitas crear archivos de distribución.</p>
+
+        <h4>Paso 1: Instalar <code>build</code></h4>
+
+        <pre><code class="language-bash">pip install build</code></pre>
+
+        <h4>Paso 2: Crear los Archivos de Distribución</h4>
+
+        <pre><code class="language-bash"># Desde el directorio que contiene pyproject.toml
+python -m build</code></pre>
+
+        <p>Esto crea dos archivos en <code>dist/</code>:</p>
+        <ul>
+            <li><strong><code>.tar.gz</code></strong>: Código fuente</li>
+            <li><strong><code>.whl</code></strong>: Wheel (distribución binaria, más rápida)</li>
+        </ul>
+
+        <pre><code class="language-python"># Ejemplo de archivos generados
+print("Archivos de distribución generados:")
+print("="*50)
+print("dist/")
+print("├── utilidades-1.0.0.tar.gz       # Código fuente")
+print("└── utilidades-1.0.0-py3-none-any.whl  # Wheel")</code></pre>
+
+        <h4>Paso 3: Instalar desde el Archivo de Distribución (Opcional)</h4>
+
+        <pre><code class="language-bash"># Instalar desde wheel (más rápido)
+pip install dist/utilidades-1.0.0-py3-none-any.whl
+
+# O desde el código fuente
+pip install dist/utilidades-1.0.0.tar.gz</code></pre>
+
+        <h3>5.8. Publicar en PyPI (OPCIONAL)</h3>
+        <p>PyPI es el repositorio oficial de paquetes Python. <strong>Sólo necesitas esto si quieres compartir tu paquete públicamente.</strong></p>
+
+        <h4>Paso 1: Instalar <code>twine</code></h4>
+
+        <pre><code class="language-bash">pip install twine</code></pre>
+
+        <h4>Paso 2: Crear Cuenta en PyPI</h4>
+
+        <ol>
+            <li><strong>TestPyPI</strong> (para pruebas): https://test.pypi.org/account/register/</li>
+            <li><strong>PyPI</strong> (producción): https://pypi.org/account/register/</li>
+        </ol>
+
+        <h4>Paso 3: Generar Token de API</h4>
+
+        <ol>
+            <li>Ve a tu cuenta en PyPI</li>
+            <li>Configuración → API Tokens</li>
+            <li>Crear nuevo token</li>
+            <li>Guarda el token (solo se muestra una vez)</li>
+        </ol>
+
+        <h4>Paso 4: Subir a TestPyPI (Pruebas)</h4>
+
+        <pre><code class="language-bash"># Primero prueba en TestPyPI
+python -m twine upload --repository testpypi dist/*
+
+# Te pedirá:
+# username: __token__
+# password: (tu token de TestPyPI)</code></pre>
+
+        <h4>Paso 5: Probar Instalación desde TestPyPI</h4>
+
+        <pre><code class="language-bash">pip install --index-url https://test.pypi.org/simple/ utilidades</code></pre>
+
+        <h4>Paso 6: Subir a PyPI (Producción)</h4>
+
+        <pre><code class="language-bash"># Una vez probado, sube a PyPI oficial
+python -m twine upload dist/*
+
+# Ahora cualquiera puede instalar con:
+# pip install utilidades</code></pre>
+
+        <blockquote>
+            <strong>⚠️ IMPORTANTE</strong>: No puedes volver a subir la misma versión. Incrementa el número de versión en <code>pyproject.toml</code> para cada actualización.
+        </blockquote>
+
+        <h3>5.9. Versionado del Paquete</h3>
+        <p>Usa <strong>Versionado Semántico</strong>: <code>MAJOR.MINOR.PATCH</code></p>
+
+        <pre><code class="language-python"># Ejemplos de versionado
+ejemplos = [
+    ("1.0.0", "Primera versión estable"),
+    ("1.0.1", "Corrección de bug"),
+    ("1.1.0", "Nueva funcionalidad"),
+    ("2.0.0", "Cambio incompatible"),
+]
+
+print("Versionado Semántico:")
+print("="*50)
+for version, descripcion in ejemplos:
+    print(f"{version:10} → {descripcion}")
+
+print("\nReglas:")
+print("- MAJOR: Cambios incompatibles")
+print("- MINOR: Nuevas funcionalidades")
+print("- PATCH: Correcciones de bugs")</code></pre>
+
+        <h3>Resumen de Comandos Básicos</h3>
+
+        <pre><code class="language-python"># Comandos esenciales
+comandos = [
+    ("Desarrollo", [
+        ("pip install -e .", "Instalar en modo desarrollo"),
+        ("pip uninstall utilidades", "Desinstalar"),
+    ]),
+    ("Distribución", [
+        ("pip install build", "Instalar herramienta build"),
+        ("python -m build", "Crear distribución"),
+    ]),
+    ("Publicación (Opcional)", [
+        ("pip install twine", "Instalar herramienta twine"),
+        ("twine upload --repository testpypi dist/*", "Subir a TestPyPI"),
+        ("twine upload dist/*", "Subir a PyPI"),
+    ]),
+]
+
+print("COMANDOS ESENCIALES")
+print("="*70)
+for categoria, cmds in comandos:
+    print(f"\n{categoria}:")
+    for comando, desc in cmds:
+        print(f"  $ {comando}")
+        print(f"    → {desc}")</code></pre>
+
+        <h2>CONTENIDO OPCIONAL AVANZADO</h2>
+        <p>El siguiente contenido es opcional y útil para proyectos más complejos.</p>
+
+        <h3>OPCIONAL: Dependencias del Proyecto</h3>
+        <p>Si tu paquete necesita otros paquetes, agrégalos en <code>pyproject.toml</code>:</p>
+
+        <pre><code class="language-toml">[project]
+dependencies = [
+    "requests>=2.28.0",
+    "pandas>=1.5.0",
+]
+
+# Dependencias opcionales
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black>=22.0",
+]</code></pre>
+
+        <p>Instalar con dependencias opcionales:</p>
+        <pre><code class="language-bash">pip install -e ".[dev]"</code></pre>
+
+        <h3>OPCIONAL: Archivos Adicionales</h3>
+        <p>Para proyectos más completos, puedes agregar:</p>
+
+        <h4><code>.gitignore</code></h4>
+
+        <pre><code class="language-bash"># Python
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Distribución
+dist/
+build/
+
+# Entorno virtual
+venv/
+.env</code></pre>
+
+        <h4><code>LICENSE</code> (Archivo de licencia)</h4>
+
+        <p>Licencias comunes:</p>
+        <ul>
+            <li><strong>MIT</strong>: Muy permisiva, permite uso comercial</li>
+            <li><strong>Apache 2.0</strong>: Similar a MIT, con protección de patentes</li>
+            <li><strong>GPL</strong>: Requiere que derivados sean open source</li>
+        </ul>
+        <p>Ver ejemplos en: https://choosealicense.com/</p>
+
+        <h4><code>MANIFEST.in</code> (Incluir archivos extra)</h4>
+
+        <pre><code class="language-bash">include README.md
+include LICENSE</code></pre>
+
+        <h3>OPCIONAL: Configuración Avanzada de <code>pyproject.toml</code></h3>
+
+        <pre><code class="language-python"># Ejemplo de pyproject.toml completo
+ejemplo_completo = """
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "utilidades"
+version = "1.0.0"
+description = "Paquete de utilidades para Python"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+authors = [
+    {name = "Tu Nombre", email = "tu.email@example.com"}
+]
+keywords = ["utilidades", "tools", "helpers"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+]
+
+dependencies = [
+    "requests>=2.28.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black>=22.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/tuusuario/utilidades"
+Documentation = "https://utilidades.readthedocs.io"
+Repository = "https://github.com/tuusuario/utilidades"
+"Bug Tracker" = "https://github.com/tuusuario/utilidades/issues"
+"""
+
+print("Configuración completa de pyproject.toml:")
+print(ejemplo_completo)</code></pre>
+
+        <h3>OPCIONAL: Clasificadores (Classifiers)</h3>
+        <p>Ayudan a categorizar tu paquete en PyPI:</p>
+
+        <pre><code class="language-python"># Clasificadores comunes
+clasificadores = {
+    "Estado de desarrollo": [
+        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
+    ],
+    "Audiencia": [
+        "Intended Audience :: Developers",
+        "Intended Audience :: Education",
+        "Intended Audience :: Science/Research",
+    ],
+    "Licencia": [
+        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: Apache Software License",
+    ],
+    "Lenguaje": [
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+    ],
+}
+
+print("Clasificadores comunes:")
+print("="*60)
+for categoria, items in clasificadores.items():
+    print(f"\n{categoria}:")
+    for item in items:
+        print(f"  - {item}")</code></pre>
+
+        <h3>OPCIONAL: Testing con pytest</h3>
+
+        <pre><code class="language-python"># Estructura de testing
+estructura = """
+mi_proyecto/
+├── pyproject.toml
+├── utilidades/
+│   ├── __init__.py
+│   └── matematicas.py
+└── tests/
+    ├── __init__.py
+    └── test_matematicas.py
+"""
+
+print("Estructura con tests:")
+print(estructura)
+
+print("\nEjecutar tests:")
+print("  $ pip install pytest")
+print("  $ pytest")</code></pre>
+
+        <h3>OPCIONAL: Configurar Credenciales de PyPI</h3>
+        <p>Crear archivo <code>~/.pypirc</code> para evitar escribir credenciales cada vez:</p>
+
+        <pre><code class="language-ini">[pypi]
+username = __token__
+password = pypi-AgEI...tu-token-aqui...
+
+[testpypi]
+repository = https://test.pypi.org/legacy/
+username = __token__
+password = pypi-AgEI...tu-token-testpypi...</code></pre>
+
+        <h2>6. Instalación de Paquetes con pip</h2>
+        <p><strong>pip</strong> es el gestor de paquetes de Python que permite instalar bibliotecas de terceros.</p>
+
+        <h3>6.1. Comandos Básicos de pip</h3>
+        <p>Estos comandos se ejecutan en la terminal, no en Python:</p>
+
+        <pre><code class="language-bash"># Instalar un paquete
+pip install nombre_paquete
+
+# Instalar versión específica
+pip install nombre_paquete==1.2.3
+
+# Actualizar un paquete
+pip install --upgrade nombre_paquete
+
+# Desinstalar un paquete
+pip uninstall nombre_paquete
+
+# Listar paquetes instalados
+pip list
+
+# Mostrar información de un paquete
+pip show nombre_paquete
+
+# Buscar paquetes
+pip search palabra_clave
+
+# Guardar lista de dependencias
+pip freeze > requirements.txt
+
+# Instalar desde requirements.txt
+pip install -r requirements.txt</code></pre>
+
+        <h3>6.2. Ejemplo: Usar Paquetes Populares</h3>
+        <p><strong>requests</strong> - Para hacer peticiones HTTP:</p>
+
+        <pre><code class="language-python"># Primero instalar: pip install requests
+# import requests
+
+# # Hacer una petición GET
+# response = requests.get('https://api.github.com')
+# print(f"Status Code: {response.status_code}")
+# print(f"Contenido: {response.json()}")
+
+print("Ejemplo comentado - Requiere instalación de requests")</code></pre>
+
+        <h2>7. Buenas Prácticas</h2>
+
+        <h3>7.1. Organización de Imports</h3>
+
+        <pre><code class="language-python"># ✅ BIEN - Imports organizados en bloques
+
+# 1. Biblioteca estándar
+import os
+import sys
+from datetime import datetime
+
+# 2. Bibliotecas de terceros
+# import requests
+# import pandas as pd
+
+# 3. Módulos locales
+# from mi_proyecto import utilidades
+# from mi_proyecto.modelos import Usuario
+
+print("Imports organizados correctamente")</code></pre>
+
+        <h3>7.2. Evitar Imports Circulares</h3>
+
+        <p><strong>❌ MAL - Import circular:</strong></p>
+
+        <pre><code class="language-python"># archivo_a.py
+from archivo_b import funcion_b
+
+def funcion_a():
+    return funcion_b()
+
+# archivo_b.py
+from archivo_a import funcion_a  # ¡Circular!
+
+def funcion_b():
+    return funcion_a()</code></pre>
+
+        <p><strong>✅ BIEN - Reorganizar código:</strong></p>
+
+        <pre><code class="language-python"># comun.py
+def funcion_compartida():
+    pass
+
+# archivo_a.py
+from comun import funcion_compartida
+
+# archivo_b.py
+from comun import funcion_compartida</code></pre>
+
+        <h3>7.3. Documentar Módulos</h3>
+
+        <pre><code class="language-python">"""
+Módulo de utilidades matemáticas.
+
+Este módulo proporciona funciones para operaciones matemáticas
+comunes que no están en la biblioteca estándar.
+
+Ejemplo de uso:
+    >>> from matematicas import factorial
+    >>> factorial(5)
+    120
+
+Atributos del módulo:
+    VERSION (str): Versión del módulo.
+    AUTOR (str): Autor del módulo.
+"""
+
+VERSION = "1.0"
+AUTOR = "Tu Nombre"
+
+# ... resto del código ...</code></pre>
+
+        <h2>8. Ejemplo Práctico Completo</h2>
+        <h3>Sistema de Gestión de Biblioteca</h3>
+
+        <pre><code class="language-python"># Simulación de un sistema de biblioteca usando módulos
+
+import json
+from datetime import datetime, timedelta
+from collections import defaultdict
+
+class Libro:
+    """Representa un libro en la biblioteca."""
+    
+    def __init__(self, isbn, titulo, autor, año):
+        self.isbn = isbn
+        self.titulo = titulo
+        self.autor = autor
+        self.año = año
+        self.prestado = False
+        self.fecha_prestamo = None
+    
+    def to_dict(self):
+        """Convierte el libro a diccionario."""
+        return {
+            'isbn': self.isbn,
+            'titulo': self.titulo,
+            'autor': self.autor,
+            'año': self.año,
+            'prestado': self.prestado
+        }
+    
+    def __str__(self):
+        estado = "Prestado" if self.prestado else "Disponible"
+        return f"{self.titulo} - {self.autor} ({self.año}) [{estado}]"
+
+class Biblioteca:
+    """Gestiona una colección de libros."""
+    
+    def __init__(self):
+        self.libros = {}
+        self.prestamos = defaultdict(list)
+    
+    def agregar_libro(self, libro):
+        """Agrega un libro a la biblioteca."""
+        self.libros[libro.isbn] = libro
+        print(f"Libro agregado: {libro.titulo}")
+    
+    def buscar_por_titulo(self, titulo):
+        """Busca libros por título."""
+        resultados = []
+        for libro in self.libros.values():
+            if titulo.lower() in libro.titulo.lower():
+                resultados.append(libro)
+        return resultados
+    
+    def buscar_por_autor(self, autor):
+        """Busca libros por autor."""
+        resultados = []
+        for libro in self.libros.values():
+            if autor.lower() in libro.autor.lower():
+                resultados.append(libro)
+        return resultados
+    
+    def prestar_libro(self, isbn, usuario):
+        """Presta un libro a un usuario."""
+        if isbn not in self.libros:
+            return False, "Libro no encontrado"
+        
+        libro = self.libros[isbn]
+        if libro.prestado:
+            return False, "Libro ya prestado"
+        
+        libro.prestado = True
+        libro.fecha_prestamo = datetime.now()
+        self.prestamos[usuario].append({
+            'isbn': isbn,
+            'fecha': libro.fecha_prestamo
+        })
+        
+        return True, f"Libro prestado a {usuario}"
+    
+    def devolver_libro(self, isbn):
+        """Devuelve un libro prestado."""
+        if isbn not in self.libros:
+            return False, "Libro no encontrado"
+        
+        libro = self.libros[isbn]
+        if not libro.prestado:
+            return False, "Libro no estaba prestado"
+        
+        libro.prestado = False
+        libro.fecha_prestamo = None
+        
+        return True, "Libro devuelto exitosamente"
+    
+    def listar_disponibles(self):
+        """Lista todos los libros disponibles."""
+        return [libro for libro in self.libros.values() if not libro.prestado]
+    
+    def estadisticas(self):
+        """Muestra estadísticas de la biblioteca."""
+        total = len(self.libros)
+        prestados = sum(1 for libro in self.libros.values() if libro.prestado)
+        disponibles = total - prestados
+        
+        return {
+            'total': total,
+            'prestados': prestados,
+            'disponibles': disponibles
+        }
+
+# Usar el sistema
+biblioteca = Biblioteca()
+
+# Agregar libros
+libro1 = Libro("978-1", "Python para Todos", "Juan Pérez", 2020)
+libro2 = Libro("978-2", "Aprende Python", "Ana García", 2021)
+libro3 = Libro("978-3", "Python Avanzado", "Juan Pérez", 2022)
+
+biblioteca.agregar_libro(libro1)
+biblioteca.agregar_libro(libro2)
+biblioteca.agregar_libro(libro3)
+
+# Buscar libros
+print("\nBuscar 'Python':")
+resultados = biblioteca.buscar_por_titulo("Python")
+for libro in resultados:
+    print(f"  {libro}")
+
+# Prestar libro
+print("\nPrestar libro:")
+exito, mensaje = biblioteca.prestar_libro("978-1", "Carlos")
+print(f"  {mensaje}")
+
+# Estadísticas
+print("\nEstadísticas:")
+stats = biblioteca.estadisticas()
+print(f"  Total: {stats['total']}")
+print(f"  Prestados: {stats['prestados']}")
+print(f"  Disponibles: {stats['disponibles']}")
+
+# Listar disponibles
+print("\nLibros disponibles:")
+for libro in biblioteca.listar_disponibles():
+    print(f"  {libro}")</code></pre>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
