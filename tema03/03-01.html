@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 03: Bucles (Loops)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Tema 03: Bucles (Loops)</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Bucles (Loops)</h1>
+
+        <h2>1. ¿Qué son los Bucles?</h2>
+        <p>Los <strong>bucles</strong> (o <strong>loops</strong>) permiten ejecutar un bloque de código <strong>repetidamente</strong>.</p>
+        
+        <p>En la vida real hay muchas situaciones repetitivas:</p>
+        <ul>
+            <li>Contar del 1 al 100</li>
+            <li>Leer cada página de un libro</li>
+            <li>Verificar cada elemento de una lista de compras</li>
+            <li>Repetir un ejercicio 10 veces</li>
+        </ul>
+
+        <p><strong>Sin bucles:</strong></p>
+        <pre><code class="language-python">print("Hola 1")
+print("Hola 2")
+print("Hola 3")
+# ... muy tedioso y poco eficiente</code></pre>
+
+        <p><strong>Con bucles:</strong></p>
+        <pre><code class="language-python">for i in range(1, 4):
+    print(f"Hola {i}")</code></pre>
+
+        <p>Python tiene dos tipos principales de bucles:</p>
+        <ul>
+            <li><strong>for</strong>: Cuando sabemos cuántas veces queremos repetir</li>
+            <li><strong>while</strong>: Cuando repetimos mientras se cumpla una condición</li>
+        </ul>
+
+        <h2>2. El Bucle for - Repetir un Número Específico de Veces</h2>
+        <p>El bucle <code>for</code> se usa cuando queremos iterar sobre una secuencia (lista, rango, cadena, etc.).</p>
+
+        <p><strong>Sintaxis básica:</strong></p>
+        <pre><code class="language-python">for variable in secuencia:
+    # código que se repite
+    instruccion1
+    instruccion2</code></pre>
+
+        <p><strong>⚠️ Importante:</strong></p>
+        <ul>
+            <li>Después del <code>for</code> va el nombre de una variable que tomará cada valor de la secuencia</li>
+            <li><code>in</code> indica que vamos a iterar sobre la secuencia</li>
+            <li>El código dentro del bucle debe estar <strong>indentado</strong></li>
+        </ul>
+
+        <h3>2.1. La función range()</h3>
+        <p>La función <code>range()</code> genera una secuencia de números. Es la forma más común de usar <code>for</code>.</p>
+
+        <p><strong>Tres formas de usar range():</strong></p>
+        <ol>
+            <li><code>range(n)</code>: genera números de 0 a n-1</li>
+            <li><code>range(inicio, fin)</code>: genera números desde inicio hasta fin-1</li>
+            <li><code>range(inicio, fin, paso)</code>: genera números desde inicio hasta fin-1, incrementando de paso en paso</li>
+        </ol>
+
+        <pre><code class="language-python"># Ejemplo 1: range(n) - del 0 al n-1
+print("Contando del 0 al 4:")
+for i in range(5):
+    print(i)</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 2: range(inicio, fin) - desde inicio hasta fin-1
+print("Contando del 1 al 10:")
+for i in range(1, 11):
+    print(i)</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 3: range(inicio, fin, paso) - con incremento personalizado
+print("Números pares del 0 al 10:")
+for i in range(0, 11, 2):
+    print(i)</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 4: Contar hacia atrás
+print("Cuenta regresiva:")
+for i in range(10, 0, -1):
+    print(i)
+print("¡Despegue!")</code></pre>
+
+        <h3>2.2. Ejemplos Prácticos con for</h3>
+
+        <pre><code class="language-python"># Ejemplo: Tabla de multiplicar
+numero = int(input("¿De qué número quieres la tabla? "))
+
+print(f"\nTabla del {numero}:")
+for i in range(1, 11):
+    resultado = numero * i
+    print(f"{numero} x {i} = {resultado}")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Sumar números del 1 al 100
+suma = 0
+
+for i in range(1, 101):
+    suma += i  # Equivalente a: suma = suma + i
+
+print(f"La suma de los números del 1 al 100 es: {suma}")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Factorial de un número
+numero = int(input("Introduce un número: "))
+factorial = 1
+
+for i in range(1, numero + 1):
+    factorial *= i  # Equivalente a: factorial = factorial * i
+
+print(f"El factorial de {numero} es: {factorial}")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Dibujar un patrón
+n = int(input("Número de filas: "))
+
+for i in range(1, n + 1):
+    print("*" * i)</code></pre>
+
+        <h3>2.3. Iterar sobre Cadenas de Texto</h3>
+
+        <pre><code class="language-python"># Ejemplo: Iterar cada carácter de una cadena
+palabra = "Python"
+
+print("Letra por letra:")
+for letra in palabra:
+    print(letra)</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Contar vocales en una palabra
+texto = input("Introduce una frase: ").lower()
+vocales = "aeiouáéíóú"
+contador = 0
+
+for letra in texto:
+    if letra in vocales:
+        contador += 1
+
+print(f"La frase tiene {contador} vocales")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Invertir una palabra
+palabra = input("Introduce una palabra: ")
+palabra_invertida = ""
+
+for letra in palabra:
+    palabra_invertida = letra + palabra_invertida
+
+print(f"Palabra invertida: {palabra_invertida}")</code></pre>
+
+        <h2>3. El Bucle while - Repetir Mientras se Cumpla una Condición</h2>
+        <p>El bucle <code>while</code> se ejecuta <strong>mientras</strong> una condición sea verdadera.</p>
+
+        <p><strong>Sintaxis:</strong></p>
+        <pre><code class="language-python">while condicion:
+    # código que se repite
+    instruccion1
+    instruccion2</code></pre>
+
+        <p><strong>⚠️ Cuidado:</strong> Si la condición siempre es True, tendrás un <strong>bucle infinito</strong>.</p>
+
+        <pre><code class="language-python"># Ejemplo básico: Contador con while
+contador = 1
+
+while contador <= 5:
+    print(f"Vuelta número {contador}")
+    contador += 1  # ¡MUY IMPORTANTE! Sin esto, bucle infinito
+
+print("Fin del bucle")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Pedir un número positivo (validación)
+numero = int(input("Introduce un número positivo: "))
+
+while numero <= 0:
+    print("Error: el número debe ser positivo")
+    numero = int(input("Introduce un número positivo: "))
+
+print(f"Perfecto, has introducido: {numero}")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Adivinar un número
+numero_secreto = 7
+intento = int(input("Adivina el número (1-10): "))
+
+while intento != numero_secreto:
+    if intento < numero_secreto:
+        print("Más alto")
+    else:
+        print("Más bajo")
+    
+    intento = int(input("Intenta de nuevo: "))
+
+print("¡Correcto! ¡Has adivinado!")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Sumar números hasta que el usuario diga basta
+suma = 0
+continuar = "si"
+
+while continuar == "si":
+    numero = float(input("Introduce un número: "))
+    suma += numero
+    print(f"Suma actual: {suma}")
+    continuar = input("¿Quieres añadir otro número? (si/no): ").lower()
+
+print(f"Suma final: {suma}")</code></pre>
+
+        <h2>4. Diferencias entre for y while</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Aspecto</th>
+                    <th>for</th>
+                    <th>while</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Cuándo usar</strong></td>
+                    <td>Cuando sabes cuántas veces repetir</td>
+                    <td>Cuando repites hasta que se cumpla una condición</td>
+                </tr>
+                <tr>
+                    <td><strong>Iteración</strong></td>
+                    <td>Sobre una secuencia</td>
+                    <td>Mientras condición sea True</td>
+                </tr>
+                <tr>
+                    <td><strong>Riesgo de bucle infinito</strong></td>
+                    <td>Bajo</td>
+                    <td>Alto (si no se actualiza la condición)</td>
+                </tr>
+                <tr>
+                    <td><strong>Ejemplo típico</strong></td>
+                    <td>Recorrer una lista, rango</td>
+                    <td>Validar entrada, menús</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Regla general:</strong></p>
+        <ul>
+            <li>Usa <code>for</code> cuando sabes el número de iteraciones</li>
+            <li>Usa <code>while</code> cuando no sabes cuántas veces iterar (depende de una condición)</li>
+        </ul>
+
+        <pre><code class="language-python"># Mismo resultado con for y while
+
+# Con FOR
+print("Con FOR:")
+for i in range(1, 6):
+    print(i)
+
+# Con WHILE
+print("\nCon WHILE:")
+i = 1
+while i <= 5:
+    print(i)
+    i += 1</code></pre>
+
+        <h2>5. break - Salir de un Bucle</h2>
+        <p><code>break</code> termina el bucle inmediatamente, sin importar la condición.</p>
+
+        <pre><code class="language-python"># Ejemplo: Buscar un número
+objetivo = 7
+
+for i in range(1, 11):
+    print(f"Verificando número {i}")
+    if i == objetivo:
+        print(f"¡Encontrado el {objetivo}!")
+        break  # Sale del bucle
+
+print("Fin del programa")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Salir de un menú
+while True:  # Bucle infinito controlado
+    print("\n=== MENÚ ===")
+    print("1. Opción 1")
+    print("2. Opción 2")
+    print("3. Salir")
+    
+    opcion = input("Elige una opción: ")
+    
+    if opcion == "1":
+        print("Ejecutando opción 1")
+    elif opcion == "2":
+        print("Ejecutando opción 2")
+    elif opcion == "3":
+        print("¡Hasta luego!")
+        break  # Sale del bucle
+    else:
+        print("Opción no válida")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Encontrar el primer número par
+numeros = [1, 3, 5, 8, 9, 11, 14]
+
+for numero in numeros:
+    if numero % 2 == 0:
+        print(f"Primer número par encontrado: {numero}")
+        break
+else:
+    print("No se encontraron números pares")</code></pre>
+
+        <h2>6. continue - Saltar a la Siguiente Iteración</h2>
+        <p><code>continue</code> salta el resto del código en esa iteración y pasa a la siguiente.</p>
+
+        <pre><code class="language-python"># Ejemplo: Imprimir solo números impares
+for i in range(1, 11):
+    if i % 2 == 0:  # Si es par
+        continue  # Salta a la siguiente iteración
+    print(i)  # Solo se ejecuta si i es impar</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Ignorar valores negativos
+numeros = [5, -2, 8, -1, 10, -5, 3]
+suma = 0
+
+for numero in numeros:
+    if numero < 0:
+        continue  # Ignora los negativos
+    suma += numero
+
+print(f"Suma de números positivos: {suma}")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Validar contraseña con reintentos
+password_correcta = "python123"
+intentos = 0
+max_intentos = 3
+
+while intentos < max_intentos:
+    password = input("Introduce la contraseña: ")
+    intentos += 1
+    
+    if password == password_correcta:
+        print("¡Acceso concedido!")
+        break
+    
+    if intentos < max_intentos:
+        print(f"Contraseña incorrecta. Te quedan {max_intentos - intentos} intentos")
+        continue
+    
+    print("Has agotado tus intentos")</code></pre>
+
+        <h2>7. Bucles Anidados</h2>
+        <p>Podemos poner un bucle dentro de otro bucle. Útil para trabajar con matrices, tablas, etc.</p>
+
+        <pre><code class="language-python"># Ejemplo: Tabla de multiplicar del 1 al 5
+for i in range(1, 6):
+    print(f"\nTabla del {i}:")
+    for j in range(1, 11):
+        print(f"{i} x {j} = {i*j}")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Dibujar un rectángulo
+filas = int(input("Número de filas: "))
+columnas = int(input("Número de columnas: "))
+
+for i in range(filas):
+    for j in range(columnas):
+        print("*", end="")  # end="" evita el salto de línea
+    print()  # Salto de línea al final de cada fila</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Pirámide de números
+n = int(input("Altura de la pirámide: "))
+
+for i in range(1, n + 1):
+    for j in range(1, i + 1):
+        print(j, end=" ")
+    print()</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Encontrar números primos del 1 al 50
+print("Números primos del 1 al 50:")
+
+for num in range(2, 51):
+    es_primo = True
+    
+    for divisor in range(2, num):
+        if num % divisor == 0:
+            es_primo = False
+            break
+    
+    if es_primo:
+        print(num, end=" ")</code></pre>
+
+        <h2>8. La Cláusula else en Bucles</h2>
+        <p>Los bucles <code>for</code> y <code>while</code> pueden tener un bloque <code>else</code> que se ejecuta cuando el bucle termina normalmente (sin <code>break</code>).</p>
+
+        <pre><code class="language-python"># Ejemplo: Buscar un elemento
+numeros = [1, 3, 5, 7, 9]
+buscar = 6
+
+for numero in numeros:
+    if numero == buscar:
+        print(f"Encontrado: {buscar}")
+        break
+else:
+    print(f"No se encontró {buscar} en la lista")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Verificar si un número es primo
+numero = int(input("Introduce un número: "))
+
+if numero < 2:
+    print(f"{numero} no es primo")
+else:
+    for i in range(2, numero):
+        if numero % i == 0:
+            print(f"{numero} no es primo (divisible por {i})")
+            break
+    else:
+        print(f"{numero} es primo")</code></pre>
+
+        <h2>9. Patrones Comunes con Bucles</h2>
+
+        <h3>9.1. Acumular Valores</h3>
+
+        <pre><code class="language-python"># Sumar
+numeros = [10, 20, 30, 40, 50]
+suma = 0
+
+for numero in numeros:
+    suma += numero
+
+print(f"Suma total: {suma}")</code></pre>
+
+        <pre><code class="language-python"># Multiplicar (producto)
+numeros = [2, 3, 4, 5]
+producto = 1
+
+for numero in numeros:
+    producto *= numero
+
+print(f"Producto: {producto}")</code></pre>
+
+        <h3>9.2. Contar Elementos</h3>
+
+        <pre><code class="language-python"># Contar números pares
+numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+contador_pares = 0
+
+for numero in numeros:
+    if numero % 2 == 0:
+        contador_pares += 1
+
+print(f"Números pares: {contador_pares}")</code></pre>
+
+        <h3>9.3. Encontrar Máximo y Mínimo</h3>
+
+        <pre><code class="language-python"># Encontrar el máximo
+numeros = [23, 45, 12, 89, 34, 67]
+maximo = numeros[0]  # Inicializar con el primer elemento
+
+for numero in numeros:
+    if numero > maximo:
+        maximo = numero
+
+print(f"El máximo es: {maximo}")</code></pre>
+
+        <pre><code class="language-python"># Encontrar el mínimo
+numeros = [23, 45, 12, 89, 34, 67]
+minimo = numeros[0]
+
+for numero in numeros:
+    if numero < minimo:
+        minimo = numero
+
+print(f"El mínimo es: {minimo}")</code></pre>
+
+        <h3>9.4. Filtrar Elementos</h3>
+
+        <pre><code class="language-python"># Crear una lista con solo números positivos
+numeros = [5, -2, 8, -1, 10, -5, 3]
+positivos = []
+
+for numero in numeros:
+    if numero > 0:
+        positivos.append(numero)
+
+print(f"Números positivos: {positivos}")</code></pre>
+
+        <h2>10. Ejemplos Prácticos Completos</h2>
+
+        <pre><code class="language-python"># Ejemplo 1: Calculadora de promedio de notas
+print("=== CALCULADORA DE PROMEDIO ===")
+cantidad = int(input("¿Cuántas notas vas a introducir? "))
+
+suma = 0
+notas_aprobadas = 0
+
+for i in range(1, cantidad + 1):
+    nota = float(input(f"Nota {i}: "))
+    suma += nota
+    
+    if nota >= 5:
+        notas_aprobadas += 1
+
+promedio = suma / cantidad
+porcentaje_aprobado = (notas_aprobadas / cantidad) * 100
+
+print(f"\nPromedio: {promedio:.2f}")
+print(f"Notas aprobadas: {notas_aprobadas}/{cantidad}")
+print(f"Porcentaje aprobado: {porcentaje_aprobado:.1f}%")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 2: Generador de números de Fibonacci
+print("=== SECUENCIA DE FIBONACCI ===")
+n = int(input("¿Cuántos números de Fibonacci quieres ver? "))
+
+a, b = 0, 1
+
+for i in range(n):
+    print(a, end=" ")
+    a, b = b, a + b
+
+print()</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 3: Conversor de temperatura con menú
+print("=== CONVERSOR DE TEMPERATURA ===")
+
+while True:
+    print("\n1. Celsius a Fahrenheit")
+    print("2. Fahrenheit a Celsius")
+    print("3. Salir")
+    
+    opcion = input("Elige una opción: ")
+    
+    if opcion == "1":
+        celsius = float(input("Temperatura en Celsius: "))
+        fahrenheit = (celsius * 9/5) + 32
+        print(f"{celsius}°C = {fahrenheit:.2f}°F")
+    
+    elif opcion == "2":
+        fahrenheit = float(input("Temperatura en Fahrenheit: "))
+        celsius = (fahrenheit - 32) * 5/9
+        print(f"{fahrenheit}°F = {celsius:.2f}°C")
+    
+    elif opcion == "3":
+        print("¡Hasta luego!")
+        break
+    
+    else:
+        print("Opción no válida")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 4: Verificador de palíndromos
+palabra = input("Introduce una palabra: ").lower().replace(" ", "")
+es_palindromo = True
+
+longitud = len(palabra)
+
+for i in range(longitud // 2):
+    if palabra[i] != palabra[longitud - 1 - i]:
+        es_palindromo = False
+        break
+
+if es_palindromo:
+    print(f"'{palabra}' es un palíndromo")
+else:
+    print(f"'{palabra}' NO es un palíndromo")</code></pre>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 04: Listas y Tuplas</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Tema 04: Listas y Tuplas</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Listas y Tuplas</h1>
+
+        <h2>1. ¿Qué son las Listas?</h2>
+        <p>Una <strong>lista</strong> es una colección <strong>ordenada</strong> y <strong>modificable</strong> de elementos.</p>
+
+        <h3>Características de las listas:</h3>
+        <ul>
+            <li>Pueden contener elementos de <strong>diferentes tipos</strong> (números, cadenas, booleanos, etc.)</li>
+            <li>Los elementos están <strong>ordenados</strong> (tienen una posición específica)</li>
+            <li>Son <strong>mutables</strong> (se pueden modificar después de crearlas)</li>
+            <li>Permiten <strong>elementos duplicados</strong></li>
+            <li>Se definen con <strong>corchetes</strong> <code>[]</code></li>
+        </ul>
+
+        <h3>Sintaxis básica:</h3>
+        <pre><code class="language-python">nombre_lista = [elemento1, elemento2, elemento3, ...]</code></pre>
+
+        <h3>En la vida real:</h3>
+        <ul>
+            <li>Lista de compras</li>
+            <li>Lista de estudiantes en una clase</li>
+            <li>Lista de reproducción de música</li>
+            <li>Registro de temperaturas diarias</li>
+        </ul>
+
+        <h2>2. Crear Listas</h2>
+
+        <pre><code class="language-python"># Lista vacía
+lista_vacia = []
+print("Lista vacía:", lista_vacia)
+
+# Lista de números
+numeros = [1, 2, 3, 4, 5]
+print("Números:", numeros)
+
+# Lista de cadenas
+frutas = ["manzana", "banana", "naranja", "pera"]
+print("Frutas:", frutas)
+
+# Lista mixta (diferentes tipos)
+mixta = ["Juan", 25, True, 1.75, "España"]
+print("Lista mixta:", mixta)
+
+# Lista con duplicados
+letras = ["a", "b", "c", "a", "b"]
+print("Letras:", letras)</code></pre>
+
+        <pre><code class="language-python"># Crear lista con list()
+lista_rango = list(range(1, 11))
+print("Del 1 al 10:", lista_rango)
+
+# Crear lista desde una cadena
+palabra = "Python"
+letras = list(palabra)
+print("Letras de Python:", letras)</code></pre>
+
+        <h2>3. Acceder a Elementos de una Lista</h2>
+        <p>Cada elemento de una lista tiene un <strong>índice</strong> (posición) que comienza en <strong>0</strong>.</p>
+
+        <h3>Índices positivos (de izquierda a derecha):</h3>
+        <pre><code class="language-python">Lista:   ["a", "b", "c", "d", "e"]
+Índice:    0    1    2    3    4</code></pre>
+
+        <h3>Índices negativos (de derecha a izquierda):</h3>
+        <pre><code class="language-python">Lista:   ["a", "b", "c", "d", "e"]
+Índice:   -5   -4   -3   -2   -1</code></pre>
+
+        <pre><code class="language-python"># Acceder por índice
+frutas = ["manzana", "banana", "naranja", "pera", "uva"]
+
+print("Primera fruta:", frutas[0])
+print("Segunda fruta:", frutas[1])
+print("Última fruta:", frutas[-1])
+print("Penúltima fruta:", frutas[-2])</code></pre>
+
+        <pre><code class="language-python"># ⚠️ Error común: índice fuera de rango
+numeros = [10, 20, 30]
+print(numeros[0])  # ✅ Correcto
+print(numeros[2])  # ✅ Correcto
+# print(numeros[3])  # ❌ Error: IndexError (no existe índice 3)</code></pre>
+
+        <h2>4. Slicing - Extraer Sublistas</h2>
+        <p>El <strong>slicing</strong> permite extraer una porción de la lista.</p>
+
+        <p><strong>Sintaxis:</strong></p>
+        <pre><code class="language-python">lista[inicio:fin:paso]</code></pre>
+
+        <ul>
+            <li><code>inicio</code>: índice donde comienza (incluido)</li>
+            <li><code>fin</code>: índice donde termina (NO incluido)</li>
+            <li><code>paso</code>: cada cuántos elementos tomar (opcional, por defecto 1)</li>
+        </ul>
+
+        <pre><code class="language-python">numeros = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# Desde el índice 2 hasta el 5 (no incluido)
+print("numeros[2:5]:", numeros[2:5])  # [2, 3, 4]
+
+# Desde el inicio hasta el índice 4
+print("numeros[:4]:", numeros[:4])  # [0, 1, 2, 3]
+
+# Desde el índice 5 hasta el final
+print("numeros[5:]:", numeros[5:])  # [5, 6, 7, 8, 9]
+
+# Toda la lista
+print("numeros[:]:", numeros[:])  # Copia de toda la lista
+
+# Cada 2 elementos
+print("numeros[::2]:", numeros[::2])  # [0, 2, 4, 6, 8]
+
+# Invertir la lista
+print("numeros[::-1]:", numeros[::-1])  # [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]</code></pre>
+
+        <pre><code class="language-python"># Ejemplos prácticos
+dias = ["lun", "mar", "mie", "jue", "vie", "sab", "dom"]
+
+print("Días laborables:", dias[:5])
+print("Fin de semana:", dias[5:])
+print("Días alternos:", dias[::2])</code></pre>
+
+        <h2>5. Modificar Listas</h2>
+        <p>Las listas son <strong>mutables</strong>, lo que significa que podemos cambiar sus elementos.</p>
+
+        <pre><code class="language-python"># Modificar un elemento
+frutas = ["manzana", "banana", "naranja"]
+print("Antes:", frutas)
+
+frutas[1] = "fresa"
+print("Después:", frutas)</code></pre>
+
+        <pre><code class="language-python"># Modificar varios elementos con slicing
+numeros = [1, 2, 3, 4, 5]
+print("Antes:", numeros)
+
+numeros[1:4] = [20, 30, 40]
+print("Después:", numeros)</code></pre>
+
+        <h2>6. Métodos de Listas - Agregar Elementos</h2>
+
+        <h3>6.1. append() - Agregar al Final</h3>
+
+        <pre><code class="language-python"># append() agrega UN elemento al final
+numeros = [1, 2, 3]
+print("Antes:", numeros)
+
+numeros.append(4)
+print("Después de append(4):", numeros)
+
+numeros.append(5)
+print("Después de append(5):", numeros)</code></pre>
+
+        <pre><code class="language-python"># Ejemplo práctico: construir una lista dinámicamente
+compras = []
+
+compras.append("leche")
+compras.append("pan")
+compras.append("huevos")
+
+print("Lista de compras:", compras)</code></pre>
+
+        <h3>6.2. insert() - Insertar en una Posición Específica</h3>
+
+        <pre><code class="language-python"># insert(índice, elemento)
+frutas = ["manzana", "naranja", "pera"]
+print("Antes:", frutas)
+
+frutas.insert(1, "banana")
+print("Después de insert(1, 'banana'):", frutas)
+
+frutas.insert(0, "fresa")
+print("Después de insert(0, 'fresa'):", frutas)</code></pre>
+
+        <h3>6.3. extend() - Agregar Múltiples Elementos</h3>
+
+        <pre><code class="language-python"># extend() agrega todos los elementos de otra lista
+numeros = [1, 2, 3]
+print("Antes:", numeros)
+
+numeros.extend([4, 5, 6])
+print("Después de extend([4, 5, 6]):", numeros)</code></pre>
+
+        <pre><code class="language-python"># Diferencia entre append() y extend()
+lista1 = [1, 2, 3]
+lista2 = [1, 2, 3]
+
+lista1.append([4, 5, 6])  # Agrega la lista como UN elemento
+lista2.extend([4, 5, 6])  # Agrega cada elemento de la lista
+
+print("Con append():", lista1)  # [1, 2, 3, [4, 5, 6]]
+print("Con extend():", lista2)  # [1, 2, 3, 4, 5, 6]</code></pre>
+
+        <h3>6.4. Operador + y * con Listas</h3>
+
+        <pre><code class="language-python"># Concatenar listas con +
+lista1 = [1, 2, 3]
+lista2 = [4, 5, 6]
+lista3 = lista1 + lista2
+print("Concatenar:", lista3)
+
+# Repetir listas con *
+lista = ["Python"] * 3
+print("Repetir:", lista)</code></pre>
+
+        <h2>7. Métodos de Listas - Eliminar Elementos</h2>
+
+        <h3>7.1. remove() - Eliminar por Valor</h3>
+
+        <pre><code class="language-python"># remove() elimina la primera aparición del valor
+frutas = ["manzana", "banana", "naranja", "banana"]
+print("Antes:", frutas)
+
+frutas.remove("banana")
+print("Después de remove('banana'):", frutas)  # Solo elimina la primera</code></pre>
+
+        <pre><code class="language-python"># ⚠️ Error si el elemento no existe
+numeros = [1, 2, 3]
+# numeros.remove(5)  # ValueError: 5 is not in list
+
+# ✅ Mejor: verificar primero
+if 5 in numeros:
+    numeros.remove(5)
+else:
+    print("El número 5 no está en la lista")</code></pre>
+
+        <h3>7.2. pop() - Eliminar por Índice y Devolver el Valor</h3>
+
+        <pre><code class="language-python"># pop() sin argumentos elimina el último elemento
+numeros = [10, 20, 30, 40, 50]
+print("Antes:", numeros)
+
+ultimo = numeros.pop()
+print("Elemento eliminado:", ultimo)
+print("Después:", numeros)</code></pre>
+
+        <pre><code class="language-python"># pop(índice) elimina el elemento en esa posición
+frutas = ["manzana", "banana", "naranja", "pera"]
+print("Antes:", frutas)
+
+fruta_eliminada = frutas.pop(1)
+print("Fruta eliminada:", fruta_eliminada)
+print("Después:", frutas)</code></pre>
+
+        <h3>7.3. del - Eliminar por Índice o Rango</h3>
+
+        <pre><code class="language-python"># del elimina por índice
+numeros = [10, 20, 30, 40, 50]
+print("Antes:", numeros)
+
+del numeros[2]
+print("Después de del numeros[2]:", numeros)</code></pre>
+
+        <pre><code class="language-python"># del con slicing - eliminar varios elementos
+numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+print("Antes:", numeros)
+
+del numeros[2:5]
+print("Después de del numeros[2:5]:", numeros)</code></pre>
+
+        <pre><code class="language-python"># del puede eliminar toda la lista
+lista = [1, 2, 3]
+del lista
+# print(lista)  # NameError: lista no existe</code></pre>
+
+        <h3>7.4. clear() - Vaciar la Lista</h3>
+
+        <pre><code class="language-python"># clear() elimina todos los elementos pero mantiene la lista
+numeros = [1, 2, 3, 4, 5]
+print("Antes:", numeros)
+
+numeros.clear()
+print("Después de clear():", numeros)
+print("La lista existe:", type(numeros))  # Sigue siendo una lista</code></pre>
+
+        <h2>8. Otros Métodos Útiles de Listas</h2>
+
+        <h3>8.1. index() - Encontrar la Posición de un Elemento</h3>
+
+        <pre><code class="language-python"># index() devuelve el índice de la primera aparición
+frutas = ["manzana", "banana", "naranja", "pera", "banana"]
+
+posicion = frutas.index("naranja")
+print(f"'naranja' está en la posición {posicion}")
+
+posicion_banana = frutas.index("banana")
+print(f"Primera 'banana' en posición {posicion_banana}")</code></pre>
+
+        <pre><code class="language-python"># ⚠️ Error si el elemento no existe
+numeros = [1, 2, 3, 4, 5]
+# posicion = numeros.index(10)  # ValueError
+
+# ✅ Mejor: verificar primero con 'in'
+if 10 in numeros:
+    posicion = numeros.index(10)
+else:
+    print("El número 10 no está en la lista")</code></pre>
+
+        <h3>8.2. count() - Contar Apariciones</h3>
+
+        <pre><code class="language-python"># count() devuelve cuántas veces aparece un elemento
+numeros = [1, 2, 3, 2, 4, 2, 5, 2]
+
+veces = numeros.count(2)
+print(f"El número 2 aparece {veces} veces")
+
+print(f"El número 3 aparece {numeros.count(3)} veces")
+print(f"El número 10 aparece {numeros.count(10)} veces")  # 0 si no existe</code></pre>
+
+        <h3>8.3. sort() - Ordenar la Lista</h3>
+
+        <pre><code class="language-python"># sort() ordena la lista EN EL LUGAR (modifica la original)
+numeros = [5, 2, 8, 1, 9, 3]
+print("Antes:", numeros)
+
+numeros.sort()
+print("Después de sort():", numeros)</code></pre>
+
+        <pre><code class="language-python"># Ordenar en orden descendente
+numeros = [5, 2, 8, 1, 9, 3]
+numeros.sort(reverse=True)
+print("Orden descendente:", numeros)</code></pre>
+
+        <pre><code class="language-python"># Ordenar cadenas (alfabéticamente)
+nombres = ["María", "Ana", "Juan", "Carlos"]
+nombres.sort()
+print("Ordenados:", nombres)</code></pre>
+
+        <h3>8.4. reverse() - Invertir el Orden</h3>
+
+        <pre><code class="language-python"># reverse() invierte el orden de la lista
+numeros = [1, 2, 3, 4, 5]
+print("Antes:", numeros)
+
+numeros.reverse()
+print("Después de reverse():", numeros)</code></pre>
+
+        <h3>8.5. copy() - Copiar una Lista</h3>
+
+        <pre><code class="language-python"># ❌ Asignación simple NO crea una copia
+lista1 = [1, 2, 3]
+lista2 = lista1  # lista2 apunta a la misma lista que lista1
+
+lista2.append(4)
+print("lista1:", lista1)  # ¡También se modifica!
+print("lista2:", lista2)</code></pre>
+
+        <pre><code class="language-python"># ✅ copy() crea una copia independiente
+lista1 = [1, 2, 3]
+lista2 = lista1.copy()  # Copia real
+
+lista2.append(4)
+print("lista1:", lista1)  # No se modifica
+print("lista2:", lista2)</code></pre>
+
+        <pre><code class="language-python"># También se puede copiar con slicing
+lista1 = [1, 2, 3]
+lista2 = lista1[:]  # Copia con slicing
+
+lista2.append(4)
+print("lista1:", lista1)
+print("lista2:", lista2)</code></pre>
+
+        <h2>9. Operaciones con Listas</h2>
+
+        <h3>9.1. len() - Longitud de la Lista</h3>
+
+        <pre><code class="language-python"># len() devuelve el número de elementos
+frutas = ["manzana", "banana", "naranja"]
+print(f"La lista tiene {len(frutas)} elementos")
+
+lista_vacia = []
+print(f"Lista vacía tiene {len(lista_vacia)} elementos")</code></pre>
+
+        <h3>9.2. in - Verificar si un Elemento Existe</h3>
+
+        <pre><code class="language-python"># Operador 'in' verifica pertenencia
+frutas = ["manzana", "banana", "naranja"]
+
+if "banana" in frutas:
+    print("Sí, tenemos bananas")
+
+if "pera" not in frutas:
+    print("No tenemos peras")</code></pre>
+
+        <h3>9.3. min(), max(), sum() - Operaciones Numéricas</h3>
+
+        <pre><code class="language-python"># Funciones para listas numéricas
+numeros = [10, 5, 8, 15, 3, 12]
+
+print("Mínimo:", min(numeros))
+print("Máximo:", max(numeros))
+print("Suma:", sum(numeros))
+print("Promedio:", sum(numeros) / len(numeros))</code></pre>
+
+        <h2>10. Recorrer Listas con Bucles</h2>
+
+        <h3>10.1. Bucle for Básico</h3>
+
+        <pre><code class="language-python"># Recorrer elementos directamente
+frutas = ["manzana", "banana", "naranja", "pera"]
+
+for fruta in frutas:
+    print(f"Me gusta la {fruta}")</code></pre>
+
+        <h3>10.2. Recorrer con Índices</h3>
+
+        <pre><code class="language-python"># Usar range() y len() para obtener índices
+frutas = ["manzana", "banana", "naranja"]
+
+for i in range(len(frutas)):
+    print(f"Fruta {i}: {frutas[i]}")</code></pre>
+
+        <h3>10.3. enumerate() - Índice y Valor al Mismo Tiempo</h3>
+
+        <pre><code class="language-python"># enumerate() da índice y valor
+frutas = ["manzana", "banana", "naranja"]
+
+for indice, fruta in enumerate(frutas):
+    print(f"{indice}: {fruta}")</code></pre>
+
+        <pre><code class="language-python"># Empezar el índice desde 1
+frutas = ["manzana", "banana", "naranja"]
+
+for indice, fruta in enumerate(frutas, start=1):
+    print(f"#{indice}: {fruta}")</code></pre>
+
+        <h2>11. List Comprehension - Crear Listas de Forma Concisa</h2>
+        <p>La <strong>list comprehension</strong> es una forma compacta de crear listas.</p>
+
+        <p><strong>Sintaxis básica:</strong></p>
+        <pre><code class="language-python">[expresion for elemento in iterable]</code></pre>
+
+        <p><strong>Con condición:</strong></p>
+        <pre><code class="language-python">[expresion for elemento in iterable if condicion]</code></pre>
+
+        <pre><code class="language-python"># Forma tradicional: crear lista de cuadrados
+cuadrados = []
+for i in range(1, 6):
+    cuadrados.append(i ** 2)
+print("Forma tradicional:", cuadrados)
+
+# Con list comprehension (más conciso)
+cuadrados = [i ** 2 for i in range(1, 6)]
+print("List comprehension:", cuadrados)</code></pre>
+
+        <pre><code class="language-python"># Filtrar solo números pares
+numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+pares = [n for n in numeros if n % 2 == 0]
+print("Números pares:", pares)</code></pre>
+
+        <pre><code class="language-python"># Convertir a mayúsculas
+palabras = ["hola", "mundo", "python"]
+mayusculas = [palabra.upper() for palabra in palabras]
+print("En mayúsculas:", mayusculas)</code></pre>
+
+        <pre><code class="language-python"># Ejemplo más complejo: solo palabras largas en mayúsculas
+palabras = ["el", "python", "es", "genial"]
+largas_mayus = [p.upper() for p in palabras if len(p) > 2]
+print("Palabras largas en mayúsculas:", largas_mayus)</code></pre>
+
+        <h2>12. Listas Multidimensionales (Listas de Listas)</h2>
+        <p>Una lista puede contener otras listas como elementos.</p>
+
+        <pre><code class="language-python"># Matriz 3x3
+matriz = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+print("Matriz completa:")
+print(matriz)</code></pre>
+
+        <pre><code class="language-python"># Acceder a elementos
+matriz = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+print("Primera fila:", matriz[0])
+print("Segundo elemento de la primera fila:", matriz[0][1])
+print("Elemento central:", matriz[1][1])</code></pre>
+
+        <pre><code class="language-python"># Recorrer matriz con bucles anidados
+matriz = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+print("Matriz formateada:")
+for fila in matriz:
+    for elemento in fila:
+        print(elemento, end=" ")
+    print()  # Nueva línea después de cada fila</code></pre>
+
+        <pre><code class="language-python"># Ejemplo práctico: tabla de estudiantes con notas
+estudiantes = [
+    ["Ana", 8.5, 9.0, 7.5],
+    ["Juan", 7.0, 8.0, 8.5],
+    ["María", 9.5, 9.0, 10.0]
+]
+
+for estudiante in estudiantes:
+    nombre = estudiante[0]
+    notas = estudiante[1:]
+    promedio = sum(notas) / len(notas)
+    print(f"{nombre}: Promedio = {promedio:.2f}")</code></pre>
+
+        <h2>13. Tuplas - Listas Inmutables</h2>
+        <p>Las <strong>tuplas</strong> son similares a las listas, pero <strong>NO SE PUEDEN MODIFICAR</strong> después de crearlas.</p>
+
+        <h3>Características de las tuplas:</h3>
+        <ul>
+            <li>Son <strong>inmutables</strong> (no se pueden modificar)</li>
+            <li>Se definen con <strong>paréntesis</strong> <code>()</code></li>
+            <li>Son más rápidas que las listas</li>
+            <li>Se usan para datos que no deben cambiar</li>
+        </ul>
+
+        <h3>Sintaxis:</h3>
+        <pre><code class="language-python">nombre_tupla = (elemento1, elemento2, elemento3)</code></pre>
+
+        <pre><code class="language-python"># Crear tuplas
+coordenadas = (10, 20)
+print("Coordenadas:", coordenadas)
+
+colores_rgb = (255, 128, 0)
+print("Color RGB:", colores_rgb)
+
+persona = ("Juan", 25, "España")
+print("Persona:", persona)</code></pre>
+
+        <pre><code class="language-python"># Tupla de un solo elemento (necesita coma)
+tupla_unitaria = (5,)  # Con coma
+no_tupla = (5)  # Sin coma, es solo un número
+
+print(type(tupla_unitaria))  # <class 'tuple'>
+print(type(no_tupla))  # <class 'int'></code></pre>
+
+        <pre><code class="language-python"># Acceder a elementos (igual que listas)
+coordenadas = (10, 20, 30)
+
+print("Primera coordenada:", coordenadas[0])
+print("Última coordenada:", coordenadas[-1])
+print("Primeras dos:", coordenadas[:2])</code></pre>
+
+        <pre><code class="language-python"># ❌ Las tuplas NO se pueden modificar
+colores = ("rojo", "verde", "azul")
+# colores[0] = "amarillo"  # TypeError: 'tuple' object does not support item assignment</code></pre>
+
+        <pre><code class="language-python"># Métodos de tuplas (solo 2)
+numeros = (1, 2, 3, 2, 4, 2, 5)
+
+print("Veces que aparece 2:", numeros.count(2))
+print("Índice del primer 3:", numeros.index(3))</code></pre>
+
+        <pre><code class="language-python"># Recorrer tuplas (igual que listas)
+dias_semana = ("lun", "mar", "mie", "jue", "vie", "sab", "dom")
+
+for dia in dias_semana:
+    print(dia)</code></pre>
+
+        <h3>Desempaquetar Tuplas</h3>
+
+        <pre><code class="language-python"># Asignar elementos de tupla a variables
+coordenadas = (10, 20)
+x, y = coordenadas
+
+print(f"x = {x}")
+print(f"y = {y}")</code></pre>
+
+        <pre><code class="language-python"># Intercambiar valores fácilmente
+a = 5
+b = 10
+print(f"Antes: a={a}, b={b}")
+
+a, b = b, a  # Intercambio con tuplas
+print(f"Después: a={a}, b={b}")</code></pre>
+
+        <h2>14. Diferencias entre Listas y Tuplas</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Característica</th>
+                    <th>Lista</th>
+                    <th>Tupla</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Sintaxis</strong></td>
+                    <td><code>[1, 2, 3]</code></td>
+                    <td><code>(1, 2, 3)</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Mutabilidad</strong></td>
+                    <td>Mutable (se puede modificar)</td>
+                    <td>Inmutable (NO se puede modificar)</td>
+                </tr>
+                <tr>
+                    <td><strong>Velocidad</strong></td>
+                    <td>Más lenta</td>
+                    <td>Más rápida</td>
+                </tr>
+                <tr>
+                    <td><strong>Métodos</strong></td>
+                    <td>Muchos (append, remove, etc.)</td>
+                    <td>Solo 2 (count, index)</td>
+                </tr>
+                <tr>
+                    <td><strong>Uso típico</strong></td>
+                    <td>Colecciones que pueden cambiar</td>
+                    <td>Datos fijos, coordenadas, configuración</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>¿Cuándo usar cada una?</h3>
+
+        <p><strong>Usa listas cuando:</strong></p>
+        <ul>
+            <li>Los datos pueden cambiar (agregar, eliminar, modificar)</li>
+            <li>Necesitas métodos como append(), remove(), sort()</li>
+            <li>Trabajas con colecciones dinámicas</li>
+        </ul>
+
+        <p><strong>Usa tuplas cuando:</strong></p>
+        <ul>
+            <li>Los datos son fijos y no deben cambiar</li>
+            <li>Necesitas mayor rendimiento</li>
+            <li>Quieres proteger los datos de modificaciones accidentales</li>
+            <li>Representas coordenadas, fechas, configuraciones</li>
+        </ul>
+
+        <h2>15. Ejemplos Prácticos Completos</h2>
+
+        <pre><code class="language-python"># Ejemplo 1: Gestión de notas
+print("=== GESTIÓN DE NOTAS ===")
+notas = []
+
+# Pedir notas
+cantidad = int(input("¿Cuántas notas vas a introducir? "))
+
+for i in range(cantidad):
+    nota = float(input(f"Nota {i+1}: "))
+    notas.append(nota)
+
+# Calcular estadísticas
+promedio = sum(notas) / len(notas)
+maxima = max(notas)
+minima = min(notas)
+aprobadas = len([n for n in notas if n >= 5])
+
+print(f"\nPromedio: {promedio:.2f}")
+print(f"Nota máxima: {maxima}")
+print(f"Nota mínima: {minima}")
+print(f"Aprobadas: {aprobadas}/{len(notas)}")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 2: Lista de compras interactiva
+print("=== LISTA DE COMPRAS ===")
+compras = []
+
+while True:
+    print("\n1. Agregar artículo")
+    print("2. Ver lista")
+    print("3. Eliminar artículo")
+    print("4. Salir")
+    
+    opcion = input("Elige una opción: ")
+    
+    if opcion == "1":
+        articulo = input("Artículo a agregar: ")
+        compras.append(articulo)
+        print(f"'{articulo}' agregado a la lista")
+    
+    elif opcion == "2":
+        if compras:
+            print("\nLista de compras:")
+            for i, articulo in enumerate(compras, 1):
+                print(f"{i}. {articulo}")
+        else:
+            print("La lista está vacía")
+    
+    elif opcion == "3":
+        if compras:
+            articulo = input("Artículo a eliminar: ")
+            if articulo in compras:
+                compras.remove(articulo)
+                print(f"'{articulo}' eliminado")
+            else:
+                print(f"'{articulo}' no está en la lista")
+        else:
+            print("La lista está vacía")
+    
+    elif opcion == "4":
+        print("¡Hasta luego!")
+        break
+    
+    else:
+        print("Opción no válida")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 3: Filtrar y ordenar datos
+productos = [
+    ("Laptop", 899),
+    ("Mouse", 25),
+    ("Teclado", 75),
+    ("Monitor", 250),
+    ("Webcam", 60)
+]
+
+print("=== PRODUCTOS ===")
+for nombre, precio in productos:
+    print(f"{nombre}: ${precio}")
+
+# Filtrar productos caros (> $100)
+caros = [(n, p) for n, p in productos if p > 100]
+print("\nProductos > $100:")
+for nombre, precio in caros:
+    print(f"{nombre}: ${precio}")
+
+# Ordenar por precio
+productos_ordenados = sorted(productos, key=lambda x: x[1])
+print("\nOrdenados por precio:")
+for nombre, precio in productos_ordenados:
+    print(f"{nombre}: ${precio}")</code></pre>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
