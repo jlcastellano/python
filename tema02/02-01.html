@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 02: Estructuras de Control - Condicionales</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Tema 02: Estructuras de Control - Condicionales</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Estructuras de Control - Condicionales</h1>
+
+        <h2>1. ¿Qué son las Estructuras de Control?</h2>
+        <p>Las <strong>estructuras de control</strong> permiten que el programa tome decisiones y ejecute diferentes bloques de código según las condiciones.</p>
+        
+        <p>En la vida real constantemente tomamos decisiones:</p>
+        <ul>
+            <li><strong>SI</strong> llueve, <strong>ENTONCES</strong> llevo paraguas</li>
+            <li><strong>SI</strong> tengo dinero, <strong>ENTONCES</strong> compro el producto, <strong>SI NO</strong> lo dejo para después</li>
+            <li><strong>SI</strong> es fin de semana, descanso, <strong>SI NO SI</strong> es festivo, también descanso, <strong>SI NO</strong> trabajo</li>
+        </ul>
+
+        <p>En Python, usamos las palabras clave: <code>if</code>, <code>elif</code> (else if), <code>else</code></p>
+
+        <h2>2. La Estructura if - La Condicional Básica</h2>
+        <p>La estructura más simple ejecuta código solo <strong>si</strong> se cumple una condición.</p>
+
+        <p><strong>Sintaxis:</strong></p>
+        <pre><code class="language-python">if condicion:
+    # código que se ejecuta si la condición es True
+    instruccion1
+    instruccion2</code></pre>
+
+        <p><strong>⚠️ Importante:</strong></p>
+        <ul>
+            <li>Después del <code>if</code> va la condición seguida de dos puntos <code>:</code></li>
+            <li>El código dentro del if debe estar <strong>indentado</strong> (sangrado) con 4 espacios o 1 tabulación</li>
+            <li>La indentación es obligatoria en Python</li>
+        </ul>
+
+        <pre><code class="language-python"># Ejemplo básico
+edad = 20
+
+if edad >= 18:
+    print("Eres mayor de edad")
+    print("Puedes votar")
+
+print("Este mensaje siempre se muestra")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo con input
+temperatura = float(input("¿Qué temperatura hace? "))
+
+if temperatura > 30:
+    print("Hace calor, lleva agua")
+
+if temperatura < 10:
+    print("Hace frío, lleva abrigo")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Verificar si un número es positivo
+numero = int(input("Introduce un número: "))
+
+if numero > 0:
+    print("El número", numero, "es positivo")</code></pre>
+
+        <h2>3. La Estructura if-else - Dos Caminos</h2>
+        <p>Cuando queremos hacer algo <strong>si se cumple</strong> la condición y <strong>otra cosa si no se cumple</strong>.</p>
+
+        <p><strong>Sintaxis:</strong></p>
+        <pre><code class="language-python">if condicion:
+    # código si la condición es True
+else:
+    # código si la condición es False</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Verificar si aprobaste
+nota = float(input("¿Qué nota sacaste? "))
+
+if nota >= 5:
+    print("¡Aprobaste! 🎉")
+else:
+    print("No aprobaste 😞")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Número par o impar
+numero = int(input("Introduce un número: "))
+
+if numero % 2 == 0:
+    print(numero, "es par")
+else:
+    print(numero, "es impar")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Control de acceso
+edad = int(input("¿Cuántos años tienes? "))
+
+if edad >= 18:
+    print("Acceso permitido")
+    print("Bienvenido al sistema")
+else:
+    print("Acceso denegado")
+    print("Debes ser mayor de edad")</code></pre>
+
+        <h2>4. La Estructura if-elif-else - Múltiples Caminos</h2>
+        <p>Cuando tenemos <strong>más de dos opciones</strong> posibles.</p>
+
+        <p><strong>Sintaxis:</strong></p>
+        <pre><code class="language-python">if condicion1:
+    # código si condicion1 es True
+elif condicion2:
+    # código si condicion1 es False y condicion2 es True
+elif condicion3:
+    # código si anteriores son False y condicion3 es True
+else:
+    # código si todas las condiciones anteriores son False</code></pre>
+
+        <p><strong>Nota:</strong> <code>elif</code> es la abreviatura de "else if"</p>
+
+        <pre><code class="language-python"># Ejemplo: Calificación según la nota
+nota = float(input("Introduce tu nota (0-10): "))
+
+if nota >= 9:
+    print("Sobresaliente")
+elif nota >= 7:
+    print("Notable")
+elif nota >= 6:
+    print("Bien")
+elif nota >= 5:
+    print("Suficiente")
+else:
+    print("Insuficiente")</code></pre>
+
+        <h3>Usando match (como switch)</h3>
+        <pre><code class="language-python">valor = int(input("Dame un valor"))
+
+match valor:
+    case 0:
+        print("Es cero")
+    case 1 | 2:  # múltiples valores
+        print("Es uno o dos")
+    case _:  # caso por defecto (como default en switch)
+        print("No coincide con ningún patrón")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Clasificación de edades
+edad = int(input("¿Cuántos años tienes? "))
+
+if edad < 0:
+    print("Edad inválida")
+elif edad < 12:
+    print("Eres un niño")
+elif edad < 18:
+    print("Eres un adolescente")
+elif edad < 65:
+    print("Eres un adulto")
+else:
+    print("Eres un adulto mayor")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Menú de opciones
+print("=== MENÚ ===")
+print("1. Nuevo archivo")
+print("2. Abrir archivo")
+print("3. Guardar archivo")
+print("4. Salir")
+
+opcion = int(input("Elige una opción: "))
+
+if opcion == 1:
+    print("Creando nuevo archivo...")
+elif opcion == 2:
+    print("Abriendo archivo...")
+elif opcion == 3:
+    print("Guardando archivo...")
+elif opcion == 4:
+    print("Saliendo...")
+else:
+    print("Opción no válida")</code></pre>
+
+        <h2>5. Condiciones Compuestas con Operadores Lógicos</h2>
+        <p>Podemos combinar múltiples condiciones usando <code>and</code>, <code>or</code>, <code>not</code></p>
+
+        <pre><code class="language-python"># Ejemplo con AND - Ambas condiciones deben cumplirse
+edad = int(input("¿Cuántos años tienes? "))
+tiene_carnet = input("¿Tienes carnet de conducir? (si/no): ").lower()
+
+if edad >= 18 and tiene_carnet == "si":
+    print("Puedes conducir")
+else:
+    print("No puedes conducir")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo con OR - Al menos una condición debe cumplirse
+dia = input("¿Qué día es hoy? ").lower()
+
+if dia == "sábado" or dia == "domingo":
+    print("Es fin de semana, ¡a descansar!")
+else:
+    print("Es día laboral")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo con NOT - Invierte la condición
+llueve = input("¿Está lloviendo? (si/no): ").lower()
+
+if not llueve == "si":
+    print("No necesitas paraguas")
+else:
+    print("Lleva paraguas")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo combinado: Descuento en tienda
+es_estudiante = input("¿Eres estudiante? (si/no): ").lower()
+edad = int(input("¿Cuántos años tienes? "))
+total_compra = float(input("Total de la compra: "))
+
+# Descuento si es estudiante O mayor de 65 O compra más de 100€
+if es_estudiante == "si" or edad > 65 or total_compra > 100:
+    descuento = total_compra * 0.10
+    total_final = total_compra - descuento
+    print(f"Tienes un descuento de {descuento}€")
+    print(f"Total a pagar: {total_final}€")
+else:
+    print(f"Total a pagar: {total_compra}€")</code></pre>
+
+        <h2>6. Verificación de Rangos</h2>
+        <p>Podemos verificar si un valor está dentro de un rango usando operadores de comparación combinados.</p>
+
+        <pre><code class="language-python"># Verificar si un número está en un rango
+numero = int(input("Introduce un número del 1 al 10: "))
+
+if 1 <= numero <= 10:
+    print("Número válido")
+else:
+    print("Número fuera de rango")</code></pre>
+
+        <pre><code class="language-python"># Clasificar temperatura
+temperatura = float(input("Temperatura actual: "))
+
+if temperatura < 0:
+    print("Congelación")
+elif 0 <= temperatura < 15:
+    print("Frío")
+elif 15 <= temperatura < 25:
+    print("Templado")
+elif 25 <= temperatura < 35:
+    print("Calor")
+else:
+    print("Calor extremo")</code></pre>
+
+        <pre><code class="language-python"># Verificar hora del día
+hora = int(input("¿Qué hora es? (0-23): "))
+
+if 0 <= hora < 6:
+    print("Madrugada")
+elif 6 <= hora < 12:
+    print("Mañana")
+elif 12 <= hora < 20:
+    print("Tarde")
+elif 20 <= hora < 24:
+    print("Noche")
+else:
+    print("Hora inválida")</code></pre>
+
+        <h2>7. Condicionales Anidados</h2>
+        <p>Podemos poner un <code>if</code> dentro de otro <code>if</code> para verificar condiciones más complejas.</p>
+        <p><strong>⚠️ Cuidado:</strong> Cada nivel de anidación añade 4 espacios más de indentación.</p>
+
+        <pre><code class="language-python"># Ejemplo: Acceso a una atracción
+edad = int(input("¿Cuántos años tienes? "))
+
+if edad >= 12:
+    altura = float(input("¿Cuánto mides (en metros)? "))
+    
+    if altura >= 1.40:
+        print("Puedes subir a la atracción")
+    else:
+        print("No tienes la altura mínima (1.40m)")
+else:
+    print("Eres menor de 12 años, no puedes subir")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Sistema de login
+usuario_correcto = "admin"
+password_correcto = "1234"
+
+usuario = input("Usuario: ")
+
+if usuario == usuario_correcto:
+    password = input("Contraseña: ")
+    
+    if password == password_correcto:
+        print("Acceso concedido")
+        print("Bienvenido al sistema")
+    else:
+        print("Contraseña incorrecta")
+else:
+    print("Usuario no encontrado")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo: Clasificación de números
+numero = int(input("Introduce un número: "))
+
+if numero >= 0:
+    if numero == 0:
+        print("El número es cero")
+    else:
+        print("El número es positivo")
+        
+        if numero % 2 == 0:
+            print("y además es par")
+        else:
+            print("y además es impar")
+else:
+    print("El número es negativo")</code></pre>
+
+        <h2>8. Operador Ternario (Condicional en una Línea)</h2>
+        <p>Python permite escribir un if-else simple en una sola línea.</p>
+
+        <p><strong>Sintaxis:</strong></p>
+        <pre><code class="language-python">variable = valor_si_true if condicion else valor_si_false</code></pre>
+
+        <pre><code class="language-python"># Ejemplo básico
+edad = 20
+mensaje = "Mayor de edad" if edad >= 18 else "Menor de edad"
+print(mensaje)</code></pre>
+
+        <pre><code class="language-python"># Comparación con if-else tradicional
+nota = 7
+
+# Forma tradicional
+if nota >= 5:
+    resultado = "Aprobado"
+else:
+    resultado = "Suspendido"
+print("Forma tradicional:", resultado)
+
+# Forma ternaria (una línea)
+resultado = "Aprobado" if nota >= 5 else "Suspendido"
+print("Forma ternaria:", resultado)</code></pre>
+
+        <pre><code class="language-python"># Ejemplo práctico: Determinar el máximo
+a = 15
+b = 20
+
+maximo = a if a > b else b
+print("El máximo es:", maximo)</code></pre>
+
+        <h2>9. Ejemplos Prácticos Completos</h2>
+
+        <pre><code class="language-python"># Ejemplo 1: Calculadora de IMC con clasificación
+print("=== CALCULADORA DE IMC ===")
+
+peso = float(input("Peso en kg: "))
+altura = float(input("Altura en metros: "))
+
+imc = peso / (altura ** 2)
+print(f"Tu IMC es: {imc:.2f}")
+
+if imc < 18.5:
+    print("Clasificación: Bajo peso")
+elif 18.5 <= imc < 25:
+    print("Clasificación: Peso normal")
+elif 25 <= imc < 30:
+    print("Clasificación: Sobrepeso")
+else:
+    print("Clasificación: Obesidad")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 2: Sistema de descuentos
+print("=== SISTEMA DE DESCUENTOS ===")
+
+total = float(input("Total de la compra: "))
+es_socio = input("¿Eres socio? (si/no): ").lower()
+
+descuento = 0
+
+if es_socio == "si":
+    if total >= 100:
+        descuento = 0.20  # 20% para socios con compra >= 100
+    else:
+        descuento = 0.10  # 10% para socios con compra < 100
+else:
+    if total >= 150:
+        descuento = 0.10  # 10% para no socios con compra >= 150
+
+if descuento > 0:
+    ahorro = total * descuento
+    total_final = total - ahorro
+    print(f"Descuento aplicado: {descuento*100}%")
+    print(f"Ahorras: {ahorro:.2f}€")
+    print(f"Total a pagar: {total_final:.2f}€")
+else:
+    print("No hay descuento aplicable")
+    print(f"Total a pagar: {total:.2f}€")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo 3: Juego de adivinar el número
+print("=== ADIVINA EL NÚMERO ===")
+print("Estoy pensando en un número del 1 al 10")
+
+numero_secreto = 7  # En una versión más avanzada usaríamos random
+intento = int(input("¿Qué número crees que es? "))
+
+if intento == numero_secreto:
+    print("¡Correcto! ¡Has adivinado!")
+elif intento < numero_secreto:
+    print("El número es mayor")
+else:
+    print("El número es menor")</code></pre>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

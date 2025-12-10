@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 01: Introducción y Primeros Pasos con Python</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Tema 01: Introducción y Primeros Pasos con Python</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Teoría y Ejemplos</h1>
+
+        <h2>1. ¿Qué es Python?</h2>
+        <p>Python es un lenguaje de programación:</p>
+        <ul>
+            <li><strong>Interpretado</strong>: No necesita compilación previa</li>
+            <li><strong>De alto nivel</strong>: Cercano al lenguaje humano</li>
+            <li><strong>Multiplataforma</strong>: Funciona en Windows, Linux, Mac</li>
+            <li><strong>Versátil</strong>: Se usa en web, ciencia de datos, IA, automatización, etc.</li>
+        </ul>
+
+        <h3>Tu primer programa en Python</h3>
+        <pre><code class="language-python"># Este es un comentario - Python lo ignora
+print("¡Hola, mundo!")  # La función print() muestra texto en pantalla</code></pre>
+
+        <h2>2. Variables: Guardar Información</h2>
+        <p>Una <strong>variable</strong> es como una caja donde guardamos datos. Tiene un nombre y un valor.</p>
+
+        <h3>Reglas para nombrar variables:</h3>
+        <ul>
+            <li>Solo letras, números y guión bajo (_)</li>
+            <li>No pueden empezar con número</li>
+            <li>No usar palabras reservadas (if, for, while, etc.)</li>
+            <li>Python distingue mayúsculas y minúsculas</li>
+            <li>Usa nombres descriptivos</li>
+        </ul>
+
+        <pre><code class="language-python"># Crear variables (asignación)
+nombre = "Ana"
+edad = 25
+altura = 1.68
+es_estudiante = True
+
+# Mostrar valores
+print("Nombre:", nombre)
+print("Edad:", edad)
+print("Altura:", altura)
+print("¿Es estudiante?", es_estudiante)</code></pre>
+
+        <pre><code class="language-python"># Ejemplos de nombres VÁLIDOS e INVÁLIDOS
+
+# ✅ VÁLIDOS
+nombre_completo = "Juan Pérez"
+edad_usuario = 30
+precio_total = 99.99
+_privado = "dato interno"
+numero2 = 42
+
+# ❌ INVÁLIDOS (descomenta para ver el error)
+# 2numero = 42          # No puede empezar con número
+# nombre-completo = "Ana"  # No se permite el guión medio
+# for = 10              # 'for' es palabra reservada</code></pre>
+
+        <h2>3. Tipos de Datos Básicos</h2>
+        <p>Python tiene varios tipos de datos fundamentales:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Descripción</th>
+                    <th>Ejemplo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>int</code></td>
+                    <td>Números enteros</td>
+                    <td>42, -10, 0</td>
+                </tr>
+                <tr>
+                    <td><code>float</code></td>
+                    <td>Números decimales</td>
+                    <td>3.14, -0.5, 2.0</td>
+                </tr>
+                <tr>
+                    <td><code>str</code></td>
+                    <td>Cadenas de texto</td>
+                    <td>"Hola", 'Python'</td>
+                </tr>
+                <tr>
+                    <td><code>bool</code></td>
+                    <td>Valores lógicos</td>
+                    <td>True, False</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <pre><code class="language-python"># Enteros (int)
+cantidad = 100
+temperatura = -5
+año = 2025
+
+print("Cantidad:", cantidad)
+print("Tipo:", type(cantidad))  # type() nos dice el tipo de dato</code></pre>
+
+        <pre><code class="language-python"># Decimales (float)
+precio = 19.99
+pi = 3.14159
+peso = 75.5
+
+print("Precio:", precio)
+print("Tipo:", type(precio))</code></pre>
+
+        <pre><code class="language-python"># Cadenas de texto (str)
+# Se pueden usar comillas simples o dobles
+mensaje1 = "Hola mundo"
+mensaje2 = 'Python es genial'
+frase = "Ella dijo: 'Buenos días'"  # Comillas dentro de comillas
+
+print(mensaje1)
+print("Tipo:", type(mensaje1))</code></pre>
+
+        <pre><code class="language-python"># Booleanos (bool)
+esta_lloviendo = False
+tiene_carnet = True
+aprobado = True
+
+print("¿Está lloviendo?", esta_lloviendo)
+print("Tipo:", type(aprobado))</code></pre>
+
+        <h2>4. Operadores Aritméticos</h2>
+        <p>Permiten realizar cálculos matemáticos:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Operador</th>
+                    <th>Operación</th>
+                    <th>Ejemplo</th>
+                    <th>Resultado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>+</code></td>
+                    <td>Suma</td>
+                    <td><code>5 + 3</code></td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <td><code>-</code></td>
+                    <td>Resta</td>
+                    <td><code>10 - 4</code></td>
+                    <td>6</td>
+                </tr>
+                <tr>
+                    <td><code>*</code></td>
+                    <td>Multiplicación</td>
+                    <td><code>6 * 7</code></td>
+                    <td>42</td>
+                </tr>
+                <tr>
+                    <td><code>/</code></td>
+                    <td>División</td>
+                    <td><code>15 / 4</code></td>
+                    <td>3.75</td>
+                </tr>
+                <tr>
+                    <td><code>//</code></td>
+                    <td>División entera</td>
+                    <td><code>15 // 4</code></td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td><code>%</code></td>
+                    <td>Módulo (resto)</td>
+                    <td><code>15 % 4</code></td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td><code>**</code></td>
+                    <td>Potencia</td>
+                    <td><code>2 ** 3</code></td>
+                    <td>8</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <pre><code class="language-python"># Operaciones básicas
+a = 10
+b = 3
+
+print("Suma:", a + b)
+print("Resta:", a - b)
+print("Multiplicación:", a * b)
+print("División:", a / b)
+print("División entera:", a // b)
+print("Módulo (resto):", a % b)
+print("Potencia:", a ** b)</code></pre>
+
+        <pre><code class="language-python"># Ejemplo práctico: Calcular el área de un rectángulo
+base = 8
+altura = 5
+area = base * altura
+
+print("El área del rectángulo es:", area, "unidades cuadradas")</code></pre>
+
+        <pre><code class="language-python"># Ejemplo práctico: Convertir temperatura de Celsius a Fahrenheit
+# Fórmula: F = (C × 9/5) + 32
+
+celsius = 25
+fahrenheit = (celsius * 9/5) + 32
+
+print(celsius, "°C son", fahrenheit, "°F")</code></pre>
+
+        <h2>5. Operadores de Comparación</h2>
+        <p>Comparan dos valores y devuelven True o False:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Operador</th>
+                    <th>Significado</th>
+                    <th>Ejemplo</th>
+                    <th>Resultado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>==</code></td>
+                    <td>Igual a</td>
+                    <td><code>5 == 5</code></td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td><code>!=</code></td>
+                    <td>Diferente de</td>
+                    <td><code>5 != 3</code></td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td><code>&gt;</code></td>
+                    <td>Mayor que</td>
+                    <td><code>7 &gt; 4</code></td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td><code>&lt;</code></td>
+                    <td>Menor que</td>
+                    <td><code>3 &lt; 9</code></td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td><code>&gt;=</code></td>
+                    <td>Mayor o igual</td>
+                    <td><code>5 &gt;= 5</code></td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td><code>&lt;=</code></td>
+                    <td>Menor o igual</td>
+                    <td><code>4 &lt;= 3</code></td>
+                    <td>False</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <pre><code class="language-python"># Comparaciones
+x = 10
+y = 20
+
+print("x == y:", x == y)
+print("x != y:", x != y)
+print("x > y:", x > y)
+print("x < y:", x < y)
+print("x >= 10:", x >= 10)
+print("y <= 20:", y <= 20)</code></pre>
+
+        <pre><code class="language-python"># Ejemplo práctico
+edad = 18
+es_mayor_edad = edad >= 18
+
+print("Edad:", edad)
+print("¿Es mayor de edad?", es_mayor_edad)</code></pre>
+
+        <h2>6. Operadores Lógicos</h2>
+        <p>Combinan expresiones booleanas:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Operador</th>
+                    <th>Descripción</th>
+                    <th>Ejemplo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>and</code></td>
+                    <td>Verdadero si AMBAS condiciones son verdaderas</td>
+                    <td><code>True and False</code> → False</td>
+                </tr>
+                <tr>
+                    <td><code>or</code></td>
+                    <td>Verdadero si AL MENOS UNA condición es verdadera</td>
+                    <td><code>True or False</code> → True</td>
+                </tr>
+                <tr>
+                    <td><code>not</code></td>
+                    <td>Invierte el valor booleano</td>
+                    <td><code>not True</code> → False</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <pre><code class="language-python"># Operador AND - ambas condiciones deben ser True
+tiene_dinero = True
+tienda_abierta = True
+puede_comprar = tiene_dinero and tienda_abierta
+
+print("¿Puede comprar?", puede_comprar)</code></pre>
+
+        <pre><code class="language-python"># Operador OR - al menos una condición debe ser True
+es_fin_de_semana = False
+es_festivo = True
+puede_descansar = es_fin_de_semana or es_festivo
+
+print("¿Puede descansar?", puede_descansar)</code></pre>
+
+        <pre><code class="language-python"># Operador NOT - invierte el valor
+esta_lloviendo = False
+hace_buen_tiempo = not esta_lloviendo
+
+print("¿Hace buen tiempo?", hace_buen_tiempo)</code></pre>
+
+        <pre><code class="language-python"># Ejemplo combinado
+edad = 20
+tiene_carnet = True
+
+puede_conducir = (edad >= 18) and tiene_carnet
+
+print("Edad:", edad)
+print("¿Tiene carnet?", tiene_carnet)
+print("¿Puede conducir?", puede_conducir)</code></pre>
+
+        <h2>7. Tabla de Verdad de Operadores Lógicos</h2>
+        
+        <h3>AND (y)</h3>
+        <pre><code class="language-python">print("True and True =", True and True)
+print("True and False =", True and False)
+print("False and True =", False and True)
+print("False and False =", False and False)</code></pre>
+
+        <h3>OR (o)</h3>
+        <pre><code class="language-python">print("True or True =", True or True)
+print("True or False =", True or False)
+print("False or True =", False or True)
+print("False or False =", False or False)</code></pre>
+
+        <h3>NOT (no)</h3>
+        <pre><code class="language-python">print("not True =", not True)
+print("not False =", not False)</code></pre>
+
+        <h2>8. Concatenación de Cadenas</h2>
+        <p>El operador <code>+</code> también sirve para unir cadenas de texto:</p>
+
+        <pre><code class="language-python"># Concatenar cadenas
+nombre = "Carlos"
+apellido = "García"
+nombre_completo = nombre + " " + apellido
+
+print("Nombre completo:", nombre_completo)</code></pre>
+
+        <pre><code class="language-python"># Repetir cadenas con *
+palabra = "Hola "
+repetido = palabra * 3
+
+print(repetido)</code></pre>
+
+        <pre><code class="language-python"># Crear mensajes personalizados
+saludo = "Buenos días"
+usuario = "María"
+mensaje = saludo + ", " + usuario + "!"
+
+print(mensaje)</code></pre>
+
+        <h2>9. Entrada de Datos con input()</h2>
+        <p>La función <code>input()</code> permite que el usuario introduzca datos:</p>
+
+        <pre><code class="language-python"># Solicitar el nombre al usuario
+nombre = input("¿Cómo te llamas? ")
+print("Hola,", nombre)</code></pre>
+
+        <pre><code class="language-python"># IMPORTANTE: input() siempre devuelve un string (texto)
+edad_texto = input("¿Cuántos años tienes? ")
+print("Tipo de dato:", type(edad_texto))
+
+# Para hacer cálculos, debemos convertir a número
+edad_numero = int(edad_texto)
+print("Tipo de dato:", type(edad_numero))
+print("El año que viene tendrás", edad_numero + 1, "años")</code></pre>
+
+        <h2>10. Ejemplo Integrador: Calculadora Básica</h2>
+        <pre><code class="language-python"># Calculadora simple que suma dos números
+
+print("=== CALCULADORA DE SUMA ===")
+
+# Solicitar números al usuario
+numero1 = input("Introduce el primer número: ")
+numero2 = input("Introduce el segundo número: ")
+
+# Convertir a números (float para permitir decimales)
+num1 = float(numero1)
+num2 = float(numero2)
+
+# Realizar operaciones
+suma = num1 + num2
+resta = num1 - num2
+multiplicacion = num1 * num2
+division = num1 / num2
+
+# Mostrar resultados
+print("\n--- RESULTADOS ---")
+print("Suma:", suma)
+print("Resta:", resta)
+print("Multiplicación:", multiplicacion)
+print("División:", division)</code></pre>
+
+        <h2>11. Prioridad de Operadores</h2>
+        <p>Python evalúa las expresiones siguiendo un orden de prioridad:</p>
+
+        <ol>
+            <li>Paréntesis <code>()</code></li>
+            <li>Potencia <code>**</code></li>
+            <li>Multiplicación, División, Módulo <code>*</code>, <code>/</code>, <code>//</code>, <code>%</code></li>
+            <li>Suma, Resta <code>+</code>, <code>-</code></li>
+            <li>Comparaciones <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>==</code>, <code>!=</code></li>
+            <li><code>not</code></li>
+            <li><code>and</code></li>
+            <li><code>or</code></li>
+        </ol>
+
+        <pre><code class="language-python"># Sin paréntesis
+resultado1 = 2 + 3 * 4
+print("2 + 3 * 4 =", resultado1)  # Primero 3*4=12, luego 2+12=14
+
+# Con paréntesis
+resultado2 = (2 + 3) * 4
+print("(2 + 3) * 4 =", resultado2)  # Primero 2+3=5, luego 5*4=20</code></pre>
+
+        <pre><code class="language-python"># Ejemplo más complejo
+a = 10
+b = 5
+c = 2
+
+resultado = a + b * c ** 2
+print("Resultado:", resultado)
+# Orden: c**2=4, b*4=20, a+20=30
+
+# Usar paréntesis para claridad
+resultado_claro = a + (b * (c ** 2))
+print("Resultado claro:", resultado_claro)</code></pre>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
