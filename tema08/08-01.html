@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 08: Programación Orientada a Objetos Avanzada</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Tema 08: Programación Orientada a Objetos Avanzada</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Programación Orientada a Objetos Avanzada</h1>
+        <h2>Herencia, Polimorfismo y Composición</h2>
+
+        <p>En esta sesión profundizaremos en conceptos avanzados de POO que te permitirán crear código más modular, reutilizable y mantenible.</p>
+
+        <h2>1. Herencia en Profundidad</h2>
+        <p>La herencia permite crear nuevas clases basadas en clases existentes, reutilizando y extendiendo funcionalidad.</p>
+
+        <h3>1.1 Herencia Simple</h3>
+
+        <pre><code class="language-python"># Clase base (padre o superclase)
+class Animal:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+        self.vivo = True
+    
+    def comer(self):
+        return f"{self.nombre} está comiendo"
+    
+    def dormir(self):
+        return f"{self.nombre} está durmiendo"
+    
+    def __str__(self):
+        return f"{self.nombre} ({self.edad} años)"
+
+
+# Clase derivada (hijo o subclase)
+class Perro(Animal):
+    def __init__(self, nombre, edad, raza):
+        # Llamar al constructor de la clase padre
+        super().__init__(nombre, edad)
+        self.raza = raza
+    
+    # Método específico de Perro
+    def ladrar(self):
+        return f"{self.nombre}: ¡Guau guau!"
+    
+    # Sobrescribir método de la clase padre
+    def __str__(self):
+        return f"{self.nombre} ({self.raza}, {self.edad} años)"
+
+
+class Gato(Animal):
+    def __init__(self, nombre, edad, color):
+        super().__init__(nombre, edad)
+        self.color = color
+        self.vidas = 9  # Atributo específico de gato
+    
+    def maullar(self):
+        return f"{self.nombre}: ¡Miau!"
+    
+    def perder_vida(self):
+        if self.vidas > 0:
+            self.vidas -= 1
+            return f"{self.nombre} perdió una vida. Vidas restantes: {self.vidas}"
+        return f"{self.nombre} no tiene más vidas"
+
+
+# Crear instancias
+perro = Perro("Max", 3, "Labrador")
+gato = Gato("Luna", 2, "Naranja")
+
+# Métodos heredados
+print(perro.comer())
+print(gato.dormir())
+
+# Métodos específicos
+print(perro.ladrar())
+print(gato.maullar())
+
+# Métodos sobrescritos
+print(perro)
+print(gato)
+
+# Verificar herencia
+print(f"\n¿perro es una instancia de Perro? {isinstance(perro, Perro)}")
+print(f"¿perro es una instancia de Animal? {isinstance(perro, Animal)}")
+print(f"¿Perro es subclase de Animal? {issubclass(Perro, Animal)}")</code></pre>
+
+        <h3>1.2 Herencia Múltiple</h3>
+        <p>Python permite que una clase herede de múltiples clases padre.</p>
+
+        <pre><code class="language-python">class Volador:
+    def __init__(self):
+        self.puede_volar = True
+        self.altura_maxima = 0
+    
+    def volar(self, altura):
+        if altura > self.altura_maxima:
+            self.altura_maxima = altura
+        return f"Volando a {altura} metros"
+    
+    def aterrizar(self):
+        return "Aterrizando..."
+
+
+class Nadador:
+    def __init__(self):
+        self.puede_nadar = True
+        self.profundidad_maxima = 0
+    
+    def nadar(self, profundidad):
+        if profundidad > self.profundidad_maxima:
+            self.profundidad_maxima = profundidad
+        return f"Nadando a {profundidad} metros de profundidad"
+    
+    def emerger(self):
+        return "Emergiendo a la superficie..."
+
+
+# Herencia múltiple
+class Pato(Animal, Volador, Nadador):
+    def __init__(self, nombre, edad):
+        # Inicializar todas las clases padre
+        Animal.__init__(self, nombre, edad)
+        Volador.__init__(self)
+        Nadador.__init__(self)
+    
+    def graznar(self):
+        return f"{self.nombre}: ¡Cuac cuac!"
+
+
+# Crear un pato
+donald = Pato("Donald", 5)
+
+# Usar métodos de todas las clases padre
+print(donald.comer())           # De Animal
+print(donald.volar(50))         # De Volador
+print(donald.nadar(2))          # De Nadador
+print(donald.graznar())         # Método propio
+
+print(f"\nAltura máxima alcanzada: {donald.altura_maxima}m")
+print(f"Profundidad máxima: {donald.profundidad_maxima}m")</code></pre>
+
+        <h3>1.3 Method Resolution Order (MRO)</h3>
+        <p>El MRO determina el orden en que Python busca métodos en la jerarquía de herencia.</p>
+
+        <pre><code class="language-python">class A:
+    def metodo(self):
+        return "Método de A"
+
+class B(A):
+    def metodo(self):
+        return "Método de B"
+
+class C(A):
+    def metodo(self):
+        return "Método de C"
+
+class D(B, C):
+    pass
+
+# Ver el MRO
+print("MRO de D:")
+print(D.__mro__)
+print()
+
+# Qué método se llama?
+d = D()
+print(f"Llamando a d.metodo(): {d.metodo()}")
+
+# Llamar explícitamente a un método específico
+print(f"Método de A: {A.metodo(d)}")
+print(f"Método de B: {B.metodo(d)}")
+print(f"Método de C: {C.metodo(d)}")</code></pre>
+
+        <h3>1.4 super() Avanzado</h3>
+
+        <pre><code class="language-python">class Empleado:
+    def __init__(self, nombre, salario):
+        self.nombre = nombre
+        self.salario = salario
+    
+    def calcular_pago(self):
+        return self.salario
+    
+    def __str__(self):
+        return f"Empleado: {self.nombre}"
+
+
+class Gerente(Empleado):
+    def __init__(self, nombre, salario, bono_anual):
+        super().__init__(nombre, salario)
+        self.bono_anual = bono_anual
+    
+    def calcular_pago(self):
+        # Llamar al método padre y agregar el bono
+        pago_base = super().calcular_pago()
+        return pago_base + (self.bono_anual / 12)
+    
+    def __str__(self):
+        # Usar el __str__ del padre y agregar información
+        return super().__str__() + " (Gerente)"
+
+
+class Desarrollador(Empleado):
+    def __init__(self, nombre, salario, lenguajes):
+        super().__init__(nombre, salario)
+        self.lenguajes = lenguajes
+    
+    def agregar_lenguaje(self, lenguaje):
+        if lenguaje not in self.lenguajes:
+            self.lenguajes.append(lenguaje)
+    
+    def __str__(self):
+        return super().__str__() + f" (Desarrollador: {', '.join(self.lenguajes)})"
+
+
+# Crear instancias
+gerente = Gerente("Ana", 5000, 12000)
+dev = Desarrollador("Carlos", 4000, ["Python", "JavaScript"])
+
+print(gerente)
+print(f"Pago mensual: ${gerente.calcular_pago():.2f}")
+
+print(f"\n{dev}")
+print(f"Pago mensual: ${dev.calcular_pago():.2f}")
+
+dev.agregar_lenguaje("TypeScript")
+print(f"Después de aprender TypeScript: {dev}")</code></pre>
+
+        <h2>2. Polimorfismo</h2>
+        <p>El polimorfismo permite que objetos de diferentes clases sean tratados de manera uniforme.</p>
+
+        <h3>2.1 Polimorfismo con Herencia</h3>
+
+        <pre><code class="language-python">class Forma:
+    def area(self):
+        raise NotImplementedError("Subclases deben implementar area()")
+    
+    def perimetro(self):
+        raise NotImplementedError("Subclases deben implementar perimetro()")
+
+
+class Rectangulo(Forma):
+    def __init__(self, ancho, alto):
+        self.ancho = ancho
+        self.alto = alto
+    
+    def area(self):
+        return self.ancho * self.alto
+    
+    def perimetro(self):
+        return 2 * (self.ancho + self.alto)
+    
+    def __str__(self):
+        return f"Rectángulo({self.ancho}x{self.alto})"
+
+
+class Circulo(Forma):
+    def __init__(self, radio):
+        self.radio = radio
+    
+    def area(self):
+        import math
+        return math.pi * self.radio ** 2
+    
+    def perimetro(self):
+        import math
+        return 2 * math.pi * self.radio
+    
+    def __str__(self):
+        return f"Círculo(r={self.radio})"
+
+
+class Triangulo(Forma):
+    def __init__(self, base, altura, lado1, lado2, lado3):
+        self.base = base
+        self.altura = altura
+        self.lado1 = lado1
+        self.lado2 = lado2
+        self.lado3 = lado3
+    
+    def area(self):
+        return (self.base * self.altura) / 2
+    
+    def perimetro(self):
+        return self.lado1 + self.lado2 + self.lado3
+    
+    def __str__(self):
+        return f"Triángulo(base={self.base}, altura={self.altura})"
+
+
+# Función polimórfica - funciona con cualquier forma
+def imprimir_info_forma(forma):
+    print(f"{forma}")
+    print(f"  Área: {forma.area():.2f}")
+    print(f"  Perímetro: {forma.perimetro():.2f}")
+    print()
+
+
+# Crear diferentes formas
+formas = [
+    Rectangulo(5, 10),
+    Circulo(7),
+    Triangulo(6, 8, 6, 8, 10)
+]
+
+# Procesar todas las formas de manera uniforme
+for forma in formas:
+    imprimir_info_forma(forma)
+
+# Calcular área total
+area_total = sum(forma.area() for forma in formas)
+print(f"Área total: {area_total:.2f}")</code></pre>
+
+        <h3>2.2 Duck Typing</h3>
+        <p>"Si camina como un pato y grazna como un pato, entonces es un pato."</p>
+        <p>En Python, el polimorfismo no requiere herencia explícita.</p>
+
+        <pre><code class="language-python">class Archivo:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.contenido = ""
+    
+    def escribir(self, texto):
+        self.contenido += texto
+    
+    def leer(self):
+        return self.contenido
+
+
+class BaseDatos:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.datos = []
+    
+    def escribir(self, dato):
+        self.datos.append(dato)
+    
+    def leer(self):
+        return '\n'.join(str(d) for d in self.datos)
+
+
+class Logger:
+    def __init__(self):
+        self.logs = []
+    
+    def escribir(self, mensaje):
+        from datetime import datetime
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.logs.append(f"[{timestamp}] {mensaje}")
+    
+    def leer(self):
+        return '\n'.join(self.logs)
+
+
+# Función que funciona con cualquier objeto que tenga escribir() y leer()
+def guardar_y_mostrar(almacenamiento, datos):
+    print(f"Guardando en: {almacenamiento.nombre if hasattr(almacenamiento, 'nombre') else 'Logger'}")
+    
+    for dato in datos:
+        almacenamiento.escribir(dato)
+    
+    print("Contenido guardado:")
+    print(almacenamiento.leer())
+    print("-" * 50)
+
+
+# Usar diferentes tipos de almacenamiento
+archivo = Archivo("datos.txt")
+bd = BaseDatos("usuarios_db")
+logger = Logger()
+
+guardar_y_mostrar(archivo, ["Línea 1\n", "Línea 2\n", "Línea 3\n"])
+guardar_y_mostrar(bd, ["Usuario 1", "Usuario 2", "Usuario 3"])
+guardar_y_mostrar(logger, ["Inicio de sesión", "Acción realizada", "Cierre de sesión"])</code></pre>
+
+        <h3>2.3 Sobrecarga de Operadores</h3>
+        <p>Python permite definir el comportamiento de operadores para objetos personalizados.</p>
+
+        <pre><code class="language-python">class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    # Suma: v1 + v2
+    def __add__(self, otro):
+        return Vector(self.x + otro.x, self.y + otro.y)
+    
+    # Resta: v1 - v2
+    def __sub__(self, otro):
+        return Vector(self.x - otro.x, self.y - otro.y)
+    
+    # Multiplicación por escalar: v * n
+    def __mul__(self, escalar):
+        return Vector(self.x * escalar, self.y * escalar)
+    
+    # División por escalar: v / n
+    def __truediv__(self, escalar):
+        return Vector(self.x / escalar, self.y / escalar)
+    
+    # Igualdad: v1 == v2
+    def __eq__(self, otro):
+        return self.x == otro.x and self.y == otro.y
+    
+    # Representación en string
+    def __str__(self):
+        return f"Vector({self.x}, {self.y})"
+    
+    def __repr__(self):
+        return f"Vector({self.x}, {self.y})"
+    
+    # Longitud/magnitud del vector
+    def __abs__(self):
+        return (self.x ** 2 + self.y ** 2) ** 0.5
+    
+    # Negación: -v
+    def __neg__(self):
+        return Vector(-self.x, -self.y)
+
+
+# Crear vectores
+v1 = Vector(3, 4)
+v2 = Vector(1, 2)
+
+print(f"v1 = {v1}")
+print(f"v2 = {v2}")
+
+# Usar operadores sobrecargados
+print(f"\nv1 + v2 = {v1 + v2}")
+print(f"v1 - v2 = {v1 - v2}")
+print(f"v1 * 3 = {v1 * 3}")
+print(f"v1 / 2 = {v1 / 2}")
+
+print(f"\n|v1| = {abs(v1):.2f}")
+print(f"-v1 = {-v1}")
+
+print(f"\nv1 == v2: {v1 == v2}")
+print(f"v1 == Vector(3, 4): {v1 == Vector(3, 4)}")</code></pre>
+
+        <h2>3. Composición</h2>
+        <p>La composición es una alternativa a la herencia donde los objetos contienen instancias de otras clases.</p>
+
+        <h3>3.1 Composición vs Herencia</h3>
+
+        <pre><code class="language-python"># Motor de un coche
+class Motor:
+    def __init__(self, tipo, caballos):
+        self.tipo = tipo
+        self.caballos = caballos
+        self.encendido = False
+    
+    def encender(self):
+        self.encendido = True
+        return f"Motor {self.tipo} encendido"
+    
+    def apagar(self):
+        self.encendido = False
+        return "Motor apagado"
+    
+    def __str__(self):
+        estado = "encendido" if self.encendido else "apagado"
+        return f"Motor {self.tipo} de {self.caballos}HP ({estado})"
+
+
+class Rueda:
+    def __init__(self, tamano):
+        self.tamano = tamano
+        self.presion = 32  # PSI
+    
+    def inflar(self, presion):
+        self.presion = presion
+        return f"Rueda inflada a {presion} PSI"
+    
+    def __str__(self):
+        return f"Rueda {self.tamano}'' ({self.presion} PSI)"
+
+
+# Composición: un Coche TIENE un Motor y Ruedas
+class Coche:
+    def __init__(self, marca, modelo, tipo_motor, caballos):
+        self.marca = marca
+        self.modelo = modelo
+        # Composición: el coche contiene otros objetos
+        self.motor = Motor(tipo_motor, caballos)
+        self.ruedas = [Rueda(17) for _ in range(4)]
+        self.velocidad = 0
+    
+    def arrancar(self):
+        resultado = self.motor.encender()
+        return f"{self.marca} {self.modelo}: {resultado}"
+    
+    def acelerar(self, incremento):
+        if self.motor.encendido:
+            self.velocidad += incremento
+            return f"Acelerando... Velocidad: {self.velocidad} km/h"
+        return "No puedes acelerar con el motor apagado"
+    
+    def frenar(self, decremento):
+        self.velocidad = max(0, self.velocidad - decremento)
+        return f"Frenando... Velocidad: {self.velocidad} km/h"
+    
+    def revisar_ruedas(self):
+        print(f"\nRevisión de ruedas del {self.marca} {self.modelo}:")
+        for i, rueda in enumerate(self.ruedas, 1):
+            print(f"  Rueda {i}: {rueda}")
+    
+    def __str__(self):
+        return f"{self.marca} {self.modelo} - {self.motor} - Velocidad: {self.velocidad} km/h"
+
+
+# Crear un coche
+mi_coche = Coche("Toyota", "Corolla", "Gasolina", 140)
+
+print(mi_coche)
+print(mi_coche.arrancar())
+print(mi_coche.acelerar(50))
+print(mi_coche.acelerar(30))
+print(mi_coche.frenar(20))
+mi_coche.revisar_ruedas()
+
+# Modificar componentes internos
+print("\nInflando ruedas...")
+for rueda in mi_coche.ruedas:
+    rueda.inflar(35)
+mi_coche.revisar_ruedas()</code></pre>
+
+        <h3>3.2 Composición Compleja</h3>
+
+        <pre><code class="language-python">class Direccion:
+    def __init__(self, calle, numero, ciudad, codigo_postal):
+        self.calle = calle
+        self.numero = numero
+        self.ciudad = ciudad
+        self.codigo_postal = codigo_postal
+    
+    def __str__(self):
+        return f"{self.calle} {self.numero}, {self.ciudad} {self.codigo_postal}"
+
+
+class Telefono:
+    def __init__(self, codigo_pais, numero):
+        self.codigo_pais = codigo_pais
+        self.numero = numero
+    
+    def __str__(self):
+        return f"+{self.codigo_pais} {self.numero}"
+
+
+class Email:
+    def __init__(self, direccion):
+        self.direccion = direccion
+        self.verificado = False
+    
+    def verificar(self):
+        self.verificado = True
+    
+    def __str__(self):
+        verificado = "✓" if self.verificado else "✗"
+        return f"{self.direccion} {verificado}"
+
+
+class ContactoInfo:
+    def __init__(self):
+        self.telefonos = []
+        self.emails = []
+        self.direccion = None
+    
+    def agregar_telefono(self, codigo_pais, numero):
+        self.telefonos.append(Telefono(codigo_pais, numero))
+    
+    def agregar_email(self, direccion):
+        self.emails.append(Email(direccion))
+    
+    def establecer_direccion(self, calle, numero, ciudad, codigo_postal):
+        self.direccion = Direccion(calle, numero, ciudad, codigo_postal)
+    
+    def mostrar(self):
+        print("Información de contacto:")
+        
+        if self.direccion:
+            print(f"  Dirección: {self.direccion}")
+        
+        if self.telefonos:
+            print("  Teléfonos:")
+            for tel in self.telefonos:
+                print(f"    - {tel}")
+        
+        if self.emails:
+            print("  Emails:")
+            for email in self.emails:
+                print(f"    - {email}")
+
+
+class Persona:
+    def __init__(self, nombre, apellido, edad):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.edad = edad
+        # Composición: una persona tiene información de contacto
+        self.contacto = ContactoInfo()
+    
+    def nombre_completo(self):
+        return f"{self.nombre} {self.apellido}"
+    
+    def mostrar_info(self):
+        print(f"\n{'='*50}")
+        print(f"{self.nombre_completo()} ({self.edad} años)")
+        print(f"{'='*50}")
+        self.contacto.mostrar()
+        print(f"{'='*50}")
+
+
+# Crear una persona con información completa
+persona = Persona("Ana", "García", 30)
+
+# Agregar información de contacto
+persona.contacto.establecer_direccion("Calle Mayor", "123", "Madrid", "28001")
+persona.contacto.agregar_telefono("34", "612345678")
+persona.contacto.agregar_telefono("34", "918765432")
+persona.contacto.agregar_email("ana.garcia@email.com")
+persona.contacto.agregar_email("ana@trabajo.com")
+
+# Verificar primer email
+persona.contacto.emails[0].verificar()
+
+# Mostrar información completa
+persona.mostrar_info()</code></pre>
+
+        <h3>3.3 Cuándo usar Herencia vs Composición</h3>
+
+        <p><strong>Usa Herencia cuando:</strong></p>
+        <ul>
+            <li>Existe una relación "ES UN/A" (un Perro ES UN Animal)</li>
+            <li>Quieres compartir comportamiento común entre clases relacionadas</li>
+            <li>La jerarquía es estable y no cambiará mucho</li>
+        </ul>
+
+        <p><strong>Usa Composición cuando:</strong></p>
+        <ul>
+            <li>Existe una relación "TIENE UN/A" (un Coche TIENE UN Motor)</li>
+            <li>Necesitas más flexibilidad para cambiar comportamientos</li>
+            <li>Quieres evitar jerarquías de herencia complejas</li>
+            <li>Necesitas combinar funcionalidades de múltiples fuentes</li>
+        </ul>
+
+        <pre><code class="language-python"># Ejemplo: Sistema de autenticación flexible con composición
+
+class AutenticadorPassword:
+    def autenticar(self, usuario, credencial):
+        # Simulación: verificar password
+        return credencial == "password123"
+
+
+class AutenticadorToken:
+    def autenticar(self, usuario, credencial):
+        # Simulación: verificar token
+        return len(credencial) == 32  # Token de 32 caracteres
+
+
+class AutenticadorBiometrico:
+    def autenticar(self, usuario, credencial):
+        # Simulación: verificar huella digital
+        return credencial.startswith("FINGER_")
+
+
+class Usuario:
+    def __init__(self, nombre, email):
+        self.nombre = nombre
+        self.email = email
+        # Composición: usar diferentes estrategias de autenticación
+        self.autenticador = None
+    
+    def establecer_autenticacion(self, autenticador):
+        """Cambiar el método de autenticación dinámicamente"""
+        self.autenticador = autenticador
+    
+    def login(self, credencial):
+        if self.autenticador is None:
+            return "No se ha configurado método de autenticación"
+        
+        if self.autenticador.autenticar(self, credencial):
+            return f"✓ {self.nombre} autenticado correctamente"
+        return f"✗ Autenticación fallida para {self.nombre}"
+
+
+# Crear usuario
+usuario = Usuario("Ana", "ana@email.com")
+
+# Usar autenticación por password
+print("=== Autenticación por Password ===")
+usuario.establecer_autenticacion(AutenticadorPassword())
+print(usuario.login("password123"))
+print(usuario.login("wrongpassword"))
+
+# Cambiar a autenticación por token
+print("\n=== Autenticación por Token ===")
+usuario.establecer_autenticacion(AutenticadorToken())
+print(usuario.login("abc123def456ghi789jkl012mno345pq"))  # 32 caracteres
+print(usuario.login("tokenCorto"))
+
+# Cambiar a autenticación biométrica
+print("\n=== Autenticación Biométrica ===")
+usuario.establecer_autenticacion(AutenticadorBiometrico())
+print(usuario.login("FINGER_12345"))
+print(usuario.login("password123"))</code></pre>
+
+        <h2>4. Clases Abstractas</h2>
+        <p>Las clases abstractas definen una interfaz que las subclases deben implementar.</p>
+
+        <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class Pago(ABC):
+    """Clase abstracta base para métodos de pago"""
+    
+    def __init__(self, monto):
+        self.monto = monto
+        self.procesado = False
+    
+    @abstractmethod
+    def procesar(self):
+        """Método abstracto que debe ser implementado por subclases"""
+        pass
+    
+    @abstractmethod
+    def cancelar(self):
+        """Método abstracto para cancelar pago"""
+        pass
+    
+    # Método concreto (compartido por todas las subclases)
+    def verificar_monto(self):
+        return self.monto > 0
+
+
+class PagoTarjeta(Pago):
+    def __init__(self, monto, numero_tarjeta, cvv):
+        super().__init__(monto)
+        self.numero_tarjeta = numero_tarjeta
+        self.cvv = cvv
+    
+    def procesar(self):
+        if self.verificar_monto():
+            # Lógica específica para procesar tarjeta
+            self.procesado = True
+            return f"Pago de ${self.monto:.2f} procesado con tarjeta ****{self.numero_tarjeta[-4:]}"
+        return "Monto inválido"
+    
+    def cancelar(self):
+        if self.procesado:
+            self.procesado = False
+            return f"Reembolso de ${self.monto:.2f} a tarjeta ****{self.numero_tarjeta[-4:]}"
+        return "No hay pago para cancelar"
+
+
+class PagoPayPal(Pago):
+    def __init__(self, monto, email):
+        super().__init__(monto)
+        self.email = email
+    
+    def procesar(self):
+        if self.verificar_monto():
+            self.procesado = True
+            return f"Pago de ${self.monto:.2f} procesado vía PayPal ({self.email})"
+        return "Monto inválido"
+    
+    def cancelar(self):
+        if self.procesado:
+            self.procesado = False
+            return f"Reembolso de ${self.monto:.2f} a cuenta PayPal {self.email}"
+        return "No hay pago para cancelar"
+
+
+class PagoCriptomoneda(Pago):
+    def __init__(self, monto, wallet_address, moneda="BTC"):
+        super().__init__(monto)
+        self.wallet_address = wallet_address
+        self.moneda = moneda
+    
+    def procesar(self):
+        if self.verificar_monto():
+            self.procesado = True
+            return f"Pago de ${self.monto:.2f} procesado en {self.moneda} a {self.wallet_address[:10]}..."
+        return "Monto inválido"
+    
+    def cancelar(self):
+        return "Los pagos en criptomoneda no se pueden cancelar"
+
+
+# Función que procesa cualquier tipo de pago
+def procesar_pago(pago):
+    print("\n" + "="*60)
+    print(f"Procesando pago de ${pago.monto:.2f}")
+    print("="*60)
+    resultado = pago.procesar()
+    print(f"Resultado: {resultado}")
+    return pago
+
+
+# Crear diferentes tipos de pago
+pago1 = PagoTarjeta(150.00, "1234567890123456", "123")
+pago2 = PagoPayPal(75.50, "usuario@email.com")
+pago3 = PagoCriptomoneda(200.00, "1A2B3C4D5E6F7G8H9I0J", "ETH")
+
+# Procesar pagos
+pagos = [pago1, pago2, pago3]
+for pago in pagos:
+    procesar_pago(pago)
+
+# Intentar cancelar
+print("\n" + "="*60)
+print("Cancelando pagos")
+print("="*60)
+for pago in pagos:
+    print(pago.cancelar())
+
+# Intentar crear instancia de clase abstracta (causará error)
+# pago_invalido = Pago(100)  # TypeError: Can't instantiate abstract class</code></pre>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

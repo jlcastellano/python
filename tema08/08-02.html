@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atributos y Métodos Especiales en Python (Dunder Methods)</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Atributos y Métodos Especiales en Python</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Atributos y Métodos Especiales en Python (Dunder Methods)</h1>
+
+        <p>Los métodos y atributos especiales en Python están rodeados por dobles guiones bajos (<code>__xxx__</code>) y se conocen como "dunder methods" (double underscore). Son utilizados por Python internamente para implementar comportamientos específicos.</p>
+
+        <h2>1. __name__</h2>
+        <p>Nombre del módulo actual. Si el script se ejecuta directamente, su valor es <code>'__main__'</code>.</p>
+
+        <pre><code class="language-python"># Ejemplo de __name__
+print(f"El nombre del módulo es: {__name__}")
+
+if __name__ == "__main__":
+    print("Este código se ejecuta solo cuando el script se ejecuta directamente")
+else:
+    print("Este código se ejecuta cuando el módulo es importado")</code></pre>
+
+        <h2>2. __init__</h2>
+        <p>Constructor de una clase. Se ejecuta cuando se crea una nueva instancia.</p>
+
+        <pre><code class="language-python"># Ejemplo de __init__
+class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+        print(f"Se ha creado una persona: {nombre}")
+
+persona1 = Persona("Ana", 25)
+print(f"Nombre: {persona1.nombre}, Edad: {persona1.edad}")</code></pre>
+
+        <h2>3. __str__</h2>
+        <p>Define la representación en string legible para humanos de un objeto (usado por <code>print()</code> y <code>str()</code>).</p>
+
+        <pre><code class="language-python"># Ejemplo de __str__
+class Libro:
+    def __init__(self, titulo, autor):
+        self.titulo = titulo
+        self.autor = autor
+    
+    def __str__(self):
+        return f"'{self.titulo}' por {self.autor}"
+
+libro = Libro("Cien años de soledad", "Gabriel García Márquez")
+print(libro)  # Usa __str__</code></pre>
+
+        <h2>4. __repr__</h2>
+        <p>Define la representación "oficial" del objeto, útil para debugging (usado por <code>repr()</code>).</p>
+
+        <pre><code class="language-python"># Ejemplo de __repr__
+class Punto:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __repr__(self):
+        return f"Punto({self.x}, {self.y})"
+
+p = Punto(3, 4)
+print(repr(p))  # Usa __repr__
+print(p)  # También usa __repr__ si no hay __str__</code></pre>
+
+        <h2>5. __len__</h2>
+        <p>Define el comportamiento de <code>len()</code> para objetos personalizados.</p>
+
+        <pre><code class="language-python"># Ejemplo de __len__
+class MiLista:
+    def __init__(self, elementos):
+        self.elementos = elementos
+    
+    def __len__(self):
+        return len(self.elementos)
+
+mi_lista = MiLista([1, 2, 3, 4, 5])
+print(f"La longitud es: {len(mi_lista)}")</code></pre>
+
+        <h2>6. __getitem__ y __setitem__</h2>
+        <p>Permiten acceso mediante índices (<code>obj[key]</code>) para lectura y escritura.</p>
+
+        <pre><code class="language-python"># Ejemplo de __getitem__ y __setitem__
+class MiDiccionario:
+    def __init__(self):
+        self.datos = {}
+    
+    def __getitem__(self, clave):
+        return self.datos[clave]
+    
+    def __setitem__(self, clave, valor):
+        self.datos[clave] = valor
+
+mi_dict = MiDiccionario()
+mi_dict["nombre"] = "Carlos"  # Usa __setitem__
+print(mi_dict["nombre"])  # Usa __getitem__</code></pre>
+
+        <h2>7. __add__, __sub__, __mul__, __truediv__</h2>
+        <p>Sobrecargan operadores aritméticos (+, -, *, /).</p>
+
+        <pre><code class="language-python"># Ejemplo de operadores aritméticos
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __add__(self, otro):
+        return Vector(self.x + otro.x, self.y + otro.y)
+    
+    def __mul__(self, escalar):
+        return Vector(self.x * escalar, self.y * escalar)
+    
+    def __str__(self):
+        return f"Vector({self.x}, {self.y})"
+
+v1 = Vector(1, 2)
+v2 = Vector(3, 4)
+v3 = v1 + v2  # Usa __add__
+v4 = v1 * 3   # Usa __mul__
+print(f"v1 + v2 = {v3}")
+print(f"v1 * 3 = {v4}")</code></pre>
+
+        <h2>8. __eq__, __lt__, __gt__, __le__, __ge__, __ne__</h2>
+        <p>Sobrecargan operadores de comparación (==, &lt;, &gt;, &lt;=, &gt;=, !=).</p>
+
+        <pre><code class="language-python"># Ejemplo de operadores de comparación
+class Estudiante:
+    def __init__(self, nombre, nota):
+        self.nombre = nombre
+        self.nota = nota
+    
+    def __eq__(self, otro):
+        return self.nota == otro.nota
+    
+    def __lt__(self, otro):
+        return self.nota < otro.nota
+    
+    def __gt__(self, otro):
+        return self.nota > otro.nota
+
+est1 = Estudiante("Ana", 8.5)
+est2 = Estudiante("Luis", 7.2)
+print(f"¿Ana tiene mejor nota que Luis? {est1 > est2}")
+print(f"¿Tienen la misma nota? {est1 == est2}")</code></pre>
+
+        <h2>9. __call__</h2>
+        <p>Permite que una instancia de clase sea llamada como si fuera una función.</p>
+
+        <pre><code class="language-python"># Ejemplo de __call__
+class Multiplicador:
+    def __init__(self, factor):
+        self.factor = factor
+    
+    def __call__(self, x):
+        return x * self.factor
+
+duplicar = Multiplicador(2)
+triplicar = Multiplicador(3)
+
+print(f"5 duplicado: {duplicar(5)}")
+print(f"5 triplicado: {triplicar(5)}")</code></pre>
+
+        <h2>10. __iter__ y __next__</h2>
+        <p>Hacen que un objeto sea iterable (se pueda usar en bucles <code>for</code>).</p>
+
+        <pre><code class="language-python"># Ejemplo de __iter__ y __next__
+class Contador:
+    def __init__(self, maximo):
+        self.maximo = maximo
+        self.actual = 0
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.actual < self.maximo:
+            self.actual += 1
+            return self.actual
+        else:
+            raise StopIteration
+
+contador = Contador(5)
+for num in contador:
+    print(f"Número: {num}")</code></pre>
+
+        <h2>11. __enter__ y __exit__</h2>
+        <p>Implementan el protocolo de gestores de contexto (usado con <code>with</code>).</p>
+
+        <pre><code class="language-python"># Ejemplo de __enter__ y __exit__
+class MiContexto:
+    def __init__(self, nombre):
+        self.nombre = nombre
+    
+    def __enter__(self):
+        print(f"Entrando al contexto: {self.nombre}")
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print(f"Saliendo del contexto: {self.nombre}")
+        return False
+
+with MiContexto("Prueba") as ctx:
+    print("Dentro del contexto")</code></pre>
+
+        <h2>12. __del__</h2>
+        <p>Destructor de la clase. Se llama cuando el objeto está a punto de ser destruido.</p>
+
+        <pre><code class="language-python"># Ejemplo de __del__
+class Recurso:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        print(f"Recurso '{nombre}' creado")
+    
+    def __del__(self):
+        print(f"Recurso '{self.nombre}' destruido")
+
+recurso = Recurso("Archivo")
+del recurso  # Fuerza la destrucción</code></pre>
+
+        <h2>13. __contains__</h2>
+        <p>Define el comportamiento del operador <code>in</code>.</p>
+
+        <pre><code class="language-python"># Ejemplo de __contains__
+class MiConjunto:
+    def __init__(self, elementos):
+        self.elementos = set(elementos)
+    
+    def __contains__(self, item):
+        return item in self.elementos
+
+mi_set = MiConjunto([1, 2, 3, 4, 5])
+print(f"¿3 está en el conjunto? {3 in mi_set}")
+print(f"¿10 está en el conjunto? {10 in mi_set}")</code></pre>
+
+        <h2>14. __new__</h2>
+        <p>Crea la instancia antes de <code>__init__</code>. Útil para patrones como Singleton.</p>
+
+        <pre><code class="language-python"># Ejemplo de __new__ (Patrón Singleton)
+class Singleton:
+    _instancia = None
+    
+    def __new__(cls):
+        if cls._instancia is None:
+            cls._instancia = super().__new__(cls)
+            print("Creando nueva instancia")
+        else:
+            print("Retornando instancia existente")
+        return cls._instancia
+
+s1 = Singleton()
+s2 = Singleton()
+print(f"¿s1 y s2 son la misma instancia? {s1 is s2}")</code></pre>
+
+        <h2>15. __hash__</h2>
+        <p>Define el valor hash del objeto, necesario para usar objetos como claves de diccionario.</p>
+
+        <pre><code class="language-python"># Ejemplo de __hash__
+class Coordenada:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __hash__(self):
+        return hash((self.x, self.y))
+    
+    def __eq__(self, otro):
+        return self.x == otro.x and self.y == otro.y
+
+c1 = Coordenada(3, 4)
+c2 = Coordenada(3, 4)
+diccionario = {c1: "Punto A"}
+print(f"Valor en diccionario: {diccionario[c2]}")</code></pre>
+
+        <h2>16. __bool__</h2>
+        <p>Define el valor de verdad del objeto en contextos booleanos.</p>
+
+        <pre><code class="language-python"># Ejemplo de __bool__
+class Carrito:
+    def __init__(self):
+        self.items = []
+    
+    def agregar(self, item):
+        self.items.append(item)
+    
+    def __bool__(self):
+        return len(self.items) > 0
+
+carrito = Carrito()
+print(f"¿Carrito vacío? {not carrito}")
+carrito.agregar("manzana")
+print(f"¿Carrito con items? {bool(carrito)}")</code></pre>
+
+        <h2>17. __getattr__, __setattr__, __delattr__</h2>
+        <p>Interceptan el acceso, asignación y eliminación de atributos.</p>
+
+        <pre><code class="language-python"># Ejemplo de __getattr__ y __setattr__
+class DinamicObject:
+    def __init__(self):
+        self._datos = {}
+    
+    def __getattr__(self, nombre):
+        if nombre in self._datos:
+            return self._datos[nombre]
+        return f"Atributo '{nombre}' no existe"
+    
+    def __setattr__(self, nombre, valor):
+        if nombre == '_datos':
+            super().__setattr__(nombre, valor)
+        else:
+            self._datos[nombre] = valor
+
+obj = DinamicObject()
+obj.nombre = "Python"
+obj.version = 3.9
+print(f"Nombre: {obj.nombre}")
+print(f"Versión: {obj.version}")
+print(f"Atributo inexistente: {obj.color}")</code></pre>
+
+        <h2>18. __doc__</h2>
+        <p>Contiene la documentación (docstring) de una función o clase.</p>
+
+        <pre><code class="language-python"># Ejemplo de __doc__
+class MiClase:
+    """Esta es una clase de ejemplo.
+    
+    Demuestra el uso de docstrings.
+    """
+    pass
+
+def mi_funcion():
+    """Esta función no hace nada, pero tiene documentación."""
+    pass
+
+print("Documentación de MiClase:")
+print(MiClase.__doc__)
+print("\nDocumentación de mi_funcion:")
+print(mi_funcion.__doc__)</code></pre>
+
+        <h2>19. __dict__</h2>
+        <p>Diccionario que contiene todos los atributos de una instancia u objeto.</p>
+
+        <pre><code class="language-python"># Ejemplo de __dict__
+class Producto:
+    def __init__(self, nombre, precio, cantidad):
+        self.nombre = nombre
+        self.precio = precio
+        self.cantidad = cantidad
+
+producto = Producto("Laptop", 999.99, 5)
+print("Atributos del producto:")
+print(producto.__dict__)
+
+# Modificar a través de __dict__
+producto.__dict__['precio'] = 899.99
+print(f"\nPrecio actualizado: {producto.precio}")</code></pre>
+
+        <h2>20. __class__</h2>
+        <p>Referencia a la clase del objeto.</p>
+
+        <pre><code class="language-python"># Ejemplo de __class__
+class Animal:
+    especie = "Desconocida"
+
+class Perro(Animal):
+    especie = "Canis familiaris"
+
+mi_perro = Perro()
+print(f"Clase del objeto: {mi_perro.__class__}")
+print(f"Nombre de la clase: {mi_perro.__class__.__name__}")
+print(f"Especie: {mi_perro.__class__.especie}")</code></pre>
+
+        <h2>21. __file__</h2>
+        <p>Ruta del archivo desde donde se cargó el módulo.</p>
+
+        <pre><code class="language-python"># Ejemplo de __file__
+import os
+print(f"Archivo del módulo os: {os.__file__}")
+
+# En un notebook, __file__ no está disponible directamente
+# pero se puede ver con módulos importados</code></pre>
+
+        <h2>22. __module__</h2>
+        <p>Nombre del módulo donde se definió la clase.</p>
+
+        <pre><code class="language-python"># Ejemplo de __module__
+class MiClaseLocal:
+    pass
+
+obj = MiClaseLocal()
+print(f"Módulo de la clase: {obj.__module__}")
+print(f"Módulo de la clase str: {str.__module__}")</code></pre>
+
+        <h2>23. __bases__</h2>
+        <p>Tupla con las clases base de una clase.</p>
+
+        <pre><code class="language-python"># Ejemplo de __bases__
+class Vehiculo:
+    pass
+
+class Motor:
+    pass
+
+class Coche(Vehiculo, Motor):
+    pass
+
+print(f"Clases base de Coche: {Coche.__bases__}")
+print(f"Clases base de int: {int.__bases__}")</code></pre>
+
+        <h2>24. __mro__</h2>
+        <p>Method Resolution Order - orden en que se buscan los métodos en la jerarquía de clases.</p>
+
+        <pre><code class="language-python"># Ejemplo de __mro__
+class A:
+    pass
+
+class B(A):
+    pass
+
+class C(A):
+    pass
+
+class D(B, C):
+    pass
+
+print("MRO de la clase D:")
+for clase in D.__mro__:
+    print(f"  - {clase.__name__}")</code></pre>
+
+        <h2>25. __slots__</h2>
+        <p>Define explícitamente los atributos permitidos, optimizando memoria.</p>
+
+        <pre><code class="language-python"># Ejemplo de __slots__
+class PuntoOptimizado:
+    __slots__ = ['x', 'y']
+    
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+punto = PuntoOptimizado(10, 20)
+print(f"Punto: ({punto.x}, {punto.y})")
+
+# Esto daría error porque 'z' no está en __slots__:
+# punto.z = 30</code></pre>
+
+        <h2>26. __format__</h2>
+        <p>Define el comportamiento de <code>format()</code> y f-strings.</p>
+
+        <pre><code class="language-python"># Ejemplo de __format__
+class Precio:
+    def __init__(self, valor):
+        self.valor = valor
+    
+    def __format__(self, formato):
+        if formato == 'euros':
+            return f"{self.valor:.2f}€"
+        elif formato == 'dolares':
+            return f"${self.valor:.2f}"
+        return f"{self.valor:.2f}"
+
+precio = Precio(123.456)
+print(f"Precio en euros: {precio:euros}")
+print(f"Precio en dólares: {precio:dolares}")
+print(f"Precio normal: {precio}")</code></pre>
+
+        <h2>27. __reversed__</h2>
+        <p>Define el comportamiento de <code>reversed()</code>.</p>
+
+        <pre><code class="language-python"># Ejemplo de __reversed__
+class MiSecuencia:
+    def __init__(self, datos):
+        self.datos = datos
+    
+    def __reversed__(self):
+        return reversed(self.datos)
+
+seq = MiSecuencia([1, 2, 3, 4, 5])
+print("Secuencia invertida:")
+for item in reversed(seq):
+    print(item, end=" ")</code></pre>
+
+        <h2>28. __missing__</h2>
+        <p>Se llama cuando una clave no existe en un diccionario (subclases de dict).</p>
+
+        <pre><code class="language-python"># Ejemplo de __missing__
+class DiccionarioConDefault(dict):
+    def __missing__(self, clave):
+        return f"La clave '{clave}' no existe, retornando valor por defecto"
+
+mi_dict = DiccionarioConDefault({'a': 1, 'b': 2})
+print(f"Clave existente 'a': {mi_dict['a']}")
+print(f"Clave inexistente 'z': {mi_dict['z']}")</code></pre>
+
+        <h2>29. __sizeof__</h2>
+        <p>Retorna el tamaño en memoria del objeto.</p>
+
+        <pre><code class="language-python"># Ejemplo de __sizeof__
+import sys
+
+lista_pequeña = [1, 2, 3]
+lista_grande = list(range(1000))
+
+print(f"Tamaño de lista pequeña: {sys.getsizeof(lista_pequeña)} bytes")
+print(f"Tamaño de lista grande: {sys.getsizeof(lista_grande)} bytes")
+
+class MiClase:
+    def __init__(self):
+        self.datos = [1, 2, 3, 4, 5]
+
+obj = MiClase()
+print(f"Tamaño del objeto: {sys.getsizeof(obj)} bytes")</code></pre>
+
+        <h2>30. __annotations__</h2>
+        <p>Diccionario con las anotaciones de tipo de variables.</p>
+
+        <pre><code class="language-python"># Ejemplo de __annotations__
+class Usuario:
+    nombre: str
+    edad: int
+    activo: bool = True
+    
+    def __init__(self, nombre: str, edad: int):
+        self.nombre = nombre
+        self.edad = edad
+
+print("Anotaciones de la clase Usuario:")
+print(Usuario.__annotations__)
+
+def saludar(nombre: str, edad: int) -> str:
+    return f"Hola {nombre}, tienes {edad} años"
+
+print("\nAnotaciones de la función saludar:")
+print(saludar.__annotations__)</code></pre>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
