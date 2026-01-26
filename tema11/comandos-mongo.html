@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comandos Básicos de MongoDB Shell</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Comandos Básicos de MongoDB Shell</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Comandos Básicos de MongoDB Shell (mongosh)</h1>
+        
+        <p>MongoDB Shell (<strong>mongosh</strong>) es la interfaz de línea de comandos interactiva para trabajar con MongoDB. A continuación se presentan los comandos más utilizados organizados por categorías.</p>
+
+        <h2>1. Conexión a MongoDB</h2>
+        <p>Para conectarte a una instancia de MongoDB, utiliza los siguientes comandos:</p>
+
+        <pre><code class="language-bash">mongosh                    # Conectar a localhost en puerto predeterminado
+mongosh "mongodb://host:puerto"   # Conectar a un host específico</code></pre>
+
+        <h2>2. Bases de datos</h2>
+        <p>Comandos para gestionar bases de datos:</p>
+
+        <pre><code class="language-javascript">show dbs                   // Mostrar todas las bases de datos
+use nombreDB               // Crear/cambiar a una base de datos
+db                        // Mostrar base de datos actual
+db.dropDatabase()         // Eliminar base de datos actual</code></pre>
+
+        <h2>3. Colecciones</h2>
+        <p>Las colecciones son equivalentes a las tablas en bases de datos relacionales. Comandos básicos:</p>
+
+        <pre><code class="language-javascript">show collections          // Mostrar todas las colecciones
+db.createCollection("nombre")     // Crear una colección
+db.nombreColeccion.drop()        // Eliminar una colección</code></pre>
+
+        <h2>4. Insertar documentos</h2>
+        <p>Para añadir documentos (registros) a una colección:</p>
+
+        <pre><code class="language-javascript">db.coleccion.insertOne({campo: "valor"})    // Insertar un documento
+
+db.coleccion.insertMany([                   // Insertar varios documentos
+  {campo1: "valor1"},
+  {campo2: "valor2"}
+])</code></pre>
+
+        <h2>5. Consultar documentos</h2>
+        <p>Comandos para recuperar información de las colecciones:</p>
+
+        <pre><code class="language-javascript">db.coleccion.find()                     // Encontrar todos los documentos
+db.coleccion.find().pretty()            // Mostrar resultados formateados
+db.coleccion.findOne()                  // Encontrar un documento
+db.coleccion.find({campo: "valor"})     // Buscar por criterio</code></pre>
+
+        <h2>6. Operadores de consulta</h2>
+        <p>MongoDB proporciona operadores especiales para realizar consultas más complejas:</p>
+
+        <pre><code class="language-javascript">db.coleccion.find({campo: {$gt: 20}})   // Mayor que
+db.coleccion.find({campo: {$lt: 20}})   // Menor que
+db.coleccion.find({campo: {$in: [1,2,3]}}) // Valores en array
+db.coleccion.find({$or: [{a:1}, {b:2}]})   // Condición OR</code></pre>
+
+        <h2>7. Actualizar documentos</h2>
+        <p>Para modificar documentos existentes en una colección:</p>
+
+        <pre><code class="language-javascript">db.coleccion.updateOne(                  // Actualizar un documento
+  {filtro: "valor"},
+  {$set: {campo: "nuevo_valor"}}
+)
+
+db.coleccion.updateMany(                 // Actualizar varios documentos
+  {filtro: "valor"},
+  {$set: {campo: "nuevo_valor"}}
+)</code></pre>
+
+        <h2>8. Eliminar documentos</h2>
+        <p>Comandos para borrar documentos de una colección:</p>
+
+        <pre><code class="language-javascript">db.coleccion.deleteOne({campo: "valor"})    // Eliminar un documento
+db.coleccion.deleteMany({campo: "valor"})   // Eliminar varios documentos</code></pre>
+
+        <h2>9. Límites y ordenamiento</h2>
+        <p>Controla la cantidad y el orden de los resultados de tus consultas:</p>
+
+        <pre><code class="language-javascript">db.coleccion.find().limit(5)            // Limitar resultados
+db.coleccion.find().sort({campo: 1})    // Ordenar ascendente
+db.coleccion.find().sort({campo: -1})   // Ordenar descendente</code></pre>
+
+        <h2>10. Agregaciones básicas</h2>
+        <p>Operaciones para obtener información estadística de las colecciones:</p>
+
+        <pre><code class="language-javascript">db.coleccion.count()                    // Contar documentos
+db.coleccion.distinct("campo")          // Valores únicos</code></pre>
+
+        <h2>11. Índices</h2>
+        <p>Los índices mejoran el rendimiento de las consultas. Comandos para gestionarlos:</p>
+
+        <pre><code class="language-javascript">db.coleccion.createIndex({campo: 1})    // Crear índice ascendente
+db.coleccion.getIndexes()               // Ver índices existentes
+db.coleccion.dropIndex("nombre_index")  // Eliminar índice</code></pre>
+
+        <blockquote>
+            <strong>Nota:</strong> Recuerda que MongoDB es una base de datos NoSQL orientada a documentos. Los documentos se almacenan en formato BSON (Binary JSON) y no requieren un esquema fijo, lo que proporciona gran flexibilidad en el modelado de datos.
+        </blockquote>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

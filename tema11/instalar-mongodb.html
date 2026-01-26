@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalación de MongoDB en Ubuntu 24.04</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Instalación de MongoDB en Ubuntu 24.04</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Instalación de MongoDB en Ubuntu 24.04</h1>
+
+        <p>A continuación se detallan los pasos necesarios para instalar <strong>MongoDB 7.0</strong> en <strong>Ubuntu 24.04</strong>. Sigue cada paso en orden para completar la instalación correctamente.</p>
+
+        <h2>1. Importar la clave pública de MongoDB</h2>
+        <p>El primer paso es importar la clave GPG oficial de MongoDB para verificar la autenticidad de los paquetes:</p>
+        <pre><code class="language-bash">curl -fsSL https://pgp.mongodb.com/server-7.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor</code></pre>
+
+        <h2>2. Crear el archivo de repositorio</h2>
+        <p>Añade el repositorio oficial de MongoDB a las fuentes de APT:</p>
+        <pre><code class="language-bash">echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list</code></pre>
+
+        <h2>3. Actualizar los paquetes</h2>
+        <p>Actualiza la lista de paquetes disponibles para incluir el repositorio de MongoDB:</p>
+        <pre><code class="language-bash">sudo apt update</code></pre>
+
+        <h2>4. Instalar MongoDB</h2>
+        <p>Instala MongoDB y todos sus componentes necesarios:</p>
+        <pre><code class="language-bash">sudo apt install mongodb-org</code></pre>
+
+        <h2>5. Iniciar el servicio de MongoDB</h2>
+        <p>Inicia el servicio de MongoDB utilizando <kbd>systemctl</kbd>:</p>
+        <pre><code class="language-bash">sudo systemctl start mongod</code></pre>
+
+        <h2>6. Habilitar MongoDB para que inicie con el sistema</h2>
+        <p>Configura MongoDB para que se inicie automáticamente al arrancar el sistema:</p>
+        <pre><code class="language-bash">sudo systemctl enable mongod</code></pre>
+
+        <h2>7. Verificar que MongoDB esté funcionando</h2>
+        <p>Comprueba el estado del servicio para asegurarte de que MongoDB está ejecutándose correctamente:</p>
+        <pre><code class="language-bash">sudo systemctl status mongod</code></pre>
+
+        <h2>8. Conectarse a MongoDB</h2>
+        <p>Para acceder a la shell interactiva de MongoDB, utiliza el comando <kbd>mongosh</kbd>:</p>
+        <pre><code class="language-bash">mongosh</code></pre>
+
+        <h2>9. Verificar la versión instalada</h2>
+        <p>Confirma la versión de MongoDB que has instalado:</p>
+        <pre><code class="language-bash">mongod --version</code></pre>
+
+        <p><mark>¡Instalación completada!</mark> Ahora tienes MongoDB 7.0 funcionando en tu sistema Ubuntu 24.04.</p>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
