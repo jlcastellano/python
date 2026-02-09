@@ -1,0 +1,405 @@
+/* VARIABLES Y RESET */
+:root {
+    --font-primary: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+    --color-bg: #f9f9f9;
+    --color-paper: #ffffff;
+    --color-text: #333333;
+    --color-accent: #007acc; /* Azul VS Code */
+    --color-border: #e1e4e8;
+    --color-note-bg: #f0f8ff;
+    --color-note-border: #007acc;
+}
+
+body {
+    background-color: var(--color-bg);
+    font-family: var(--font-primary);
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+    color: var(--color-text);
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-note-border));
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header div {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.contenido-didactico {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--color-paper);
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* --- TIPOGRAFÍA --- */
+.contenido-didactico h1 {
+    font-size: 2.5rem;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    color: #7c3aed;
+}
+
+.contenido-didactico h2 {
+    font-size: 1.8rem;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #007acc;
+    position: relative;
+}
+
+/* Pequeño detalle visual a la izquierda de los H2 */
+.contenido-didactico h2::before {
+    content: '#';
+    color: var(--color-accent);
+    margin-right: 8px;
+    font-weight: 300;
+}
+
+.contenido-didactico h3 {
+    font-size: 1.4rem;
+    margin-top: 30px;
+    color: #444;
+}
+
+.contenido-didactico p {
+    margin-bottom: 1.2em;
+    font-size: 1.05rem;
+}
+
+/* 1. Contenedor de la imagen (figure) */
+.contenido-didactico figure {
+    margin: 2rem 0;          /* Espacio arriba y abajo */
+    padding: 0;              /* Resetea padding por defecto */
+    text-align: center;      /* Centra la imagen y el texto */
+    display: block;
+}
+
+/* 2. La imagen en sí (img) */
+.contenido-didactico img {
+    max-width: 100%;         /* Responsive: nunca más ancha que el contenedor */
+    height: auto;            /* Mantiene proporciones */
+    border-radius: 8px;      /* Estética: bordes suaves */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra ligera */
+}
+
+/* 3. El pie de foto (figcaption) */
+.contenido-didactico figcaption {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* --- ELEMENTOS DE TEXTO INLINE --- */
+.contenido-didactico code:not([class*="language-"]) {
+    /* Estilo para código inline (no bloques) */
+    background-color: #f1f1f1;
+    color: #e01e5a;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+}
+
+.contenido-didactico kbd {
+    background-color: #eee;
+    border-radius: 3px;
+    border: 1px solid #b4b4b4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.2), 0 2px 0 0 rgba(255,255,255,.7) inset;
+    color: #333;
+    display: inline-block;
+    font-size: .85em;
+    font-weight: 700;
+    line-height: 1;
+    padding: 2px 4px;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+}
+
+.contenido-didactico mark {
+    background-color: #fff3cd;
+    padding: 0 2px;
+    border-radius: 2px;
+    color: #856404;
+}
+
+/* --- LISTAS --- */
+.contenido-didactico ul, 
+.contenido-didactico ol {
+    padding-left: 25px;
+    margin-bottom: 20px;
+}
+
+.contenido-didactico li {
+    margin-bottom: 8px;
+}
+
+/* Listas de definición (Glosarios) */
+.contenido-didactico dl {
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+}
+
+.contenido-didactico dt {
+    font-weight: bold;
+    color: var(--color-accent);
+    margin-top: 15px;
+    font-size: 1.1em;
+}
+
+.contenido-didactico dt:first-child {
+    margin-top: 0;
+}
+
+.contenido-didactico dd {
+    margin-left: 0;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* --- NOTAS (BLOCKQUOTE) --- */
+.contenido-didactico blockquote {
+    margin: 30px 0;
+    padding: 20px;
+    background-color: var(--color-note-bg);
+    border-left: 5px solid var(--color-note-border);
+    border-radius: 0 4px 4px 0;
+    color: #444;
+    font-style: normal; /* Quitamos itálica por defecto para legibilidad técnica */
+}
+
+/* --- TABLAS --- */
+.contenido-didactico table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+    font-size: 0.95rem;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    border-radius: 6px;
+}
+
+.contenido-didactico thead tr {
+    background-color: var(--color-accent);
+    color: #ffffff;
+    text-align: left;
+}
+
+.contenido-didactico th, 
+.contenido-didactico td {
+    padding: 12px 15px;
+}
+
+.contenido-didactico tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.contenido-didactico tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.contenido-didactico tbody tr:last-of-type {
+    border-bottom: 2px solid var(--color-accent);
+}
+
+.contenido-didactico tfoot {
+    background-color: #f1f1f1;
+    font-size: 0.85em;
+    color: #666;
+    text-align: center;
+}
+
+/* --- DETAILS / SUMMARY (Acordeones) --- */
+.contenido-didactico details {
+    background-color: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.contenido-didactico details[open] {
+    background-color: #fcfcfc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.contenido-didactico summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--color-accent);
+    outline: none;
+}
+
+.contenido-didactico details p {
+    margin-bottom: 0;
+    margin-top: 10px;
+    padding-left: 18px;
+    color: #555;
+}
+
+/* --- BLOQUES DE CÓDIGO (Ajustes sobre Prism.js) --- */
+/* Contenedor relativo para posicionar el botón de copiar */
+.contenido-didactico pre[class*="language-"] {
+    position: relative;
+    margin: 25px 0;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    padding-top: 35px !important; /* Espacio para la barra superior */
+}
+
+/* Barra superior falsa estilo "Ventana" */
+.contenido-didactico pre[class*="language-"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25px;
+    background: #2d2d2d; /* Color barra titulo VS Code */
+    border-radius: 6px 6px 0 0;
+    border-bottom: 1px solid #111;
+    z-index: 1;
+}
+
+/* Botones de ventana (rojo, amarillo, verde) decorativos */
+.contenido-didactico pre[class*="language-"]::after {
+    content: '•••';
+    position: absolute;
+    top: 2px;
+    left: 10px;
+    color: #555;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    z-index: 2;
+}
+
+/* Botón de copiar (Estilo Azulado) */
+.copy-button {
+    position: absolute;
+    top: 2px;
+    right: 10px;
+    z-index: 10;
+    
+    /* Nuevo estilo azulado */
+    background-color: #0e639c; /* Azul oscuro base */
+    border: 1px solid #1177bb; /* Borde sutilmente más claro */
+    color: #ffffff;
+    
+    font-size: 0.75rem;
+    padding: 3px 10px; /* Un poco más de relleno para que parezca botón */
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-family: var(--font-primary);
+    font-weight: 500;
+}
+
+.copy-button:hover {
+    background-color: #1177bb; /* Azul más brillante al pasar el mouse */
+    border-color: #3399cc;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.copy-button:active {
+    transform: translateY(1px); /* Efecto de pulsación */
+}
+
+/* Estado de éxito (se mantiene verde para indicar 'OK') */
+.copy-button.copied {
+    background-color: #238636; /* Verde éxito */
+    border-color: #2ea043;
+    color: #ffffff;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .contenido-didactico {
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 0;
+    }
+
+    .contenido-didactico h1 {
+        font-size: 2rem;
+    }
+
+    .contenido-didactico table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+/* Sección de introducción a criptografía */
+.intro-crypto {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: white;
+padding: 40px;
+border-radius: 12px;
+margin-bottom: 40px;
+}
+
+.intro-crypto h2 {
+color: white;
+border-bottom: 2px solid rgba(255,255,255,0.3);
+padding-bottom: 15px;
+}
+
+.intro-crypto h3 {
+color: #ffd700;
+margin-top: 30px;
+}
+
+.intro-crypto dl {
+background: rgba(255,255,255,0.1);
+border: 1px solid rgba(255,255,255,0.2);
+}
+
+.intro-crypto dt {
+color: #ffd700;
+}
+
+.intro-crypto dd {
+color: rgba(255,255,255,0.95);
+}
+
+.intro-crypto p {
+line-height: 1.8;
+}
+
+.intro-crypto code {
+background: rgba(0,0,0,0.3);
+color: #ffd700;
+}
+
+/* Sección de preparación */
+.preparacion {
+margin-top: 40px;
+}
