@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 09: Manejo de Excepciones y Errores</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Tema 09: Manejo de Excepciones y Errores</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Gestión robusta de errores en Python</h1>
+        
+        <p>En esta sesión aprenderás:</p>
+        <ul>
+            <li>Qué son las excepciones y por qué son importantes</li>
+            <li>Tipos de excepciones en Python</li>
+            <li>Manejo de excepciones con try-except</li>
+            <li>Creación de excepciones personalizadas</li>
+            <li>Buenas prácticas en el manejo de errores</li>
+        </ul>
+
+        <h2>1. Introducción a las Excepciones</h2>
+        
+        <h3>¿Qué es una excepción?</h3>
+        <p>Una excepción es un <strong>evento que ocurre durante la ejecución de un programa</strong> que interrumpe el flujo normal de las instrucciones. Cuando Python encuentra un error, genera ("lanza" o "raise") una excepción.</p>
+
+        <h3>Ejemplos de errores comunes:</h3>
+        
+        <pre><code class="language-python"># Error de división por cero
+resultado = 10 / 0  # ZeroDivisionError
+
+# Error de tipo
+# numero = "10" + 5  # TypeError
+
+# Error de índice
+# lista = [1, 2, 3]
+# valor = lista[10]  # IndexError
+
+# Error de clave
+# diccionario = {"nombre": "Ana"}
+# edad = diccionario["edad"]  # KeyError
+
+# Error de valor
+# numero = int("abc")  # ValueError
+
+print("Si quitas los comentarios, verás diferentes tipos de errores")</code></pre>
+
+        <h2>2. Estructura try-except Básica</h2>
+        
+        <p>La estructura básica para manejar excepciones es:</p>
+        
+        <pre><code class="language-python">try:
+    # Código que puede generar un error
+except TipoDeExcepcion:
+    # Código que se ejecuta si ocurre el error</code></pre>
+
+        <h3>Ejemplo básico: división segura</h3>
+        
+        <pre><code class="language-python">def dividir_seguro(a, b):
+    try:
+        resultado = a / b
+        return resultado
+    except ZeroDivisionError:
+        print("Error: No se puede dividir por cero")
+        return None
+
+# Pruebas
+print(dividir_seguro(10, 2))  # 5.0
+print(dividir_seguro(10, 0))  # Error: No se puede dividir por cero
+print(dividir_seguro(15, 3))  # 5.0</code></pre>
+
+        <h3>Capturar múltiples tipos de excepciones</h3>
+        
+        <pre><code class="language-python">def convertir_a_numero(valor):
+    try:
+        numero = int(valor)
+        return numero
+    except ValueError:
+        print(f"'{valor}' no es un número válido")
+        return None
+    except TypeError:
+        print(f"El tipo de dato {type(valor)} no se puede convertir")
+        return None
+
+# Pruebas
+print(convertir_a_numero("123"))    # 123
+print(convertir_a_numero("abc"))    # Error ValueError
+print(convertir_a_numero([1, 2]))   # Error TypeError
+print(convertir_a_numero("45"))     # 45</code></pre>
+
+        <h2>3. Capturar Múltiples Excepciones</h2>
+        
+        <p>Puedes capturar múltiples excepciones de diferentes formas:</p>
+
+        <h3>Forma 1: Capturar varias excepciones en una sola línea</h3>
+        
+        <pre><code class="language-python">def operacion_segura(a, b, operacion):
+    try:
+        if operacion == "dividir":
+            return a / b
+        elif operacion == "lista":
+            lista = [a, b]
+            return lista[10]
+    except (ZeroDivisionError, IndexError, TypeError) as error:
+        print(f"Error detectado: {type(error).__name__}")
+        print(f"Mensaje: {error}")
+        return None
+
+# Pruebas
+print(operacion_segura(10, 0, "dividir"))
+print(operacion_segura(10, 5, "lista"))</code></pre>
+
+        <h3>Forma 2: Usar 'as' para acceder al objeto de excepción</h3>
+        
+        <pre><code class="language-python">def leer_archivo(nombre_archivo):
+    try:
+        with open(nombre_archivo, 'r') as archivo:
+            return archivo.read()
+    except FileNotFoundError as e:
+        print(f"Archivo no encontrado: {e.filename}")
+        return None
+    except PermissionError as e:
+        print(f"Sin permisos para leer el archivo: {e}")
+        return None
+    except Exception as e:
+        print(f"Error inesperado: {type(e).__name__} - {e}")
+        return None
+
+# Prueba (el archivo probablemente no existe)
+contenido = leer_archivo("archivo_inexistente.txt")</code></pre>
+
+        <h2>4. Bloques else y finally</h2>
+        
+        <dl>
+            <dt>else</dt>
+            <dd>Se ejecuta si <strong>no</strong> ocurre ninguna excepción.</dd>
+            
+            <dt>finally</dt>
+            <dd>Se ejecuta <strong>siempre</strong>, ocurra o no una excepción. Útil para limpieza (cerrar archivos, conexiones, etc.).</dd>
+        </dl>
+
+        <h3>Ejemplo con else</h3>
+        
+        <pre><code class="language-python">def dividir_con_else(a, b):
+    try:
+        resultado = a / b
+    except ZeroDivisionError:
+        print("No se puede dividir por cero")
+    else:
+        print(f"División exitosa: {resultado}")
+        return resultado
+
+print("\nPrueba 1:")
+dividir_con_else(10, 2)
+
+print("\nPrueba 2:")
+dividir_con_else(10, 0)</code></pre>
+
+        <h3>Ejemplo con finally</h3>
+        
+        <pre><code class="language-python">def procesar_archivo(nombre):
+    archivo = None
+    try:
+        print(f"Intentando abrir {nombre}...")
+        archivo = open(nombre, 'r')
+        contenido = archivo.read()
+        print(f"Archivo leído exitosamente")
+        return contenido
+    except FileNotFoundError:
+        print(f"El archivo {nombre} no existe")
+        return None
+    finally:
+        print("Ejecutando bloque finally...")
+        if archivo:
+            archivo.close()
+            print("Archivo cerrado")
+        else:
+            print("No había archivo que cerrar")
+
+# Prueba
+procesar_archivo("inexistente.txt")</code></pre>
+
+        <h3>Ejemplo completo: try-except-else-finally</h3>
+        
+        <pre><code class="language-python">def operacion_completa(a, b):
+    print("=" * 40)
+    print(f"Operación: {a} / {b}")
+    try:
+        resultado = a / b
+    except ZeroDivisionError:
+        print("ERROR: División por cero")
+        resultado = None
+    except TypeError:
+        print("ERROR: Tipos de datos incorrectos")
+        resultado = None
+    else:
+        print(f"Operación exitosa: resultado = {resultado}")
+    finally:
+        print("Operación finalizada")
+        print("=" * 40)
+    
+    return resultado
+
+# Pruebas
+operacion_completa(10, 2)    # Exitosa
+operacion_completa(10, 0)    # Error: división por cero
+operacion_completa("10", 2)  # Error: tipo incorrecto</code></pre>
+
+        <h2>5. Jerarquía de Excepciones en Python</h2>
+        
+        <p>Las excepciones en Python están organizadas en una jerarquía. Aquí están las más comunes:</p>
+        
+        <pre><code class="language-plaintext">BaseException
+├── SystemExit
+├── KeyboardInterrupt
+└── Exception
+    ├── ArithmeticError
+    │   ├── ZeroDivisionError
+    │   └── OverflowError
+    ├── LookupError
+    │   ├── IndexError
+    │   └── KeyError
+    ├── ValueError
+    ├── TypeError
+    ├── AttributeError
+    ├── NameError
+    ├── OSError
+    │   ├── FileNotFoundError
+    │   └── PermissionError
+    └── RuntimeError</code></pre>
+
+        <h3>Tabla de excepciones comunes</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Excepción</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>ZeroDivisionError</code></td>
+                    <td>División o módulo por cero</td>
+                </tr>
+                <tr>
+                    <td><code>ValueError</code></td>
+                    <td>Valor inapropiado (tipo correcto pero valor incorrecto)</td>
+                </tr>
+                <tr>
+                    <td><code>TypeError</code></td>
+                    <td>Operación aplicada a tipo incorrecto</td>
+                </tr>
+                <tr>
+                    <td><code>IndexError</code></td>
+                    <td>Índice fuera de rango</td>
+                </tr>
+                <tr>
+                    <td><code>KeyError</code></td>
+                    <td>Clave no encontrada en diccionario</td>
+                </tr>
+                <tr>
+                    <td><code>FileNotFoundError</code></td>
+                    <td>Archivo no encontrado</td>
+                </tr>
+                <tr>
+                    <td><code>AttributeError</code></td>
+                    <td>Atributo o método no existe</td>
+                </tr>
+                <tr>
+                    <td><code>NameError</code></td>
+                    <td>Variable no definida</td>
+                </tr>
+                <tr>
+                    <td><code>ImportError</code></td>
+                    <td>Error al importar módulo</td>
+                </tr>
+                <tr>
+                    <td><code>MemoryError</code></td>
+                    <td>Sin memoria disponible</td>
+                </tr>
+                <tr>
+                    <td><code>OverflowError</code></td>
+                    <td>Resultado numérico demasiado grande</td>
+                </tr>
+                <tr>
+                    <td><code>RecursionError</code></td>
+                    <td>Profundidad máxima de recursión excedida</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>6. Lanzar Excepciones con raise</h2>
+        
+        <p>Puedes lanzar excepciones manualmente usando <code>raise</code>:</p>
+
+        <h3>Ejemplo básico de raise</h3>
+        
+        <pre><code class="language-python">def verificar_edad(edad):
+    if edad < 0:
+        raise ValueError("La edad no puede ser negativa")
+    if edad > 150:
+        raise ValueError("La edad no es realista")
+    if not isinstance(edad, int):
+        raise TypeError("La edad debe ser un número entero")
+    
+    print(f"Edad válida: {edad}")
+    return True
+
+# Pruebas
+try:
+    verificar_edad(25)
+    verificar_edad(-5)
+except ValueError as e:
+    print(f"Error de valor: {e}")</code></pre>
+
+        <h3>Función de validación con múltiples raise</h3>
+        
+        <pre><code class="language-python">def crear_usuario(nombre, edad, email):
+    # Validar nombre
+    if not nombre or not isinstance(nombre, str):
+        raise ValueError("El nombre debe ser una cadena no vacía")
+    
+    if len(nombre) < 2:
+        raise ValueError("El nombre debe tener al menos 2 caracteres")
+    
+    # Validar edad
+    if not isinstance(edad, int):
+        raise TypeError("La edad debe ser un número entero")
+    
+    if edad < 18:
+        raise ValueError("El usuario debe ser mayor de edad")
+    
+    # Validar email
+    if "@" not in email:
+        raise ValueError("Email inválido: debe contener @")
+    
+    return {
+        "nombre": nombre,
+        "edad": edad,
+        "email": email
+    }
+
+# Pruebas
+try:
+    usuario1 = crear_usuario("Ana", 25, "ana@email.com")
+    print(f"Usuario creado: {usuario1}")
+    
+    usuario2 = crear_usuario("B", 30, "b@email.com")
+except ValueError as e:
+    print(f"Error de validación: {e}")
+except TypeError as e:
+    print(f"Error de tipo: {e}")</code></pre>
+
+        <h2>7. Excepciones Personalizadas</h2>
+        
+        <p>Puedes crear tus propias excepciones heredando de <code>Exception</code>:</p>
+
+        <h3>Excepción personalizada básica</h3>
+        
+        <pre><code class="language-python">class EdadInvalidaError(Exception):
+    """Excepción lanzada cuando la edad no es válida"""
+    pass
+
+class SaldoInsuficienteError(Exception):
+    """Excepción lanzada cuando no hay suficiente saldo"""
+    pass
+
+# Usar las excepciones personalizadas
+def verificar_edad_personalizada(edad):
+    if edad < 0 or edad > 150:
+        raise EdadInvalidaError(f"Edad {edad} fuera de rango válido (0-150)")
+    print(f"Edad {edad} es válida")
+
+# Pruebas
+try:
+    verificar_edad_personalizada(25)
+    verificar_edad_personalizada(200)
+except EdadInvalidaError as e:
+    print(f"Error personalizado: {e}")</code></pre>
+
+        <h3>Excepción personalizada con atributos adicionales</h3>
+        
+        <pre><code class="language-python">class ErrorCuentaBancaria(Exception):
+    """Clase base para excepciones de cuenta bancaria"""
+    def __init__(self, mensaje, numero_cuenta=None, saldo_actual=None):
+        super().__init__(mensaje)
+        self.numero_cuenta = numero_cuenta
+        self.saldo_actual = saldo_actual
+        self.mensaje = mensaje
+    
+    def __str__(self):
+        detalle = self.mensaje
+        if self.numero_cuenta:
+            detalle += f" [Cuenta: {self.numero_cuenta}]"
+        if self.saldo_actual is not None:
+            detalle += f" [Saldo: ${self.saldo_actual}]"
+        return detalle
+
+class SaldoInsuficiente(ErrorCuentaBancaria):
+    """No hay suficiente saldo para la operación"""
+    pass
+
+class LimiteRetiroExcedido(ErrorCuentaBancaria):
+    """Se excedió el límite diario de retiros"""
+    pass
+
+# Usar las excepciones
+class CuentaBancaria:
+    def __init__(self, numero, saldo_inicial=0):
+        self.numero = numero
+        self.saldo = saldo_inicial
+        self.limite_retiro_diario = 1000
+    
+    def retirar(self, monto):
+        if monto > self.saldo:
+            raise SaldoInsuficiente(
+                f"Intento de retirar ${monto}",
+                self.numero,
+                self.saldo
+            )
+        
+        if monto > self.limite_retiro_diario:
+            raise LimiteRetiroExcedido(
+                f"El monto ${monto} excede el límite diario",
+                self.numero
+            )
+        
+        self.saldo -= monto
+        print(f"Retiro exitoso: ${monto}. Nuevo saldo: ${self.saldo}")
+
+# Pruebas
+cuenta = CuentaBancaria("12345", 500)
+
+try:
+    cuenta.retirar(200)  # OK
+    cuenta.retirar(500)  # Error: saldo insuficiente
+except ErrorCuentaBancaria as e:
+    print(f"\nError en operación bancaria:")
+    print(e)</code></pre>
+
+        <h2>8. Contexto y Re-lanzamiento de Excepciones</h2>
+        
+        <p>A veces necesitas capturar una excepción, hacer algo, y luego re-lanzarla:</p>
+
+        <h3>Re-lanzar excepciones</h3>
+        
+        <pre><code class="language-python">def procesar_datos(datos):
+    try:
+        # Procesar datos
+        resultado = int(datos) * 2
+        return resultado
+    except ValueError as e:
+        print(f"Registrando error: {e}")
+        # Re-lanzar la excepción para que la maneje el código superior
+        raise
+
+def main():
+    try:
+        resultado = procesar_datos("abc")
+        print(f"Resultado: {resultado}")
+    except ValueError:
+        print("Error capturado en main: no se pudo convertir a número")
+
+main()</code></pre>
+
+        <h3>Encadenar excepciones con 'from'</h3>
+        
+        <pre><code class="language-python">def leer_configuracion(archivo):
+    try:
+        with open(archivo) as f:
+            config = f.read()
+            # Simular procesamiento
+            datos = eval(config)  # ¡No hacer esto en producción!
+            return datos
+    except FileNotFoundError as e:
+        raise RuntimeError(f"No se puede cargar la configuración") from e
+    except SyntaxError as e:
+        raise RuntimeError(f"Configuración con formato inválido") from e
+
+try:
+    config = leer_configuracion("config_inexistente.txt")
+except RuntimeError as e:
+    print(f"Error: {e}")
+    print(f"Causa original: {e.__cause__}")</code></pre>
+
+        <h2>9. Context Managers y Excepciones</h2>
+        
+        <p>Los context managers (<code>with</code>) garantizan limpieza incluso si ocurren excepciones:</p>
+
+        <pre><code class="language-python">class ManejadorRecursos:
+    def __init__(self, nombre):
+        self.nombre = nombre
+    
+    def __enter__(self):
+        print(f"Adquiriendo recurso: {self.nombre}")
+        return self
+    
+    def __exit__(self, exc_type, exc_value, traceback):
+        if exc_type is not None:
+            print(f"Se produjo una excepción: {exc_type.__name__}")
+            print(f"Mensaje: {exc_value}")
+        
+        print(f"Liberando recurso: {self.nombre}")
+        # Retornar True para suprimir la excepción
+        # Retornar False (o nada) para propagar la excepción
+        return False
+    
+    def hacer_algo(self):
+        print(f"Trabajando con {self.nombre}")
+
+# Uso normal
+print("Caso 1: Sin errores")
+with ManejadorRecursos("Base de datos") as recurso:
+    recurso.hacer_algo()
+
+print("\nCaso 2: Con error")
+try:
+    with ManejadorRecursos("Archivo") as recurso:
+        recurso.hacer_algo()
+        raise ValueError("Algo salió mal")
+except ValueError as e:
+    print(f"Excepción capturada fuera del context manager: {e}")</code></pre>
+
+        <h2>10. Buenas Prácticas en Manejo de Excepciones</h2>
+        
+        <h3>✅ HACER</h3>
+        <ol>
+            <li><strong>Ser específico</strong> con las excepciones</li>
+            <li><strong>Capturar solo</strong> las excepciones que puedes manejar</li>
+            <li><strong>Usar finally</strong> para limpieza</li>
+            <li><strong>Proporcionar contexto</strong> en mensajes de error</li>
+            <li><strong>Documentar</strong> qué excepciones puede lanzar una función</li>
+        </ol>
+
+        <h3>❌ NO HACER</h3>
+        <ol>
+            <li><strong>Capturar Exception genérico</strong> sin re-lanzar</li>
+            <li><strong>Silenciar excepciones</strong> con <code>pass</code></li>
+            <li><strong>Usar excepciones para control de flujo normal</strong></li>
+            <li><strong>Mensajes de error vagos</strong></li>
+        </ol>
+
+        <h3>Comparación: Mal vs Bien</h3>
+        
+        <pre><code class="language-python"># ❌ MAL - Demasiado genérico
+def procesar_malo(datos):
+    try:
+        resultado = int(datos) / len(datos)
+        return resultado
+    except:  # ¡No hacer esto!
+        return None
+
+# ✅ BIEN - Específico y con información
+def procesar_bueno(datos):
+    """
+    Procesa los datos y retorna un resultado.
+    
+    Args:
+        datos: String numérico o lista
+    
+    Returns:
+        Resultado del procesamiento
+    
+    Raises:
+        ValueError: Si datos no es convertible a número
+        TypeError: Si datos no tiene len()
+        ZeroDivisionError: Si len(datos) es 0
+    """
+    try:
+        numero = int(datos)
+        longitud = len(datos)
+        if longitud == 0:
+            raise ValueError("Los datos no pueden estar vacíos")
+        return numero / longitud
+    except ValueError as e:
+        print(f"Error de valor: {e}")
+        raise
+    except TypeError as e:
+        print(f"Error de tipo: {e}")
+        raise
+
+# Prueba
+try:
+    procesar_bueno("123")
+except Exception as e:
+    print(f"Excepción: {e}")</code></pre>
+
+        <h3>Ejemplo completo: Validador de formulario</h3>
+        
+        <pre><code class="language-python">class FormularioInvalidoError(Exception):
+    """Excepción para errores de validación de formulario"""
+    def __init__(self, campo, mensaje):
+        self.campo = campo
+        self.mensaje = mensaje
+        super().__init__(f"Campo '{campo}': {mensaje}")
+
+class ValidadorFormulario:
+    @staticmethod
+    def validar_email(email):
+        """Valida formato de email. Lanza FormularioInvalidoError si es inválido."""
+        if not isinstance(email, str):
+            raise FormularioInvalidoError("email", "Debe ser una cadena de texto")
+        
+        if "@" not in email or "." not in email:
+            raise FormularioInvalidoError("email", "Formato de email inválido")
+        
+        return True
+    
+    @staticmethod
+    def validar_edad(edad):
+        """Valida edad. Lanza FormularioInvalidoError si es inválida."""
+        try:
+            edad_int = int(edad)
+        except (ValueError, TypeError):
+            raise FormularioInvalidoError("edad", "Debe ser un número")
+        
+        if edad_int < 0:
+            raise FormularioInvalidoError("edad", "No puede ser negativa")
+        
+        if edad_int > 150:
+            raise FormularioInvalidoError("edad", "Edad no realista")
+        
+        return True
+    
+    @staticmethod
+    def validar_telefono(telefono):
+        """Valida teléfono. Lanza FormularioInvalidoError si es inválido."""
+        if not isinstance(telefono, str):
+            raise FormularioInvalidoError("telefono", "Debe ser una cadena")
+        
+        # Remover espacios y guiones
+        telefono_limpio = telefono.replace(" ", "").replace("-", "")
+        
+        if not telefono_limpio.isdigit():
+            raise FormularioInvalidoError("telefono", "Debe contener solo dígitos")
+        
+        if len(telefono_limpio) < 10:
+            raise FormularioInvalidoError("telefono", "Debe tener al menos 10 dígitos")
+        
+        return True
+    
+    @classmethod
+    def validar_formulario(cls, datos):
+        """
+        Valida un formulario completo.
+        
+        Args:
+            datos: Diccionario con los datos del formulario
+        
+        Returns:
+            True si todo es válido
+        
+        Raises:
+            FormularioInvalidoError: Si algún campo es inválido
+        """
+        errores = []
+        
+        # Validar cada campo
+        try:
+            cls.validar_email(datos.get("email", ""))
+        except FormularioInvalidoError as e:
+            errores.append(str(e))
+        
+        try:
+            cls.validar_edad(datos.get("edad", ""))
+        except FormularioInvalidoError as e:
+            errores.append(str(e))
+        
+        try:
+            cls.validar_telefono(datos.get("telefono", ""))
+        except FormularioInvalidoError as e:
+            errores.append(str(e))
+        
+        # Si hay errores, lanzar excepción con todos
+        if errores:
+            mensaje_completo = "Errores de validación:\n" + "\n".join(errores)
+            raise FormularioInvalidoError("formulario", mensaje_completo)
+        
+        return True
+
+# Pruebas
+print("Caso 1: Formulario válido")
+formulario_valido = {
+    "email": "usuario@email.com",
+    "edad": 25,
+    "telefono": "555-123-4567"
+}
+
+try:
+    ValidadorFormulario.validar_formulario(formulario_valido)
+    print("✓ Formulario válido")
+except FormularioInvalidoError as e:
+    print(f"✗ {e}")
+
+print("\nCaso 2: Formulario inválido")
+formulario_invalido = {
+    "email": "email_invalido",
+    "edad": -5,
+    "telefono": "123"
+}
+
+try:
+    ValidadorFormulario.validar_formulario(formulario_invalido)
+    print("✓ Formulario válido")
+except FormularioInvalidoError as e:
+    print(f"✗ Error:\n{e.mensaje}")</code></pre>
+
+        <h2>11. Logging vs Print en Manejo de Errores</h2>
+        
+        <p>Es mejor usar el módulo <code>logging</code> que <code>print()</code> para registrar errores:</p>
+
+        <pre><code class="language-python">import logging
+
+# Configurar logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='app.log',  # Nombre del archivo donde se guardarán los logs
+    filemode='a'  # 'a' para append (añadir), 'w' para sobrescribir    
+)
+
+logger = logging.getLogger(__name__)
+print(logging.getLogger(__name__))
+
+def operacion_con_logging(a, b):
+    try:
+        logger.info(f"Iniciando operación: {a} / {b}")
+        resultado = a / b
+        logger.info(f"Operación exitosa: {resultado}")
+        return resultado
+    except ZeroDivisionError:
+        logger.error("Error: Intento de división por cero", exc_info=True)
+        raise
+    except Exception as e:
+        logger.critical(f"Error inesperado: {e}", exc_info=True)
+        raise
+
+# Pruebas
+try:
+    operacion_con_logging(10, 2)
+    operacion_con_logging(10, 0)
+except ZeroDivisionError:
+    print("Error capturado en el nivel superior")</code></pre>
+
+        <blockquote>
+            <p><strong>Nota importante:</strong> El manejo adecuado de excepciones es fundamental para crear aplicaciones robustas y mantenibles. Siempre documenta qué excepciones puede lanzar tu código y maneja los errores de forma específica y clara.</p>
+        </blockquote>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
