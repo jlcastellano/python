@@ -42,3 +42,19 @@ tema11/mi_base_datos.db
 tema11/sqlalchemy_ejemplo.db
 preguntas1T.xml
 ejercicios11 - copia.ipynb
+tema14/app_con_recursos.py
+tema14/app_con_recursos.spec
+tema14/calculadora_gui.py
+tema14/calculadora_simple.py
+tema14/Calculadora.spec
+tema14/CalculadoraGUI.spec
+tema14/config.json
+tema14/ejemplo.spec
+tema14/setup_cx.py
+tema14/output/calculadora_gui.exe
+tema15/main.py
+tema15/__pycache__/main.cpython-310.pyc
+tema15/__pycache__/main.cpython-311.pyc
+tema15/__pycache__/main.cpython-314.pyc
+tema15/tema15 - FastAPI - copia.ipynb
+tema15/main.py

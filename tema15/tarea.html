@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API de Sistema de Reservas de Restaurante</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>API de Sistema de Reservas de Restaurante</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>API de Sistema de Reservas de Restaurante</h1>
+
+        <h2>1. Descripción del Proyecto</h2>
+        
+        <p>Desarrollarás una <strong>API REST completa</strong> para gestionar el sistema de reservas de un restaurante llamado <strong>"La Mesa Dorada"</strong>. El restaurante necesita modernizar su sistema de reservas, actualmente basado en papel, y ha contratado tus servicios para crear una solución digital.</p>
+
+        <p>La API debe permitir gestionar clientes, mesas y reservas, garantizando que no se produzcan conflictos de horarios y proporcionando estadísticas de ocupación para ayudar a la gerencia en la toma de decisiones.</p>
+
+        <h2>2. Contexto del Negocio</h2>
+
+        <p>El restaurante "La Mesa Dorada" cuenta con las siguientes características:</p>
+
+        <ul>
+            <li><strong>Horario de operación:</strong> 12:00 a 16:00 (comidas) y 20:00 a 00:00 (cenas)</li>
+            <li><strong>Capacidad:</strong> 15 mesas de diferentes tamaños (2, 4, 6 y 8 personas)</li>
+            <li><strong>Duración estándar de reserva:</strong> 2 horas</li>
+            <li><strong>Política de cancelación:</strong> Las reservas pueden cancelarse hasta 2 horas antes</li>
+        </ul>
+
+        <h2>3. Requisitos Funcionales</h2>
+
+        <h3>3.1. Gestión de Clientes</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Método</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>/clientes/</code></td>
+                    <td>GET</td>
+                    <td>Listar todos los clientes con paginación</td>
+                </tr>
+                <tr>
+                    <td><code>/clientes/{id}</code></td>
+                    <td>GET</td>
+                    <td>Obtener un cliente por ID</td>
+                </tr>
+                <tr>
+                    <td><code>/clientes/</code></td>
+                    <td>POST</td>
+                    <td>Crear un nuevo cliente</td>
+                </tr>
+                <tr>
+                    <td><code>/clientes/{id}</code></td>
+                    <td>PUT</td>
+                    <td>Actualizar datos de un cliente</td>
+                </tr>
+                <tr>
+                    <td><code>/clientes/{id}</code></td>
+                    <td>DELETE</td>
+                    <td>Eliminar un cliente (solo si no tiene reservas activas)</td>
+                </tr>
+                <tr>
+                    <td><code>/clientes/buscar/</code></td>
+                    <td>GET</td>
+                    <td>Buscar clientes por nombre, email o teléfono</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Datos del cliente:</strong></p>
+        <ul>
+            <li>ID (autogenerado)</li>
+            <li>Nombre completo (obligatorio, mínimo 3 caracteres)</li>
+            <li>Email (obligatorio, formato válido, único)</li>
+            <li>Teléfono (obligatorio, formato español: 9 dígitos)</li>
+            <li>Fecha de registro (autogenerada)</li>
+            <li>Notas/preferencias (opcional)</li>
+        </ul>
+
+        <h3>3.2. Gestión de Mesas</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Método</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>/mesas/</code></td>
+                    <td>GET</td>
+                    <td>Listar todas las mesas</td>
+                </tr>
+                <tr>
+                    <td><code>/mesas/{id}</code></td>
+                    <td>GET</td>
+                    <td>Obtener una mesa por ID</td>
+                </tr>
+                <tr>
+                    <td><code>/mesas/</code></td>
+                    <td>POST</td>
+                    <td>Crear una nueva mesa</td>
+                </tr>
+                <tr>
+                    <td><code>/mesas/{id}</code></td>
+                    <td>PUT</td>
+                    <td>Actualizar datos de una mesa</td>
+                </tr>
+                <tr>
+                    <td><code>/mesas/{id}</code></td>
+                    <td>DELETE</td>
+                    <td>Eliminar una mesa (solo si no tiene reservas futuras)</td>
+                </tr>
+                <tr>
+                    <td><code>/mesas/disponibles/</code></td>
+                    <td>GET</td>
+                    <td>Listar mesas disponibles para una fecha/hora y número de comensales</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Datos de la mesa:</strong></p>
+        <ul>
+            <li>ID (autogenerado)</li>
+            <li>Número de mesa (único, 1-99)</li>
+            <li>Capacidad (2, 4, 6 u 8 personas)</li>
+            <li>Ubicación (interior, terraza, privado)</li>
+            <li>Activa (boolean, para poder desactivar mesas temporalmente)</li>
+        </ul>
+
+        <h3>3.3. Gestión de Reservas</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Método</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>/reservas/</code></td>
+                    <td>GET</td>
+                    <td>Listar reservas con filtros (fecha, cliente, mesa, estado)</td>
+                </tr>
+                <tr>
+                    <td><code>/reservas/{id}</code></td>
+                    <td>GET</td>
+                    <td>Obtener una reserva por ID</td>
+                </tr>
+                <tr>
+                    <td><code>/reservas/</code></td>
+                    <td>POST</td>
+                    <td>Crear una nueva reserva</td>
+                </tr>
+                <tr>
+                    <td><code>/reservas/{id}</code></td>
+                    <td>PUT</td>
+                    <td>Modificar una reserva existente</td>
+                </tr>
+                <tr>
+                    <td><code>/reservas/{id}</code></td>
+                    <td>DELETE</td>
+                    <td>Cancelar una reserva</td>
+                </tr>
+                <tr>
+                    <td><code>/reservas/{id}/confirmar</code></td>
+                    <td>PATCH</td>
+                    <td>Confirmar llegada del cliente</td>
+                </tr>
+                <tr>
+                    <td><code>/reservas/{id}/completar</code></td>
+                    <td>PATCH</td>
+                    <td>Marcar reserva como completada</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Datos de la reserva:</strong></p>
+        <ul>
+            <li>ID (autogenerado)</li>
+            <li>ID del cliente (obligatorio, debe existir)</li>
+            <li>ID de la mesa (obligatorio, debe existir y estar activa)</li>
+            <li>Fecha y hora de inicio (obligatorio, debe ser futura)</li>
+            <li>Fecha y hora de fin (calculada automáticamente: inicio + 2 horas)</li>
+            <li>Número de comensales (obligatorio, no puede exceder capacidad de la mesa)</li>
+            <li>Estado (pendiente, confirmada, completada, cancelada)</li>
+            <li>Notas especiales (opcional)</li>
+            <li>Fecha de creación (autogenerada)</li>
+        </ul>
+
+        <h3>3.4. Estadísticas</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Método</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>/estadisticas/ocupacion/diaria</code></td>
+                    <td>GET</td>
+                    <td>Ocupación por día (parámetro: fecha)</td>
+                </tr>
+                <tr>
+                    <td><code>/estadisticas/ocupacion/semanal</code></td>
+                    <td>GET</td>
+                    <td>Ocupación de la semana (parámetro: fecha inicio)</td>
+                </tr>
+                <tr>
+                    <td><code>/estadisticas/clientes-frecuentes</code></td>
+                    <td>GET</td>
+                    <td>Top 10 clientes con más reservas</td>
+                </tr>
+                <tr>
+                    <td><code>/estadisticas/mesas-populares</code></td>
+                    <td>GET</td>
+                    <td>Mesas más reservadas</td>
+                </tr>
+                <tr>
+                    <td><code>/estadisticas/resumen</code></td>
+                    <td>GET</td>
+                    <td>Resumen general (total reservas, cancelaciones, etc.)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>4. Requisitos Técnicos</h2>
+
+        <h3>4.1. Estructura del Proyecto</h3>
+
+        <pre><code class="language-plaintext">reservas_restaurante/
+│
+├── app/
+│   ├── __init__.py
+│   ├── main.py                 # Punto de entrada de la aplicación
+│   ├── database.py             # Configuración de la base de datos
+│   │
+│   ├── models/                 # Modelos Pydantic
+│   │   ├── __init__.py
+│   │   ├── cliente.py
+│   │   ├── mesa.py
+│   │   └── reserva.py
+│   │
+│   ├── routers/                # Endpoints organizados por recurso
+│   │   ├── __init__.py
+│   │   ├── clientes.py
+│   │   ├── mesas.py
+│   │   ├── reservas.py
+│   │   └── estadisticas.py
+│   │
+│   ├── services/               # Lógica de negocio
+│   │   ├── __init__.py
+│   │   ├── cliente_service.py
+│   │   ├── mesa_service.py
+│   │   └── reserva_service.py
+│   │
+│   └── exceptions/             # Excepciones personalizadas
+│       ├── __init__.py
+│       └── custom_exceptions.py
+│
+├── data/
+│   └── restaurante.db          # Base de datos SQLite
+│
+├── tests/                      # Tests (opcional, puntos extra)
+│   └── ...
+│
+├── requirements.txt
+├── README.md
+└── .gitignore</code></pre>
+
+        <h3>4.2. Modelos Pydantic</h3>
+
+        <p>Debes crear <strong>modelos separados</strong> para cada operación:</p>
+
+        <pre><code class="language-python"># Ejemplo para Cliente:
+
+class ClienteBase(BaseModel):
+    """Campos comunes"""
+    nombre: str
+    email: EmailStr
+    telefono: str
+    notas: Optional[str] = None
+
+class ClienteCreate(ClienteBase):
+    """Para crear un cliente (POST)"""
+    pass
+
+class ClienteUpdate(BaseModel):
+    """Para actualizar un cliente (PUT) - todos opcionales"""
+    nombre: Optional[str] = None
+    email: Optional[EmailStr] = None
+    telefono: Optional[str] = None
+    notas: Optional[str] = None
+
+class ClienteResponse(ClienteBase):
+    """Para respuestas (GET)"""
+    id: int
+    fecha_registro: datetime
+    
+    class Config:
+        from_attributes = True</code></pre>
+
+        <h3>4.3. Validaciones Requeridas</h3>
+
+        <p><strong>Validaciones de negocio que deben implementarse:</strong></p>
+
+        <ol>
+            <li><strong>No solapamiento de reservas:</strong> Una mesa no puede tener dos reservas que se superpongan en el tiempo.</li>
+            <li><strong>Capacidad de mesa:</strong> El número de comensales no puede exceder la capacidad de la mesa.</li>
+            <li><strong>Horario de operación:</strong> Las reservas solo pueden hacerse dentro del horario del restaurante.</li>
+            <li><strong>Reservas futuras:</strong> No se pueden crear reservas en el pasado.</li>
+            <li><strong>Mesa activa:</strong> Solo se pueden hacer reservas en mesas activas.</li>
+            <li><strong>Cliente existente:</strong> El cliente debe existir en la base de datos.</li>
+            <li><strong>Cancelación:</strong> Las reservas solo pueden cancelarse si están en estado "pendiente" o "confirmada".</li>
+        </ol>
+
+        <h3>4.4. Excepciones Personalizadas</h3>
+
+        <p>Crea excepciones específicas para cada tipo de error:</p>
+
+        <pre><code class="language-python">class ClienteNoEncontradoError(Exception):
+    """El cliente especificado no existe"""
+    pass
+
+class MesaNoDisponibleError(Exception):
+    """La mesa no está disponible en el horario solicitado"""
+    pass
+
+class ReservaSolapadaError(Exception):
+    """Ya existe una reserva para esa mesa en ese horario"""
+    pass
+
+class CapacidadExcedidaError(Exception):
+    """El número de comensales excede la capacidad de la mesa"""
+    pass
+
+class FueraDeHorarioError(Exception):
+    """La reserva está fuera del horario de operación"""
+    pass
+
+class CancelacionNoPermitidaError(Exception):
+    """La reserva no puede cancelarse (muy tarde o estado inválido)"""
+    pass</code></pre>
+
+        <h3>4.5. Base de Datos</h3>
+
+        <p><strong>Esquema de tablas SQLite:</strong></p>
+
+        <pre><code class="language-sql">-- Tabla de clientes
+CREATE TABLE clientes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    telefono TEXT NOT NULL,
+    notas TEXT,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabla de mesas
+CREATE TABLE mesas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    numero INTEGER UNIQUE NOT NULL,
+    capacidad INTEGER NOT NULL CHECK(capacidad IN (2, 4, 6, 8)),
+    ubicacion TEXT NOT NULL CHECK(ubicacion IN ('interior', 'terraza', 'privado')),
+    activa BOOLEAN DEFAULT 1
+);
+
+-- Tabla de reservas
+CREATE TABLE reservas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cliente_id INTEGER NOT NULL,
+    mesa_id INTEGER NOT NULL,
+    fecha_hora_inicio TIMESTAMP NOT NULL,
+    fecha_hora_fin TIMESTAMP NOT NULL,
+    num_comensales INTEGER NOT NULL,
+    estado TEXT DEFAULT 'pendiente' CHECK(estado IN ('pendiente', 'confirmada', 'completada', 'cancelada')),
+    notas TEXT,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id),
+    FOREIGN KEY (mesa_id) REFERENCES mesas(id)
+);
+
+-- Índices para mejorar rendimiento
+CREATE INDEX idx_reservas_fecha ON reservas(fecha_hora_inicio);
+CREATE INDEX idx_reservas_mesa ON reservas(mesa_id);
+CREATE INDEX idx_reservas_cliente ON reservas(cliente_id);</code></pre>
+
+        <h2>5. Requisitos de Documentación</h2>
+
+        <h3>5.1. Archivo README.md</h3>
+
+        <p>El archivo README debe incluir:</p>
+
+        <ol>
+            <li><strong>Título y descripción</strong> del proyecto</li>
+            <li><strong>Requisitos previos</strong> (Python 3.8+, etc.)</li>
+            <li><strong>Instrucciones de instalación</strong> paso a paso</li>
+            <li><strong>Cómo ejecutar</strong> la aplicación</li>
+            <li><strong>Estructura del proyecto</strong> explicada</li>
+            <li><strong>Ejemplos de uso</strong> de los principales endpoints</li>
+            <li><strong>Autor y fecha</strong></li>
+        </ol>
+
+        <h3>5.2. Documentación de la API</h3>
+
+        <ul>
+            <li>Todos los endpoints deben tener <strong>docstrings</strong> descriptivos</li>
+
+        </ul>
+
+        <h2>6. Datos de Prueba</h2>
+
+        <p>La base de datos debe incluir datos iniciales para facilitar las pruebas:</p>
+
+        <ul>
+            <li><strong>Mínimo 10 clientes</strong> de ejemplo</li>
+            <li><strong>15 mesas</strong> distribuidas: 5 de 2 personas, 5 de 4 personas, 3 de 6 personas, 2 de 8 personas</li>
+            <li><strong>20 reservas</strong> de ejemplo en diferentes estados y fechas</li>
+        </ul>
+
+        <h2>7. Criterios de Evaluación</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Criterio</th>
+                    <th>Puntos</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Estructura del proyecto</strong></td>
+                    <td>10</td>
+                    <td>Organización correcta de carpetas y archivos</td>
+                </tr>
+                <tr>
+                    <td><strong>Modelos Pydantic</strong></td>
+                    <td>15</td>
+                    <td>Modelos separados (Create, Update, Response) con validaciones</td>
+                </tr>
+                <tr>
+                    <td><strong>Endpoints CRUD</strong></td>
+                    <td>20</td>
+                    <td>Todos los endpoints funcionan correctamente</td>
+                </tr>
+                <tr>
+                    <td><strong>Validaciones de negocio</strong></td>
+                    <td>20</td>
+                    <td>No solapamiento, capacidad, horarios, etc.</td>
+                </tr>
+                <tr>
+                    <td><strong>Excepciones personalizadas</strong></td>
+                    <td>10</td>
+                    <td>Manejo de errores claro y consistente</td>
+                </tr>
+                <tr>
+                    <td><strong>Base de datos</strong></td>
+                    <td>10</td>
+                    <td>Esquema correcto, conexión funcional, datos de prueba</td>
+                </tr>
+                <tr>
+                    <td><strong>Estadísticas</strong></td>
+                    <td>10</td>
+                    <td>Endpoints de estadísticas funcionando</td>
+                </tr>
+                <tr>
+                    <td><strong>Documentación</strong></td>
+                    <td>5</td>
+                    <td>README completo y docstrings en el código</td>
+                </tr>
+                <tr>
+                    <td><strong>TOTAL</strong></td>
+                    <td><strong>100</strong></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Puntuación Extra (hasta +10 puntos)</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Criterio Extra</th>
+                    <th>Puntos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Validación de formato de teléfono español</td>
+                    <td>+2</td>
+                </tr>
+                <tr>
+                    <td>Endpoint adicional: historial de reservas de un cliente</td>
+                    <td>+3</td>
+                </tr>
+                <tr>
+                    <td>Sistema de logs con el módulo logging</td>
+                    <td>+3</td>
+                </tr>
+                <tr>
+                    <td>Uso de variables de entorno para configuración</td>
+                    <td>+2</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Penalizaciones</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Penalización</th>
+                    <th>Puntos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No funciona al ejecutar</td>
+                    <td>-30</td>
+                </tr>
+                <tr>
+                    <td>Falta el archivo requirements.txt</td>
+                    <td>-5</td>
+                </tr>
+                <tr>
+                    <td>No incluye datos de prueba</td>
+                    <td>-10</td>
+                </tr>
+                <tr>
+                    <td>Código sin comentarios/docstrings</td>
+                    <td>-5</td>
+                </tr>
+                <tr>
+                    <td>Mezcla de idiomas (variables en inglés y español)</td>
+                    <td>-5</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>8. Entrega</h2>
+
+        <h3>Formato de entrega</h3>
+        <ul>
+            <li><strong>Archivo ZIP</strong> con todo el proyecto</li>
+            <li>Nombre del archivo: <code>Apellido_Nombre_Reservas_API.zip</code></li>
+        </ul>
+
+        <h3>Contenido obligatorio</h3>
+        <ul>
+            <li>Código fuente completo</li>
+            <li>Base de datos con datos de prueba</li>
+            <li>Archivo <code>requirements.txt</code></li>
+            <li>Archivo <code>README.md</code></li>
+        </ul>
+
+ 
+        <h2>9. Recursos de Ayuda</h2>
+
+        <ul>
+            <li>Documentación oficial de FastAPI: <a href="https://fastapi.tiangolo.com/" target="_blank">https://fastapi.tiangolo.com/</a></li>
+            <li>Documentación de Pydantic: <a href="https://docs.pydantic.dev/" target="_blank">https://docs.pydantic.dev/</a></li>
+            <li>Apuntes del Tema 11 (Bases de datos con SQLite)</li>
+            <li>Apuntes del Tema 15 (FastAPI)</li>
+        </ul>
+
+        <h2>10. Ejemplo de Funcionamiento Esperado</h2>
+
+        <h3>Crear una reserva (caso exitoso):</h3>
+
+        <p><strong>Request:</strong></p>
+        <pre><code class="language-http">POST /reservas/
+Content-Type: application/json
+
+{
+    "cliente_id": 1,
+    "mesa_id": 5,
+    "fecha_hora_inicio": "2024-12-20T20:00:00",
+    "num_comensales": 4,
+    "notas": "Cumpleaños, traer tarta"
+}</code></pre>
+
+        <p><strong>Response (201 Created):</strong></p>
+        <pre><code class="language-json">{
+    "id": 21,
+    "cliente_id": 1,
+    "mesa_id": 5,
+    "fecha_hora_inicio": "2024-12-20T20:00:00",
+    "fecha_hora_fin": "2024-12-20T22:00:00",
+    "num_comensales": 4,
+    "estado": "pendiente",
+    "notas": "Cumpleaños, traer tarta",
+    "fecha_creacion": "2024-12-15T10:30:00",
+    "cliente": {
+        "nombre": "María García",
+        "email": "maria@email.com"
+    },
+    "mesa": {
+        "numero": 5,
+        "ubicacion": "terraza"
+    }
+}</code></pre>
+
+        <h3>Crear una reserva (caso de error - solapamiento):</h3>
+
+        <p><strong>Request:</strong></p>
+        <pre><code class="language-http">POST /reservas/
+Content-Type: application/json
+
+{
+    "cliente_id": 2,
+    "mesa_id": 5,
+    "fecha_hora_inicio": "2024-12-20T21:00:00",
+    "num_comensales": 2
+}</code></pre>
+
+        <p><strong>Response (409 Conflict):</strong></p>
+        <pre><code class="language-json">{
+    "detail": {
+        "error": "ReservaSolapadaError",
+        "mensaje": "La mesa 5 ya tiene una reserva de 20:00 a 22:00 el día 2024-12-20",
+        "sugerencia": "Mesas disponibles en ese horario: 3, 7, 12"
+    }
+}</code></pre>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pydantic - Documentación</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Pydantic</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>¿Qué es Pydantic?</h1>
+        
+        <p>Pydantic es una biblioteca de Python que se utiliza para <strong>validar datos</strong> y <strong>definir esquemas</strong> de forma sencilla usando las anotaciones de tipos de Python.</p>
+
+        <h2>Explicación Simple</h2>
+        <p>Imagina que tienes un formulario de registro de usuarios. Necesitas asegurarte de que el nombre sea un texto, la edad sea un número positivo y el email tenga formato válido. <mark>Pydantic hace todo esto automáticamente</mark>.</p>
+
+        <h2>Ejemplo Práctico</h2>
+        
+        <h3>Sin Pydantic (validación manual):</h3>
+        <pre><code class="language-python">def crear_usuario(datos):
+    # Tienes que validar todo manualmente
+    if "nombre" not in datos:
+        raise ValueError("Falta el nombre")
+    if not isinstance(datos["nombre"], str):
+        raise ValueError("El nombre debe ser texto")
+    if len(datos["nombre"]) < 2:
+        raise ValueError("El nombre es muy corto")
+    if "edad" not in datos:
+        raise ValueError("Falta la edad")
+    if not isinstance(datos["edad"], int):
+        raise ValueError("La edad debe ser un número")
+    if datos["edad"] < 0:
+        raise ValueError("La edad no puede ser negativa")
+    # ... y así con cada campo
+    
+    return datos</code></pre>
+
+        <h3>Con Pydantic (validación automática):</h3>
+        <pre><code class="language-python">from pydantic import BaseModel, EmailStr, Field
+
+class Usuario(BaseModel):
+    nombre: str = Field(min_length=2)
+    edad: int = Field(ge=0)  # ge = greater or equal (mayor o igual)
+    email: EmailStr
+    activo: bool = True  # Valor por defecto
+
+# Pydantic valida automáticamente
+usuario = Usuario(
+    nombre="Ana",
+    edad=25,
+    email="ana@gmail.com"
+)
+
+print(usuario.nombre)  # Ana
+print(usuario.model_dump())  # Convierte a diccionario</code></pre>
+
+        <h2>¿Qué hace Pydantic automáticamente?</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Característica</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Validación de tipos</td>
+                    <td>Verifica que cada campo sea del tipo correcto</td>
+                </tr>
+                <tr>
+                    <td>Conversión automática</td>
+                    <td>Convierte "25" a 25 si el campo es int</td>
+                </tr>
+                <tr>
+                    <td>Valores por defecto</td>
+                    <td>Permite definir valores predeterminados</td>
+                </tr>
+                <tr>
+                    <td>Campos obligatorios</td>
+                    <td>Los campos sin valor por defecto son obligatorios</td>
+                </tr>
+                <tr>
+                    <td>Mensajes de error</td>
+                    <td>Genera errores claros si los datos son inválidos</td>
+                </tr>
+                <tr>
+                    <td>Serialización</td>
+                    <td>Convierte objetos a diccionarios o JSON fácilmente</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Ejemplo de Validación</h2>
+        
+        <pre><code class="language-python">from pydantic import BaseModel, Field, EmailStr
+from typing import Optional
+
+class Cliente(BaseModel):
+    nombre: str = Field(min_length=3, max_length=50)
+    email: EmailStr
+    telefono: str = Field(pattern=r'^\d{9}$')  # Exactamente 9 dígitos
+    edad: int = Field(ge=18, le=120)  # Entre 18 y 120
+    notas: Optional[str] = None  # Campo opcional
+
+# Esto funciona correctamente
+cliente_valido = Cliente(
+    nombre="María García",
+    email="maria@email.com",
+    telefono="612345678",
+    edad=30
+)
+
+# Esto lanza un error automáticamente
+try:
+    cliente_invalido = Cliente(
+        nombre="AB",           # Muy corto (mínimo 3)
+        email="no-es-email",   # Formato inválido
+        telefono="123",        # No tiene 9 dígitos
+        edad=15                # Menor de 18
+    )
+except Exception as e:
+    print(e)</code></pre>
+
+        <p>Mensaje de error que genera Pydantic:</p>
+        
+        <pre><code class="language-bash">4 validation errors for Cliente
+nombre
+  String should have at least 3 characters
+email
+  value is not a valid email address
+telefono
+  String should match pattern '^\d{9}$'
+edad
+  Input should be greater than or equal to 18</code></pre>
+
+        <h2>¿Por qué se usa con FastAPI?</h2>
+        
+        <p>FastAPI usa Pydantic para <strong>validar automáticamente</strong> los datos que llegan a tu API.</p>
+
+        <pre><code class="language-python">from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Producto(BaseModel):
+    nombre: str
+    precio: float
+    stock: int
+
+@app.post("/productos/")
+def crear_producto(producto: Producto):
+    # FastAPI + Pydantic validan automáticamente
+    # Si los datos son inválidos, devuelve error 422
+    return {"mensaje": f"Producto {producto.nombre} creado"}</code></pre>
+
+        <p>Si alguien envía datos incorrectos a tu API, FastAPI (usando Pydantic) rechaza la petición automáticamente con un mensaje de error claro.</p>
+
+        <h2>Resumen</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Aspecto</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>¿Qué es?</td>
+                    <td>Biblioteca para validar datos en Python</td>
+                </tr>
+                <tr>
+                    <td>¿Para qué sirve?</td>
+                    <td>Definir esquemas de datos con validación automática</td>
+                </tr>
+                <tr>
+                    <td>¿Cómo funciona?</td>
+                    <td>Usas clases que heredan de BaseModel</td>
+                </tr>
+                <tr>
+                    <td>¿Por qué es útil?</td>
+                    <td>Evita escribir código de validación manual</td>
+                </tr>
+                <tr>
+                    <td>¿Dónde se usa?</td>
+                    <td>Muy común en APIs con FastAPI</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
