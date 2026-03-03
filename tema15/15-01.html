@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creación de APIs con FastAPI</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Creación de APIs con FastAPI</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>1. ¿Qué es FastAPI?</h1>
+        
+        <p><strong>FastAPI</strong> es un framework moderno y de alto rendimiento para construir APIs (Application Programming Interfaces) con Python 3.7+.</p>
+
+        <h2>Características principales:</h2>
+        <ul>
+            <li><strong>Rápido:</strong> Uno de los frameworks más rápidos de Python, comparable a NodeJS y Go</li>
+            <li><strong>Fácil:</strong> Diseño intuitivo y fácil de aprender</li>
+            <li><strong>Robusto:</strong> Código listo para producción con validación automática</li>
+            <li><strong>Documentación automática:</strong> Genera documentación interactiva (Swagger UI y ReDoc)</li>
+            <li><strong>Type hints:</strong> Usa anotaciones de tipo de Python para validación y autocompletado</li>
+            <li><strong>Basado en estándares:</strong> OpenAPI (Swagger) y JSON Schema</li>
+        </ul>
+
+        <h2>¿Qué es una API?</h2>
+        <p>Una <strong>API REST</strong> (Representational State Transfer) es un conjunto de reglas que permite que diferentes aplicaciones se comuniquen entre sí a través de HTTP.</p>
+
+        <h3>Analogía:</h3>
+        <p>Una API es como un <strong>camarero en un restaurante</strong>:</p>
+        <ul>
+            <li>El <strong>cliente</strong> hace un pedido (request)</li>
+            <li>El <strong>camarero</strong> (API) lleva el pedido a la cocina</li>
+            <li>La <strong>cocina</strong> (servidor) prepara el pedido</li>
+            <li>El <strong>camarero</strong> trae la comida (response) al cliente</li>
+        </ul>
+
+        <h3>Instalación:</h3>
+        <pre><code class="language-bash">pip install fastapi
+pip install "uvicorn[standard]"  # Servidor ASGI</code></pre>
+    </section>
+
+    <section class="contenido-didactico">
+        <h1>2. Primera API con FastAPI</h1>
+        
+        <p>Vamos a crear una API simple paso a paso.</p>
+
+        <pre><code class="language-python"># Importar FastAPI
+from fastapi import FastAPI
+
+# Crear instancia de la aplicación
+app = FastAPI()
+
+# Definir una ruta (endpoint)
+@app.get("/")
+def raiz():
+    """Endpoint raíz que retorna un saludo."""
+    return {"mensaje": "¡Hola Mundo!"}
+
+@app.get("/saludo")
+def saludar():
+    """Endpoint que retorna un saludo personalizado."""
+    return {"mensaje": "Bienvenido a FastAPI"}
+
+# Para ejecutar:
+# Guardar como main.py y ejecutar: uvicorn main:app --reload
+# Visitar: http://127.0.0.1:8000
+# Documentación: http://127.0.0.1:8000/docs</code></pre>
+
+        <h2>Estructura básica explicada:</h2>
+        <pre><code class="language-python">@app.get("/")           # Decorador que define el método HTTP y la ruta
+def raiz():             # Función que maneja la petición
+    return {...}        # Respuesta (FastAPI la convierte a JSON automáticamente)</code></pre>
+
+        <h2>Métodos HTTP principales:</h2>
+        <ul>
+            <li><strong>GET:</strong> Obtener datos (leer)</li>
+            <li><strong>POST:</strong> Crear nuevos recursos</li>
+            <li><strong>PUT:</strong> Actualizar recursos completos</li>
+            <li><strong>PATCH:</strong> Actualizar recursos parcialmente</li>
+            <li><strong>DELETE:</strong> Eliminar recursos</li>
+        </ul>
+    </section>
+
+    <section class="contenido-didactico">
+        <h1>3. Path Parameters (Parámetros de Ruta)</h1>
+        
+        <p>Los parámetros de ruta permiten capturar valores directamente desde la URL.</p>
+
+        <h2>Parámetro de ruta simple</h2>
+        <pre><code class="language-python">from fastapi import FastAPI
+
+app = FastAPI()
+
+# Parámetro de ruta simple
+@app.get("/usuarios/{usuario_id}")
+def obtener_usuario(usuario_id: int):
+    """
+    Obtiene un usuario por su ID.
+    
+    - **usuario_id**: ID del usuario (entero)
+    """
+    return {
+        "usuario_id": usuario_id,
+        "nombre": f"Usuario {usuario_id}"
+    }
+
+# URL: http://127.0.0.1:8000/usuarios/123
+# Respuesta: {"usuario_id": 123, "nombre": "Usuario 123"}</code></pre>
+
+        <h2>Múltiples parámetros de ruta</h2>
+        <pre><code class="language-python"># Múltiples parámetros de ruta
+@app.get("/productos/{categoria}/{producto_id}")
+def obtener_producto(categoria: str, producto_id: int):
+    """
+    Obtiene un producto por categoría y ID.
+    """
+    return {
+        "categoria": categoria,
+        "producto_id": producto_id,
+        "nombre": f"Producto {producto_id} de {categoria}"
+    }
+
+# URL: http://127.0.0.1:8000/productos/electronica/456</code></pre>
+
+        <h2>Validación de parámetros con Path</h2>
+        <pre><code class="language-python"># Validación de parámetros con Path
+from fastapi import Path
+
+@app.get("/items/{item_id}")
+def leer_item(
+    item_id: int = Path(
+        ...,  # ... significa "requerido"
+        title="ID del Item",
+        description="El ID debe ser un número positivo",
+        ge=1,  # greater than or equal (>=)
+        le=1000  # less than or equal (<=)
+    )
+):
+    """Lee un item validando que el ID esté entre 1 y 1000."""
+    return {"item_id": item_id}
+
+# Válido: /items/500
+# Inválido: /items/0 o /items/1001 (retorna error automáticamente)</code></pre>
+    </section>
+
+    <section class="contenido-didactico">
+        <h1>Usando requests</h1>
+        
+        <p>Con el módulo <code>requests</code> podemos conectar con la API desde Python.</p>
+
+        <pre><code class="language-python">import requests
+import json
+
+url = "http://127.0.0.1:8000/usuarios/123"
+
+response = requests.get(url)
+
+print(f"Status Code: {response.status_code}")
+# print(f"Respuesta: {response.json()}")
+print(f"Respuesta: {json.dumps(response.json(), indent=2, ensure_ascii=False)}")</code></pre>
+    </section>
+
+    <section class="contenido-didactico">
+        <h1>4. Query Parameters (Parámetros de Consulta)</h1>
+        
+        <p>Los parámetros de consulta van después del <code>?</code> en la URL: <code>/items?skip=0&limit=10</code></p>
+
+        <h2>Query parameters simples</h2>
+        <pre><code class="language-python">from fastapi import FastAPI, Query
+from typing import Optional
+
+app = FastAPI()
+
+# Query parameters simples
+@app.get("/items/")
+def listar_items(skip: int = 0, limit: int = 10):
+    """
+    Lista items con paginación.
+    
+    - **skip**: Número de items a saltar (default: 0)
+    - **limit**: Número máximo de items a retornar (default: 10)
+    """
+    return {
+        "skip": skip,
+        "limit": limit,
+        "items": [f"Item {i}" for i in range(skip, skip + limit)]
+    }
+
+# URL: http://127.0.0.1:8000/items/?skip=5&limit=3
+# Respuesta: {"skip": 5, "limit": 3, "items": ["Item 5", "Item 6", "Item 7"]}</code></pre>
+
+        <h2>Query parameters opcionales</h2>
+        <pre><code class="language-python"># Query parameters opcionales
+@app.get("/buscar/")
+def buscar(
+    q: Optional[str] = None,  # Parámetro opcional
+    orden: str = "asc"  # Parámetro con valor por defecto
+):
+    """
+    Busca items con filtros opcionales.
+    """
+    resultado = {"orden": orden}
+    
+    if q:
+        resultado["q"] = q
+        resultado["resultados"] = [f"Resultado que contiene '{q}'"]
+    else:
+        resultado["resultados"] = ["Todos los resultados"]
+    
+    return resultado
+
+# URL: http://127.0.0.1:8000/buscar/
+# URL: http://127.0.0.1:8000/buscar/?q=python
+# URL: http://127.0.0.1:8000/buscar/?q=python&orden=desc</code></pre>
+
+        <h2>Validación de query parameters con Query</h2>
+        <pre><code class="language-python"># Validación de query parameters con Query
+@app.get("/productos/")
+def listar_productos(
+    nombre: str = Query(
+        ...,  # Requerido
+        min_length=3,
+        max_length=50,
+        description="Nombre del producto a buscar"
+    ),
+    precio_min: float = Query(
+        0,
+        ge=0,  # >= 0
+        description="Precio mínimo"
+    ),
+    precio_max: float = Query(
+        None,
+        le=10000,  # <= 10000
+        description="Precio máximo"
+    )
+):
+    """
+    Busca productos con validación de parámetros.
+    """
+    return {
+        "nombre": nombre,
+        "precio_min": precio_min,
+        "precio_max": precio_max
+    }
+
+# URL válida: /productos/?nombre=laptop&precio_min=500&precio_max=2000
+# URL inválida: /productos/?nombre=pc (nombre muy corto)</code></pre>
+    </section>
+
+    <section class="contenido-didactico">
+        <h1>5. Request Body (Cuerpo de la Petición)</h1>
+        
+        <p>Para enviar datos más complejos (POST, PUT, PATCH), usamos modelos Pydantic.</p>
+
+        <pre><code class="language-python">from fastapi import FastAPI
+from pydantic import BaseModel, Field, EmailStr
+from typing import Optional
+
+app = FastAPI()
+
+# Definir modelo con Pydantic
+class Usuario(BaseModel):
+    """Modelo de Usuario."""
+    nombre: str = Field(..., min_length=2, max_length=50)
+    email: str
+    edad: int = Field(..., ge=18, le=120)
+    activo: bool = True
+    descripcion: Optional[str] = None
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "nombre": "Ana García",
+                "email": "ana@example.com",
+                "edad": 25,
+                "activo": True,
+                "descripcion": "Desarrolladora Python"
+            }
+        }
+
+@app.post("/usuarios/")
+def crear_usuario(usuario: Usuario):
+    """
+    Crea un nuevo usuario.
+    
+    FastAPI valida automáticamente que:
+    - nombre tenga entre 2 y 50 caracteres
+    - edad esté entre 18 y 120
+    - todos los campos requeridos estén presentes
+    """
+    return {
+        "mensaje": "Usuario creado exitosamente",
+        "usuario": usuario
+    }
+
+# Prueba con: POST http://127.0.0.1:8000/usuarios/
+# Body (JSON):
+# {
+#     "nombre": "Ana García",
+#     "email": "ana@example.com",
+#     "edad": 25
+# }</code></pre>
+
+        <h2>Usando requests</h2>
+        <pre><code class="language-python">import requests
+import json
+
+url = "http://127.0.0.1:8000/usuarios/"
+
+datos = {
+    "nombre": "Juan Pérez Actualizado",
+    "email": "juan.nuevo@example.com",
+    "edad": 31,
+    "activo": True
+}
+
+response = requests.post(url, json=datos)
+
+print(f"Status Code: {response.status_code}")
+print(f"Respuesta: {json.dumps(response.json(), indent=2, ensure_ascii=False)}")</code></pre>
+
+        <h2>Modelo anidado</h2>
+        <pre><code class="language-python"># Modelo anidado
+from typing import List
+
+class Direccion(BaseModel):
+    """Modelo de Dirección."""
+    calle: str
+    ciudad: str
+    codigo_postal: str
+    pais: str = "España"
+
+class UsuarioCompleto(BaseModel):
+    """Modelo de Usuario Completo con dirección."""
+    nombre: str
+    email: str
+    edad: int
+    direccion: Direccion  # Modelo anidado
+    hobbies: List[str] = []  # Lista de strings
+
+@app.post("/usuarios-completo/")
+def crear_usuario_completo(usuario: UsuarioCompleto):
+    """Crea un usuario con información completa."""
+    return {
+        "mensaje": "Usuario completo creado",
+        "usuario": usuario
+    }
+
+# Body (JSON):
+# {
+#     "nombre": "Juan Pérez",
+#     "email": "juan@example.com",
+#     "edad": 30,
+#     "direccion": {
+#         "calle": "Calle Mayor 123",
+#         "ciudad": "Madrid",
+#         "codigo_postal": "28001"
+#     },
+#     "hobbies": ["programar", "leer", "viajar"]
+# }</code></pre>
+    </section>
+
+    <section class="contenido-didactico">
+        <h1>6. Métodos HTTP Completos (CRUD)</h1>
+        
+        <p>Ejemplo completo de un CRUD (Create, Read, Update, Delete) para gestionar usuarios.</p>
+
+        <pre><code class="language-python">from fastapi import FastAPI, HTTPException, status
+from pydantic import BaseModel
+from typing import Dict, Optional
+
+app = FastAPI(title="API de Usuarios", version="1.0.0")
+
+# Modelo de Usuario
+class Usuario(BaseModel):
+    nombre: str
+    email: str
+    edad: int
+    activo: bool = True
+
+class UsuarioActualizar(BaseModel):
+    nombre: Optional[str] = None
+    email: Optional[str] = None
+    edad: Optional[int] = None
+    activo: Optional[bool] = None
+
+# Base de datos simulada
+usuarios_db: Dict[int, Usuario] = {}
+contador_id = 1
+
+
+# CREATE - Crear usuario
+@app.post(
+    "/usuarios/",
+    response_model=Dict,
+    status_code=status.HTTP_201_CREATED,
+    tags=["Usuarios"]
+)
+def crear_usuario(usuario: Usuario):
+    """
+    Crea un nuevo usuario.
+    
+    - **nombre**: Nombre completo del usuario
+    - **email**: Email del usuario
+    - **edad**: Edad del usuario
+    - **activo**: Estado del usuario (default: True)
+    """
+    global contador_id
+    
+    usuarios_db[contador_id] = usuario
+    usuario_creado = {
+        "id": contador_id,
+        **usuario.dict()
+    }
+    contador_id += 1
+    
+    return {
+        "mensaje": "Usuario creado exitosamente",
+        "usuario": usuario_creado
+    }
+
+
+# READ - Obtener todos los usuarios
+@app.get("/usuarios/", tags=["Usuarios"])
+def listar_usuarios(
+    skip: int = 0,
+    limit: int = 10,
+    activo: Optional[bool] = None
+):
+    """
+    Lista todos los usuarios con paginación y filtros opcionales.
+    """
+    usuarios = []
+    
+    for id, usuario in usuarios_db.items():
+        # Filtrar por estado si se especifica
+        if activo is not None and usuario.activo != activo:
+            continue
+        
+        usuarios.append({
+            "id": id,
+            **usuario.dict()
+        })
+    
+    # Aplicar paginación
+    usuarios_paginados = usuarios[skip: skip + limit]
+    
+    return {
+        "total": len(usuarios),
+        "skip": skip,
+        "limit": limit,
+        "usuarios": usuarios_paginados
+    }
+
+
+# READ - Obtener un usuario específico
+@app.get("/usuarios/{usuario_id}", tags=["Usuarios"])
+def obtener_usuario(usuario_id: int):
+    """
+    Obtiene un usuario por su ID.
+    """
+    if usuario_id not in usuarios_db:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Usuario con ID {usuario_id} no encontrado"
+        )
+    
+    return {
+        "id": usuario_id,
+        **usuarios_db[usuario_id].dict()
+    }
+
+
+# UPDATE - Actualizar usuario completo
+@app.put("/usuarios/{usuario_id}", tags=["Usuarios"])
+def actualizar_usuario(usuario_id: int, usuario: Usuario):
+    """
+    Actualiza todos los datos de un usuario.
+    """
+    if usuario_id not in usuarios_db:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Usuario con ID {usuario_id} no encontrado"
+        )
+    
+    usuarios_db[usuario_id] = usuario
+    
+    return {
+        "mensaje": "Usuario actualizado exitosamente",
+        "usuario": {
+            "id": usuario_id,
+            **usuario.dict()
+        }
+    }
+
+
+# UPDATE - Actualizar parcialmente
+@app.patch("/usuarios/{usuario_id}", tags=["Usuarios"])
+def actualizar_parcial_usuario(usuario_id: int, usuario: UsuarioActualizar):
+    """
+    Actualiza parcialmente los datos de un usuario.
+    Solo actualiza los campos proporcionados.
+    """
+    if usuario_id not in usuarios_db:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Usuario con ID {usuario_id} no encontrado"
+        )
+    
+    usuario_actual = usuarios_db[usuario_id]
+    
+    # Actualizar solo los campos proporcionados
+    datos_actualizados = usuario.dict(exclude_unset=True)
+    usuario_actualizado = usuario_actual.copy(update=datos_actualizados)
+    
+    usuarios_db[usuario_id] = usuario_actualizado
+    
+    return {
+        "mensaje": "Usuario actualizado parcialmente",
+        "usuario": {
+            "id": usuario_id,
+            **usuario_actualizado.dict()
+        }
+    }
+
+
+# DELETE - Eliminar usuario
+@app.delete(
+    "/usuarios/{usuario_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    tags=["Usuarios"]
+)
+def eliminar_usuario(usuario_id: int):
+    """
+    Elimina un usuario por su ID.
+    """
+    if usuario_id not in usuarios_db:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Usuario con ID {usuario_id} no encontrado"
+        )
+    
+    del usuarios_db[usuario_id]
+    
+    return None  # 204 No Content no retorna body
+
+
+# Endpoint adicional: Estadísticas
+@app.get("/usuarios/estadisticas/resumen", tags=["Estadísticas"])
+def obtener_estadisticas():
+    """
+    Obtiene estadísticas generales de los usuarios.
+    """
+    total_usuarios = len(usuarios_db)
+    usuarios_activos = sum(1 for u in usuarios_db.values() if u.activo)
+    usuarios_inactivos = total_usuarios - usuarios_activos
+    
+    if total_usuarios > 0:
+        edad_promedio = sum(u.edad for u in usuarios_db.values()) / total_usuarios
+    else:
+        edad_promedio = 0
+    
+    return {
+        "total_usuarios": total_usuarios,
+        "usuarios_activos": usuarios_activos,
+        "usuarios_inactivos": usuarios_inactivos,
+        "edad_promedio": round(edad_promedio, 2)
+    }</code></pre>
+    </section>
+
+    <section class="contenido-didactico">
+        <h1>7. Manejo de Errores y Excepciones</h1>
+
+        <pre><code class="language-python">from fastapi import FastAPI, HTTPException, status
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
+
+app = FastAPI()
+
+# Lanzar excepción HTTP
+@app.get("/items/{item_id}")
+def obtener_item(item_id: int):
+    if item_id not in range(1, 101):
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Item {item_id} no encontrado",
+            headers={"X-Error": "Item no existe"}
+        )
+    return {"item_id": item_id}
+
+
+# Manejador de excepción personalizado
+class ItemNoEncontrado(Exception):
+    def __init__(self, item_id: int):
+        self.item_id = item_id
+
+@app.exception_handler(ItemNoEncontrado)
+async def manejador_item_no_encontrado(request, exc: ItemNoEncontrado):
+    return JSONResponse(
+        status_code=404,
+        content={
+            "error": "Item no encontrado",
+            "item_id": exc.item_id,
+            "mensaje": f"El item {exc.item_id} no existe en la base de datos"
+        }
+    )
+
+@app.get("/productos/{producto_id}")
+def obtener_producto(producto_id: int):
+    if producto_id > 100:
+        raise ItemNoEncontrado(item_id=producto_id)
+    return {"producto_id": producto_id}
+
+
+# Manejador global de errores de validación
+@app.exception_handler(RequestValidationError)
+async def manejador_validacion(request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content={
+            "error": "Error de validación",
+            "detalle": str(exc),
+            "mensaje": "Los datos proporcionados no son válidos"
+        }
+    )</code></pre>
+    </section>
+
+    <section class="contenido-didactico">
+        <h1>8. Response Models y Status Codes</h1>
+        
+        <p>Controlar exactamente qué se retorna y con qué código de estado.</p>
+
+        <h2>Modelos de entrada y salida diferentes</h2>
+        <pre><code class="language-python">from fastapi import FastAPI, status
+from pydantic import BaseModel
+from typing import List
+
+app = FastAPI()
+
+# Modelos de entrada y salida diferentes
+class UsuarioEntrada(BaseModel):
+    """Modelo para crear usuario (incluye contraseña)."""
+    nombre: str
+    email: str
+    password: str
+
+class UsuarioSalida(BaseModel):
+    """Modelo de respuesta (sin contraseña)."""
+    id: int
+    nombre: str
+    email: str
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "id": 1,
+                "nombre": "Ana García",
+                "email": "ana@example.com"
+            }
+        }
+
+
+@app.post(
+    "/usuarios/",
+    response_model=UsuarioSalida,  # Especifica el modelo de respuesta
+    status_code=status.HTTP_201_CREATED  # Código de estado
+)
+def crear_usuario(usuario: UsuarioEntrada):
+    """
+    Crea un usuario. La contraseña no se incluye en la respuesta.
+    """
+    # Aquí se guardaría en la BD con la contraseña hasheada
+    usuario_guardado = {
+        "id": 1,
+        "nombre": usuario.nombre,
+        "email": usuario.email,
+        # password no se incluye en la respuesta
+    }
+    return usuario_guardado
+
+
+# Lista de usuarios
+@app.get(
+    "/usuarios/",
+    response_model=List[UsuarioSalida],  # Lista de usuarios
+    status_code=status.HTTP_200_OK
+)
+def listar_usuarios():
+    """Lista todos los usuarios."""
+    return [
+        {"id": 1, "nombre": "Ana", "email": "ana@example.com"},
+        {"id": 2, "nombre": "Juan", "email": "juan@example.com"}
+    ]</code></pre>
+
+        <h2>Códigos de estado comunes</h2>
+        <pre><code class="language-python"># Códigos de estado comunes
+
+@app.get("/ok", status_code=status.HTTP_200_OK)
+def ok():
+    """200 OK - Solicitud exitosa."""
+    return {"mensaje": "Todo OK"}
+
+@app.post("/crear", status_code=status.HTTP_201_CREATED)
+def crear():
+    """201 Created - Recurso creado exitosamente."""
+    return {"mensaje": "Recurso creado"}
+
+@app.delete("/eliminar", status_code=status.HTTP_204_NO_CONTENT)
+def eliminar():
+    """204 No Content - Eliminación exitosa, sin contenido."""
+    return None
+
+@app.get("/no-autorizado", status_code=status.HTTP_401_UNAUTHORIZED)
+def no_autorizado():
+    """401 Unauthorized - No autenticado."""
+    return {"error": "No autenticado"}
+
+@app.get("/prohibido", status_code=status.HTTP_403_FORBIDDEN)
+def prohibido():
+    """403 Forbidden - Sin permisos."""
+    return {"error": "Sin permisos"}
+
+@app.get("/no-encontrado", status_code=status.HTTP_404_NOT_FOUND)
+def no_encontrado():
+    """404 Not Found - Recurso no encontrado."""
+    return {"error": "No encontrado"}
+
+@app.post("/validacion", status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
+def error_validacion():
+    """422 Unprocessable Entity - Error de validación."""
+    return {"error": "Datos inválidos"}
+
+@app.get("/error-servidor", status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+def error_servidor():
+    """500 Internal Server Error - Error del servidor."""
+    return {"error": "Error interno"}</code></pre>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

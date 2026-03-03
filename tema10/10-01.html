@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manejo de Archivos y Serialización</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Tema 10: Manejo de Archivos y Serialización</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>1. Trabajando con Archivos de Texto</h1>
+        
+        <p>Los archivos son fundamentales para persistir datos y comunicarse con otros programas.</p>
+
+        <h2>¿Por qué trabajar con archivos?</h2>
+        <ul>
+            <li><strong>Persistencia:</strong> Guardar datos entre ejecuciones del programa</li>
+            <li><strong>Intercambio:</strong> Compartir información con otros programas</li>
+            <li><strong>Configuración:</strong> Almacenar ajustes y preferencias</li>
+            <li><strong>Logs:</strong> Registrar eventos y errores</li>
+            <li><strong>Procesamiento:</strong> Analizar grandes volúmenes de datos</li>
+        </ul>
+
+        <h2>1.1. Apertura y Cierre de Archivos</h2>
+
+        <pre><code class="language-python"># ❌ Forma básica (requiere cerrar manualmente)
+# archivo = open('datos.txt', 'r')
+# contenido = archivo.read()
+# archivo.close()
+
+# ✅ Forma recomendada (with statement - cierre automático)
+# El archivo se cierra automáticamente al salir del bloque
+with open('datos.txt', 'r') as archivo:
+    contenido = archivo.read()
+
+print("Ejemplos de apertura de archivos")</code></pre>
+
+        <p><strong>Modos de apertura:</strong></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Modo</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>'r'</code></td>
+                    <td>Lectura (por defecto)</td>
+                </tr>
+                <tr>
+                    <td><code>'w'</code></td>
+                    <td>Escritura (sobrescribe el archivo)</td>
+                </tr>
+                <tr>
+                    <td><code>'a'</code></td>
+                    <td>Agregar al final (append)</td>
+                </tr>
+                <tr>
+                    <td><code>'r+'</code></td>
+                    <td>Lectura y escritura</td>
+                </tr>
+                <tr>
+                    <td><code>'b'</code></td>
+                    <td>Modo binario (ej: <code>'rb'</code>, <code>'wb'</code>)</td>
+                </tr>
+                <tr>
+                    <td><code>'x'</code></td>
+                    <td>Creación exclusiva (falla si existe)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>1.2. Lectura de Archivos</h2>
+
+        <pre><code class="language-python"># Primero creamos un archivo de ejemplo
+contenido_ejemplo = """Primera línea
+Segunda línea
+Tercera línea
+Python es genial
+Última línea"""
+
+with open('ejemplo.txt', 'w', encoding='utf-8') as f:
+    f.write(contenido_ejemplo)
+
+print("Archivo de ejemplo creado")</code></pre>
+
+        <pre><code class="language-python"># Leer todo el contenido
+with open('ejemplo.txt', 'r', encoding='utf-8') as f:
+    contenido = f.read()
+    print("Contenido completo:")
+    print(contenido)</code></pre>
+
+        <pre><code class="language-python"># Leer línea por línea
+print("\nLínea por línea:")
+with open('ejemplo.txt', 'r', encoding='utf-8') as f:
+    for linea in f:
+        print(f"  {linea.strip()}")  # strip() elimina espacios y saltos de línea</code></pre>
+
+        <pre><code class="language-python"># Leer todas las líneas en una lista
+with open('ejemplo.txt', 'r', encoding='utf-8') as f:
+    lineas = f.readlines()
+    print("\nLista de líneas:")
+    print(lineas)</code></pre>
+
+        <pre><code class="language-python"># Leer una sola línea
+with open('ejemplo.txt', 'r', encoding='utf-8') as f:
+    primera_linea = f.readline()
+    segunda_linea = f.readline()
+    print(f"\nPrimera línea: {primera_linea.strip()}")
+    print(f"Segunda línea: {segunda_linea.strip()}")</code></pre>
+
+        <h2>1.3. Escritura de Archivos</h2>
+
+        <pre><code class="language-python"># Escribir (sobrescribe el archivo)
+with open('salida.txt', 'w', encoding='utf-8') as f:
+    f.write('Primera línea\n')
+    f.write('Segunda línea\n')
+
+print("Archivo 'salida.txt' creado")
+
+# Leer para verificar
+with open('salida.txt', 'r', encoding='utf-8') as f:
+    print(f.read())</code></pre>
+
+        <pre><code class="language-python"># Escribir múltiples líneas
+lineas = ['Línea 1\n', 'Línea 2\n', 'Línea 3\n']
+with open('multiples.txt', 'w', encoding='utf-8') as f:
+    f.writelines(lineas)
+
+print("Múltiples líneas escritas")</code></pre>
+
+        <pre><code class="language-python"># Agregar al final del archivo
+with open('salida.txt', 'a', encoding='utf-8') as f:
+    f.write('Nueva línea al final\n')
+
+print("Línea agregada")
+
+# Leer para verificar
+with open('salida.txt', 'r', encoding='utf-8') as f:
+    print(f.read())</code></pre>
+
+        <pre><code class="language-python"># Escribir con print
+with open('con_print.txt', 'w', encoding='utf-8') as f:
+    print('Hola mundo', file=f)
+    print('Otra línea', file=f)
+    print('Python', 'es', 'genial', file=f)
+
+print("Archivo escrito con print")</code></pre>
+
+        <h2>1.4. Manejo de Rutas con pathlib</h2>
+
+        <p><code>pathlib</code> es el módulo moderno para trabajar con rutas de archivos de forma orientada a objetos.</p>
+
+        <pre><code class="language-python">from pathlib import Path
+
+# Crear un objeto Path
+ruta = Path('datos/archivo.txt')
+
+# Propiedades útiles
+print(f"Nombre completo: {ruta.name}")
+print(f"Nombre sin extensión: {ruta.stem}")
+print(f"Extensión: {ruta.suffix}")
+print(f"Directorio padre: {ruta.parent}")
+print(f"¿Existe?: {ruta.exists()}")</code></pre>
+
+        <pre><code class="language-python"># Combinar rutas de forma portable
+carpeta = Path('datos')
+archivo = carpeta / 'usuarios.txt'
+subcarpeta = carpeta / 'procesados' / 'archivo.csv'
+
+print(f"Ruta combinada: {archivo}")
+print(f"Subcarpeta: {subcarpeta}")</code></pre>
+
+        <pre><code class="language-python"># Crear directorios
+Path('nueva_carpeta').mkdir(exist_ok=True)
+Path('carpeta/subcarpeta').mkdir(parents=True, exist_ok=True)
+
+print("Directorios creados")</code></pre>
+
+        <pre><code class="language-python"># Listar archivos en un directorio
+print("Archivos .txt en directorio actual:")
+for archivo in Path('.').glob('*.txt'):
+    print(f"  {archivo}")</code></pre>
+
+        <pre><code class="language-python"># Listar recursivamente
+print("\nArchivos .txt en todos los subdirectorios:")
+for archivo in Path('.').rglob('*.txt'):
+    print(f"  {archivo}")</code></pre>
+
+        <h2>1.5. Ejemplo Completo: Contador de Palabras</h2>
+
+        <pre><code class="language-python">from pathlib import Path
+from collections import Counter
+
+def contar_palabras(nombre_archivo):
+    """Cuenta las palabras en un archivo de texto."""
+    ruta = Path(nombre_archivo)
+    
+    if not ruta.exists():
+        print(f"El archivo {nombre_archivo} no existe")
+        return None
+    
+    with open(ruta, 'r', encoding='utf-8') as f:
+        texto = f.read().lower()
+        # Eliminar puntuación básica
+        for char in '.,;:!?-':
+            texto = texto.replace(char, '')
+        
+        palabras = texto.split()
+        contador = Counter(palabras)
+        
+        return contador
+
+# Crear un archivo de ejemplo
+with open('texto_ejemplo.txt', 'w', encoding='utf-8') as f:
+    f.write('''
+Python es un lenguaje de programación.
+Python es fácil de aprender.
+Programación en Python es divertida.
+''')
+
+resultado = contar_palabras('texto_ejemplo.txt')
+
+print("Las 5 palabras más comunes:")
+for palabra, frecuencia in resultado.most_common(5):
+    print(f"  {palabra}: {frecuencia}")</code></pre>
+    </section>
+
+    <section class="contenido-didactico">
+        <h1>2. Archivos CSV</h1>
+
+        <p>CSV (Comma-Separated Values) es un formato común para almacenar datos tabulares.</p>
+
+        <h2>2.1. Lectura de CSV</h2>
+
+        <pre><code class="language-python">import csv
+
+# Primero creamos un CSV de ejemplo
+with open('datos.csv', 'w', newline='', encoding='utf-8') as f:
+    escritor = csv.writer(f)
+    escritor.writerow(['nombre', 'edad', 'ciudad'])
+    escritor.writerow(['Ana', 25, 'Madrid'])
+    escritor.writerow(['Luis', 30, 'Barcelona'])
+    escritor.writerow(['María', 28, 'Valencia'])
+
+print("Archivo CSV creado")</code></pre>
+
+        <pre><code class="language-python"># Lectura básica
+print("\nLectura básica:")
+with open('datos.csv', 'r', encoding='utf-8') as f:
+    lector = csv.reader(f)
+    for fila in lector:
+        print(f"  {fila}")  # Cada fila es una lista</code></pre>
+
+        <pre><code class="language-python"># Lectura con DictReader (más recomendado)
+print("\nLectura con DictReader:")
+with open('datos.csv', 'r', encoding='utf-8') as f:
+    lector = csv.DictReader(f)
+    for fila in lector:
+        print(f"  {fila}")  # Cada fila es un diccionario
+        print(f"    Nombre: {fila['nombre']}, Edad: {fila['edad']}")</code></pre>
+
+        <pre><code class="language-python"># Leer todo en una lista
+with open('datos.csv', 'r', encoding='utf-8') as f:
+    lector = csv.DictReader(f)
+    datos = list(lector)
+    print(f"\nDatos completos: {datos}")</code></pre>
+
+        <h2>2.2. Escritura de CSV</h2>
+
+        <pre><code class="language-python"># Escritura básica
+with open('salida.csv', 'w', newline='', encoding='utf-8') as f:
+    escritor = csv.writer(f)
+    escritor.writerow(['Nombre', 'Edad', 'Ciudad'])
+    escritor.writerow(['Ana', 25, 'Madrid'])
+    escritor.writerow(['Luis', 30, 'Barcelona'])
+
+print("CSV escrito con writer")</code></pre>
+
+        <pre><code class="language-python"># Escritura con DictWriter (recomendado)
+datos = [
+    {'nombre': 'Ana', 'edad': 25, 'ciudad': 'Madrid'},
+    {'nombre': 'Luis', 'edad': 30, 'ciudad': 'Barcelona'},
+    {'nombre': 'María', 'edad': 28, 'ciudad': 'Valencia'}
+]
+
+with open('salida_dict.csv', 'w', newline='', encoding='utf-8') as f:
+    campos = ['nombre', 'edad', 'ciudad']
+    escritor = csv.DictWriter(f, fieldnames=campos)
+    
+    escritor.writeheader()  # Escribe la fila de encabezados
+    escritor.writerows(datos)  # Escribe todas las filas
+
+print("CSV escrito con DictWriter")</code></pre>
+
+        <h2>2.3. Ejemplo: Sistema de Gestión de Estudiantes</h2>
+
+        <pre><code class="language-python">import csv
+from pathlib import Path
+
+class GestorEstudiantes:
+    def __init__(self, archivo='estudiantes.csv'):
+        self.archivo = Path(archivo)
+        self.campos = ['id', 'nombre', 'edad', 'calificacion']
+        
+        # Crear archivo si no existe
+        if not self.archivo.exists():
+            self.crear_archivo()
+    
+    def crear_archivo(self):
+        """Crea el archivo CSV con encabezados."""
+        with open(self.archivo, 'w', newline='', encoding='utf-8') as f:
+            escritor = csv.DictWriter(f, fieldnames=self.campos)
+            escritor.writeheader()
+    
+    def agregar_estudiante(self, id, nombre, edad, calificacion):
+        """Agrega un estudiante al archivo."""
+        with open(self.archivo, 'a', newline='', encoding='utf-8') as f:
+            escritor = csv.DictWriter(f, fieldnames=self.campos)
+            escritor.writerow({
+                'id': id,
+                'nombre': nombre,
+                'edad': edad,
+                'calificacion': calificacion
+            })
+        print(f"✅ Estudiante {nombre} agregado")
+    
+    def leer_todos(self):
+        """Lee todos los estudiantes."""
+        with open(self.archivo, 'r', encoding='utf-8') as f:
+            lector = csv.DictReader(f)
+            return list(lector)
+    
+    def buscar_por_id(self, id):
+        """Busca un estudiante por ID."""
+        estudiantes = self.leer_todos()
+        for est in estudiantes:
+            if est['id'] == str(id):
+                return est
+        return None
+    
+    def promedio_calificaciones(self):
+        """Calcula el promedio de calificaciones."""
+        estudiantes = self.leer_todos()
+        if not estudiantes:
+            return 0
+        
+        total = sum(float(est['calificacion']) for est in estudiantes)
+        return total / len(estudiantes)
+    
+    def mostrar_todos(self):
+        """Muestra todos los estudiantes."""
+        estudiantes = self.leer_todos()
+        
+        if not estudiantes:
+            print("No hay estudiantes registrados")
+            return
+        
+        print("\n" + "="*60)
+        print(f"{'ID':<5} {'Nombre':<20} {'Edad':<5} {'Calificación':<12}")
+        print("="*60)
+        
+        for est in estudiantes:
+            print(f"{est['id']:<5} {est['nombre']:<20} {est['edad']:<5} {est['calificacion']:<12}")
+        
+        print("="*60)
+        print(f"Promedio de calificaciones: {self.promedio_calificaciones():.2f}")
+
+# Ejemplo de uso
+gestor = GestorEstudiantes()
+
+# Agregar estudiantes
+gestor.agregar_estudiante(1, 'Ana García', 20, 8.5)
+gestor.agregar_estudiante(2, 'Luis Martínez', 22, 9.0)
+gestor.agregar_estudiante(3, 'María López', 21, 7.8)
+
+# Mostrar todos
+gestor.mostrar_todos()
+
+# Buscar por ID
+estudiante = gestor.buscar_por_id(2)
+print(f"\nEstudiante encontrado: {estudiante}")</code></pre>
+    </section>
+
+    <section class="contenido-didactico">
+        <h1>3. Serialización con JSON</h1>
+
+        <p>JSON (JavaScript Object Notation) es un formato de texto ligero para intercambio de datos.</p>
+
+        <h2>3.1. Conceptos Básicos de JSON</h2>
+
+        <p><strong>Equivalencias Python ↔ JSON:</strong></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Python</th>
+                    <th>JSON</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>dict</code></td>
+                    <td>objeto <code>{}</code></td>
+                </tr>
+                <tr>
+                    <td><code>list</code>, <code>tuple</code></td>
+                    <td>array <code>[]</code></td>
+                </tr>
+                <tr>
+                    <td><code>str</code></td>
+                    <td>string</td>
+                </tr>
+                <tr>
+                    <td><code>int</code>, <code>float</code></td>
+                    <td>number</td>
+                </tr>
+                <tr>
+                    <td><code>True</code></td>
+                    <td><code>true</code></td>
+                </tr>
+                <tr>
+                    <td><code>False</code></td>
+                    <td><code>false</code></td>
+                </tr>
+                <tr>
+                    <td><code>None</code></td>
+                    <td><code>null</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>3.2. Escribir JSON</h2>
+
+        <pre><code class="language-python">import json
+
+# Datos de ejemplo
+datos = {
+    'nombre': 'Ana',
+    'edad': 25,
+    'ciudad': 'Madrid',
+    'hobbies': ['leer', 'programar', 'viajar'],
+    'activo': True,
+    'salario': None
+}
+
+# Convertir a string JSON
+json_string = json.dumps(datos, indent=2, ensure_ascii=False)
+print("JSON formateado:")
+print(json_string)</code></pre>
+
+        <pre><code class="language-python"># Guardar en archivo
+with open('datos.json', 'w', encoding='utf-8') as f:
+    json.dump(datos, f, indent=2, ensure_ascii=False)
+
+print("\nDatos guardados en datos.json")</code></pre>
+
+        <pre><code class="language-python"># Con formato compacto (sin espacios)
+json_compacto = json.dumps(datos, separators=(',', ':'))
+print("\nJSON compacto:")
+print(json_compacto)</code></pre>
+
+        <h2>3.3. Leer JSON</h2>
+
+        <pre><code class="language-python"># Leer desde string
+json_string = '{"nombre": "Ana", "edad": 25}'
+datos = json.loads(json_string)
+print(f"Nombre: {datos['nombre']}")
+print(f"Edad: {datos['edad']}")</code></pre>
+
+        <pre><code class="language-python"># Leer desde archivo
+with open('datos.json', 'r', encoding='utf-8') as f:
+    datos = json.load(f)
+    print("\nDatos desde archivo:")
+    print(datos)</code></pre>
+
+        <h2>3.4. Serializar Objetos Personalizados</h2>
+
+        <pre><code class="language-python">from datetime import datetime
+
+class Persona:
+    def __init__(self, nombre, edad, fecha_nacimiento):
+        self.nombre = nombre
+        self.edad = edad
+        self.fecha_nacimiento = fecha_nacimiento
+    
+    def __repr__(self):
+        return f"Persona('{self.nombre}', {self.edad})"
+
+# Método 1: Crear un encoder personalizado
+class PersonaEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Persona):
+            return {
+                'nombre': obj.nombre,
+                'edad': obj.edad,
+                'fecha_nacimiento': obj.fecha_nacimiento.isoformat()
+            }
+        if isinstance(obj, datetime):
+            return obj.isoformat()
+        return super().default(obj)
+
+persona = Persona('Ana', 25, datetime(1998, 5, 15))
+
+# Serializar con encoder personalizado
+json_string = json.dumps(persona, cls=PersonaEncoder, indent=2)
+print("Persona serializada:")
+print(json_string)</code></pre>
+
+        <pre><code class="language-python"># Método 2: Función de serialización
+def persona_a_dict(obj):
+    if isinstance(obj, Persona):
+        return {
+            '__tipo__': 'Persona',
+            'nombre': obj.nombre,
+            'edad': obj.edad,
+            'fecha_nacimiento': obj.fecha_nacimiento.isoformat()
+        }
+    raise TypeError(f"Objeto de tipo {type(obj)} no serializable")
+
+# Función de deserialización
+def dict_a_persona(dct):
+    if '__tipo__' in dct and dct['__tipo__'] == 'Persona':
+        return Persona(
+            dct['nombre'],
+            dct['edad'],
+            datetime.fromisoformat(dct['fecha_nacimiento'])
+        )
+    return dct
+
+# Serializar
+json_string = json.dumps(persona, default=persona_a_dict, indent=2)
+print("\nPersona con función:")
+print(json_string)
+
+# Deserializar
+persona_recuperada = json.loads(json_string, object_hook=dict_a_persona)
+print(f"\nPersona recuperada: {persona_recuperada}")</code></pre>
+
+        <h2>3.5. Ejemplo: Sistema de Configuración</h2>
+
+        <pre><code class="language-python">from pathlib import Path
+from datetime import datetime
+
+class Configuracion:
+    """Gestor de configuración usando JSON."""
+    
+    def __init__(self, archivo='config.json'):
+        self.archivo = Path(archivo)
+        self.config = self.cargar()
+    
+    def cargar(self):
+        """Carga la configuración desde el archivo."""
+        if self.archivo.exists():
+            with open(self.archivo, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        else:
+            return self._config_por_defecto()
+    
+    def _config_por_defecto(self):
+        """Retorna la configuración por defecto."""
+        return {
+            'idioma': 'es',
+            'tema': 'claro',
+            'notificaciones': True,
+            'ultima_modificacion': None,
+            'opciones_avanzadas': {
+                'debug': False,
+                'cache': True,
+                'timeout': 30
+            }
+        }
+    
+    def guardar(self):
+        """Guarda la configuración en el archivo."""
+        self.config['ultima_modificacion'] = datetime.now().isoformat()
+        with open(self.archivo, 'w', encoding='utf-8') as f:
+            json.dump(self.config, f, indent=2, ensure_ascii=False)
+        print(f"✅ Configuración guardada en {self.archivo}")
+    
+    def obtener(self, clave, valor_por_defecto=None):
+        """Obtiene un valor de la configuración."""
+        claves = clave.split('.')
+        valor = self.config
+        
+        for k in claves:
+            if isinstance(valor, dict) and k in valor:
+                valor = valor[k]
+            else:
+                return valor_por_defecto
+        
+        return valor
+    
+    def establecer(self, clave, valor):
+        """Establece un valor en la configuración."""
+        claves = clave.split('.')
+        config_actual = self.config
+        
+        for k in claves[:-1]:
+            if k not in config_actual:
+                config_actual[k] = {}
+            config_actual = config_actual[k]
+        
+        config_actual[claves[-1]] = valor
+        self.guardar()
+    
+    def mostrar(self):
+        """Muestra la configuración actual."""
+        print("\n" + "="*50)
+        print("CONFIGURACIÓN ACTUAL")
+        print("="*50)
+        print(json.dumps(self.config, indent=2, ensure_ascii=False))
+        print("="*50)
+
+# Ejemplo de uso
+config = Configuracion()
+
+# Mostrar configuración actual
+config.mostrar()
+
+# Obtener valores
+print(f"\nIdioma: {config.obtener('idioma')}")
+print(f"Debug: {config.obtener('opciones_avanzadas.debug')}")
+
+# Modificar valores
+config.establecer('tema', 'oscuro')
+config.establecer('opciones_avanzadas.debug', True)
+
+# Mostrar cambios
+config.mostrar()</code></pre>
+    </section>
+
+    <section class="contenido-didactico">
+        <h1>4. Serialización con Pickle</h1>
+
+        <p>Pickle es el formato de serialización nativo de Python.</p>
+
+        <h2>4.1. Conceptos Básicos</h2>
+
+        <p><strong>Características de Pickle:</strong></p>
+        <ul>
+            <li>✅ Puede serializar casi cualquier objeto Python</li>
+            <li>✅ Más eficiente que JSON para objetos complejos</li>
+            <li>⚠️ <strong>Solo usar con datos confiables</strong> (puede ejecutar código arbitrario)</li>
+            <li>⚠️ Los archivos pickle no son legibles por humanos</li>
+            <li>⚠️ Solo funcionan con Python</li>
+        </ul>
+
+        <pre><code class="language-python">import pickle
+
+# Datos de ejemplo
+datos = {
+    'nombre': 'Ana',
+    'edad': 25,
+    'hobbies': ['leer', 'viajar'],
+    'activo': True
+}
+
+# Guardar con pickle (modo binario)
+with open('datos.pickle', 'wb') as f:
+    pickle.dump(datos, f)
+
+print("Datos guardados en pickle")</code></pre>
+
+        <pre><code class="language-python"># Cargar con pickle
+with open('datos.pickle', 'rb') as f:
+    datos_cargados = pickle.load(f)
+    print(f"Datos cargados: {datos_cargados}")</code></pre>
+
+        <pre><code class="language-python"># Serializar a bytes
+datos_bytes = pickle.dumps(datos)
+print(f"\nBytes: {datos_bytes[:50]}...")  # Primeros 50 bytes
+
+# Deserializar desde bytes
+datos_recuperados = pickle.loads(datos_bytes)
+print(f"Recuperados: {datos_recuperados}")</code></pre>
+
+        <h2>4.2. Serializar Objetos Personalizados</h2>
+
+        <pre><code class="language-python">from datetime import datetime
+
+class Tarea:
+    def __init__(self, titulo, descripcion, completada=False):
+        self.titulo = titulo
+        self.descripcion = descripcion
+        self.completada = completada
+        self.fecha_creacion = datetime.now()
+    
+    def completar(self):
+        self.completada = True
+        self.fecha_completado = datetime.now()
+    
+    def __repr__(self):
+        estado = "✓" if self.completada else "✗"
+        return f"[{estado}] {self.titulo}"
+
+# Crear tareas
+tareas = [
+    Tarea("Estudiar Python", "Completar sesión de archivos"),
+    Tarea("Hacer ejercicios", "Resolver todos los ejercicios"),
+    Tarea("Proyecto final", "Implementar el sistema de gestión")
+]
+
+tareas[0].completar()
+
+# Guardar con pickle
+with open('tareas.pickle', 'wb') as f:
+    pickle.dump(tareas, f)
+
+print("Tareas guardadas")</code></pre>
+
+        <pre><code class="language-python"># Cargar tareas
+with open('tareas.pickle', 'rb') as f:
+    tareas_cargadas = pickle.load(f)
+
+print("\nTareas cargadas:")
+for tarea in tareas_cargadas:
+    print(tarea)
+    print(f"  Creada: {tarea.fecha_creacion.strftime('%Y-%m-%d %H:%M')}")</code></pre>
+
+        <h2>4.3. Comparación: JSON vs Pickle</h2>
+
+        <pre><code class="language-python">datos = {
+    'numeros': list(range(1000)),
+    'texto': 'Python es genial ' * 100,
+    'diccionario': {f'clave_{i}': i for i in range(100)}
+}
+
+# Guardar con JSON
+with open('datos_comp.json', 'w') as f:
+    json.dump(datos, f)
+
+# Guardar con Pickle
+with open('datos_comp.pickle', 'wb') as f:
+    pickle.dump(datos, f)
+
+# Comparar tamaños
+from pathlib import Path
+size_json = Path('datos_comp.json').stat().st_size
+size_pickle = Path('datos_comp.pickle').stat().st_size
+
+print(f"Tamaño JSON: {size_json:,} bytes")
+print(f"Tamaño Pickle: {size_pickle:,} bytes")
+print(f"Diferencia: {abs(size_json - size_pickle):,} bytes")</code></pre>
+
+        <p><strong>Cuándo usar cada uno:</strong></p>
+
+        <p><strong>JSON:</strong></p>
+        <ul>
+            <li>✅ Intercambio de datos entre diferentes lenguajes</li>
+            <li>✅ APIs web y servicios REST</li>
+            <li>✅ Archivos de configuración legibles</li>
+            <li>✅ Datos simples (diccionarios, listas, strings, números)</li>
+        </ul>
+
+        <p><strong>Pickle:</strong></p>
+        <ul>
+            <li>✅ Guardar objetos Python complejos</li>
+            <li>✅ Cache interno de la aplicación</li>
+            <li>✅ Guardar estado de objetos personalizados</li>
+            <li>⚠️ Solo con datos confiables (nunca de fuentes externas)</li>
+        </ul>
+    </section>
+
+    <section class="contenido-didactico">
+        <h1>5. Manejo de Errores con Archivos</h1>
+
+        <h2>5.1. Excepciones Comunes</h2>
+
+        <pre><code class="language-python">def leer_archivo_seguro(nombre_archivo):
+    """Lee un archivo manejando posibles errores."""
+    try:
+        with open(nombre_archivo, 'r', encoding='utf-8') as f:
+            return f.read()
+    
+    except FileNotFoundError:
+        print(f"❌ Error: El archivo '{nombre_archivo}' no existe")
+        return None
+    
+    except PermissionError:
+        print(f"❌ Error: No tienes permisos para leer '{nombre_archivo}'")
+        return None
+    
+    except UnicodeDecodeError:
+        print(f"❌ Error: Problema de codificación en '{nombre_archivo}'")
+        print("   Intenta con otra codificación (latin-1, cp1252, etc.)")
+        return None
+    
+    except Exception as e:
+        print(f"❌ Error inesperado: {type(e).__name__}: {e}")
+        return None
+
+# Uso
+contenido = leer_archivo_seguro('archivo_inexistente.txt')</code></pre>
+
+        <h2>5.2. Validación de Rutas</h2>
+
+        <pre><code class="language-python">import os
+from pathlib import Path
+
+def validar_ruta_archivo(ruta, extensiones_permitidas=None):
+    """Valida que una ruta sea válida y segura."""
+    ruta = Path(ruta)
+    
+    # Verificar que existe
+    if not ruta.exists():
+        raise FileNotFoundError(f"La ruta {ruta} no existe")
+    
+    # Verificar que es un archivo (no un directorio)
+    if not ruta.is_file():
+        raise ValueError(f"{ruta} no es un archivo")
+    
+    # Verificar extensión si se especifica
+    if extensiones_permitidas:
+        if ruta.suffix.lower() not in extensiones_permitidas:
+            raise ValueError(
+                f"Extensión {ruta.suffix} no permitida. "
+                f"Permitidas: {extensiones_permitidas}"
+            )
+    
+    # Verificar permisos de lectura
+    if not os.access(ruta, os.R_OK):
+        raise PermissionError(f"No hay permisos de lectura para {ruta}")
+    
+    return ruta
+
+# Uso
+try:
+    ruta = validar_ruta_archivo('datos.csv', extensiones_permitidas=['.csv', '.txt'])
+    print(f"✅ Ruta válida: {ruta}")
+except (FileNotFoundError, ValueError, PermissionError) as e:
+    print(f"❌ {e}")</code></pre>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

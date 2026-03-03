@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 12: Interfaces Gráficas con Tkinter</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Tema 12: Interfaces Gráficas con Tkinter</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Creación de aplicaciones con interfaz gráfica de usuario (GUI)</h1>
+        
+        <p>En este tema aprenderás a crear aplicaciones visuales e interactivas usando <strong>Tkinter</strong>, la biblioteca estándar de Python para interfaces gráficas.</p>
+
+        <h2>1. Introducción a Tkinter</h2>
+        
+        <p><strong>Tkinter</strong> (Tk interface) es la biblioteca estándar de Python para crear interfaces gráficas. Viene preinstalada con Python y permite crear ventanas, botones, campos de texto y otros elementos visuales.</p>
+
+        <h3>¿Por qué usar Tkinter?</h3>
+        <ul>
+            <li>Incluida con Python (no requiere instalación)</li>
+            <li>Fácil de aprender para principiantes</li>
+            <li>Multiplataforma (Windows, Mac, Linux)</li>
+            <li>Buena para aplicaciones pequeñas y medianas</li>
+        </ul>
+
+        <h2>2. Primera Ventana con Tkinter</h2>
+        
+        <p>Toda aplicación Tkinter comienza con una <strong>ventana principal</strong>.</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+# Crear la ventana principal
+ventana = tk.Tk()
+
+# Configurar título
+ventana.title("Mi Primera Aplicación")
+
+# Configurar tamaño (ancho x alto)
+ventana.geometry("400x300")
+
+# Ejecutar el bucle principal (mantiene la ventana abierta)
+ventana.mainloop()</code></pre>
+
+        <h3>Componentes básicos:</h3>
+        <dl>
+            <dt>tk.Tk()</dt>
+            <dd>Crea la ventana principal</dd>
+            
+            <dt>title()</dt>
+            <dd>Define el título de la ventana</dd>
+            
+            <dt>geometry()</dt>
+            <dd>Establece el tamaño en píxeles</dd>
+            
+            <dt>mainloop()</dt>
+            <dd>Inicia el bucle de eventos (mantiene la ventana activa)</dd>
+        </dl>
+
+        <h2>3. Widgets Básicos</h2>
+        
+        <p>Los <strong>widgets</strong> son los elementos visuales de la interfaz (botones, etiquetas, campos de texto, etc.).</p>
+
+        <h3>3.1 Label (Etiqueta)</h3>
+        
+        <p>Muestra texto o imágenes.</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+ventana = tk.Tk()
+ventana.title("Etiquetas")
+ventana.geometry("300x200")
+
+# Crear etiqueta simple
+etiqueta1 = tk.Label(ventana, text="¡Hola Mundo!")
+etiqueta1.pack()
+
+# Etiqueta con formato
+etiqueta2 = tk.Label(
+    ventana,
+    text="Texto con estilo",
+    font=("Arial", 16, "bold"),
+    fg="blue",           # Color del texto
+    bg="yellow"          # Color de fondo
+)
+etiqueta2.pack(pady=10)  # pady añade espacio vertical
+
+ventana.mainloop()</code></pre>
+
+        <h3>3.2 Button (Botón)</h3>
+        
+        <p>Permite al usuario realizar acciones.</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+def saludar():
+    print("¡Botón presionado!")
+    etiqueta.config(text="¡Hola desde el botón!")
+
+ventana = tk.Tk()
+ventana.title("Botones")
+ventana.geometry("300x200")
+
+etiqueta = tk.Label(ventana, text="Presiona el botón")
+etiqueta.pack(pady=10)
+
+# Crear botón con comando
+boton = tk.Button(
+    ventana,
+    text="Saludar",
+    command=saludar,     # Función a ejecutar
+    bg="green",
+    fg="white",
+    font=("Arial", 12)
+)
+boton.pack(pady=10)
+
+ventana.mainloop()</code></pre>
+
+        <h3>3.3 Entry (Campo de entrada)</h3>
+        
+        <p>Permite al usuario escribir texto.</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+def mostrar_texto():
+    texto = entrada.get()  # Obtener el texto del Entry
+    etiqueta.config(text=f"Escribiste: {texto}")
+
+ventana = tk.Tk()
+ventana.title("Campo de Entrada")
+ventana.geometry("400x200")
+
+tk.Label(ventana, text="Escribe algo:").pack(pady=5)
+
+# Campo de entrada
+entrada = tk.Entry(ventana, width=30, font=("Arial", 12))
+entrada.pack(pady=5)
+
+boton = tk.Button(ventana, text="Mostrar", command=mostrar_texto)
+boton.pack(pady=5)
+
+etiqueta = tk.Label(ventana, text="", font=("Arial", 10))
+etiqueta.pack(pady=10)
+
+ventana.mainloop()</code></pre>
+
+        <h3>3.4 Text (Área de texto)</h3>
+        
+        <p>Para textos multilínea.</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+def obtener_texto():
+    contenido = texto.get("1.0", tk.END)  # Desde línea 1, columna 0 hasta el final
+    print("Contenido del área de texto:")
+    print(contenido)
+
+ventana = tk.Tk()
+ventana.title("Área de Texto")
+ventana.geometry("400x300")
+
+# Área de texto con scroll
+texto = tk.Text(ventana, width=40, height=10, font=("Arial", 10))
+texto.pack(pady=10)
+
+boton = tk.Button(ventana, text="Obtener Texto", command=obtener_texto)
+boton.pack()
+
+ventana.mainloop()</code></pre>
+
+        <h3>3.5 Checkbutton (Casilla de verificación)</h3>
+        
+        <p>Para opciones que se pueden activar/desactivar.</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+def mostrar_seleccion():
+    opciones = []
+    if var1.get():
+        opciones.append("Python")
+    if var2.get():
+        opciones.append("JavaScript")
+    if var3.get():
+        opciones.append("Java")
+    
+    resultado.config(text=f"Seleccionaste: {', '.join(opciones) if opciones else 'Nada'}")
+
+ventana = tk.Tk()
+ventana.title("Checkbuttons")
+ventana.geometry("300x250")
+
+tk.Label(ventana, text="Selecciona tus lenguajes favoritos:", font=("Arial", 12)).pack(pady=10)
+
+# Variables para cada checkbox
+var1 = tk.BooleanVar()
+var2 = tk.BooleanVar()
+var3 = tk.BooleanVar()
+
+tk.Checkbutton(ventana, text="Python", variable=var1).pack()
+tk.Checkbutton(ventana, text="JavaScript", variable=var2).pack()
+tk.Checkbutton(ventana, text="Java", variable=var3).pack()
+
+tk.Button(ventana, text="Mostrar Selección", command=mostrar_seleccion).pack(pady=10)
+
+resultado = tk.Label(ventana, text="", font=("Arial", 10))
+resultado.pack()
+
+ventana.mainloop()</code></pre>
+
+        <h3>3.6 Radiobutton (Botón de opción)</h3>
+        
+        <p>Para seleccionar una opción entre varias.</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+def mostrar_seleccion():
+    resultado.config(text=f"Seleccionaste: {opcion.get()}")
+
+ventana = tk.Tk()
+ventana.title("Radiobuttons")
+ventana.geometry("300x250")
+
+tk.Label(ventana, text="¿Cuál es tu color favorito?", font=("Arial", 12)).pack(pady=10)
+
+# Variable compartida para todos los radiobuttons
+opcion = tk.StringVar(value="Rojo")  # Valor por defecto
+
+tk.Radiobutton(ventana, text="Rojo", variable=opcion, value="Rojo").pack()
+tk.Radiobutton(ventana, text="Azul", variable=opcion, value="Azul").pack()
+tk.Radiobutton(ventana, text="Verde", variable=opcion, value="Verde").pack()
+
+tk.Button(ventana, text="Confirmar", command=mostrar_seleccion).pack(pady=10)
+
+resultado = tk.Label(ventana, text="", font=("Arial", 10))
+resultado.pack()
+
+ventana.mainloop()</code></pre>
+
+        <h3>3.7 Listbox (Lista)</h3>
+        
+        <p>Muestra una lista de elementos seleccionables.</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+def mostrar_seleccion():
+    seleccion = lista.curselection()  # Índice del elemento seleccionado
+    if seleccion:
+        elemento = lista.get(seleccion[0])
+        resultado.config(text=f"Seleccionaste: {elemento}")
+
+ventana = tk.Tk()
+ventana.title("Listbox")
+ventana.geometry("300x300")
+
+tk.Label(ventana, text="Selecciona una ciudad:", font=("Arial", 12)).pack(pady=10)
+
+lista = tk.Listbox(ventana, height=5, font=("Arial", 10))
+lista.pack(pady=5)
+
+# Agregar elementos
+ciudades = ["Madrid", "Barcelona", "Valencia", "Sevilla", "Bilbao"]
+for ciudad in ciudades:
+    lista.insert(tk.END, ciudad)
+
+tk.Button(ventana, text="Mostrar Selección", command=mostrar_seleccion).pack(pady=10)
+
+resultado = tk.Label(ventana, text="", font=("Arial", 10))
+resultado.pack()
+
+ventana.mainloop()</code></pre>
+
+        <h2>4. Gestores de Geometría (Layout)</h2>
+        
+        <p>Controlan cómo se posicionan los widgets en la ventana.</p>
+
+        <h3>4.1 pack()</h3>
+        
+        <p>Organiza widgets uno tras otro (vertical u horizontalmente).</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+ventana = tk.Tk()
+ventana.title("Pack Layout")
+ventana.geometry("300x200")
+
+# Apilar verticalmente (por defecto)
+tk.Label(ventana, text="Superior", bg="red", fg="white").pack()
+tk.Label(ventana, text="Centro", bg="green", fg="white").pack()
+tk.Label(ventana, text="Inferior", bg="blue", fg="white").pack()
+
+# Horizontalmente
+tk.Label(ventana, text="Izquierda", bg="yellow").pack(side=tk.LEFT)
+tk.Label(ventana, text="Derecha", bg="orange").pack(side=tk.RIGHT)
+
+ventana.mainloop()</code></pre>
+
+        <h3>4.2 grid()</h3>
+        
+        <p>Organiza widgets en filas y columnas (como una tabla).</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+ventana = tk.Tk()
+ventana.title("Grid Layout")
+
+# Formulario usando grid
+tk.Label(ventana, text="Nombre:").grid(row=0, column=0, padx=10, pady=5, sticky="e")
+tk.Entry(ventana).grid(row=0, column=1, padx=10, pady=5)
+
+tk.Label(ventana, text="Email:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
+tk.Entry(ventana).grid(row=1, column=1, padx=10, pady=5)
+
+tk.Label(ventana, text="Teléfono:").grid(row=2, column=0, padx=10, pady=5, sticky="e")
+tk.Entry(ventana).grid(row=2, column=1, padx=10, pady=5)
+
+tk.Button(ventana, text="Enviar").grid(row=3, column=0, columnspan=2, pady=10)
+
+ventana.mainloop()</code></pre>
+
+        <h3>4.3 place()</h3>
+        
+        <p>Posiciona widgets en coordenadas exactas.</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+ventana = tk.Tk()
+ventana.title("Place Layout")
+ventana.geometry("400x300")
+
+# Posicionamiento absoluto
+tk.Label(ventana, text="Esquina superior izquierda", bg="lightblue").place(x=10, y=10)
+tk.Label(ventana, text="Centro", bg="lightgreen").place(x=150, y=130)
+tk.Button(ventana, text="Botón en (100, 200)").place(x=100, y=200)
+
+ventana.mainloop()</code></pre>
+
+        <h2>5. Eventos y Binding</h2>
+        
+        <p>Puedes hacer que los widgets respondan a eventos del usuario (clics, teclas, movimiento del mouse).</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+def evento_clic(evento):
+    print(f"Clic en coordenadas: ({evento.x}, {evento.y})")
+
+def evento_tecla(evento):
+    print(f"Tecla presionada: {evento.char}")
+
+def evento_enter(evento):
+    etiqueta.config(text="Mouse sobre la etiqueta", bg="yellow")
+
+def evento_leave(evento):
+    etiqueta.config(text="Mouse fuera de la etiqueta", bg="lightgray")
+
+ventana = tk.Tk()
+ventana.title("Eventos")
+ventana.geometry("400x300")
+
+etiqueta = tk.Label(ventana, text="Mouse fuera de la etiqueta", 
+                    bg="lightgray", width=30, height=5)
+etiqueta.pack(pady=20)
+
+# Vincular eventos
+etiqueta.bind("&lt;Button-1&gt;", evento_clic)      # Clic izquierdo
+ventana.bind("&lt;Key&gt;", evento_tecla)           # Cualquier tecla
+etiqueta.bind("&lt;Enter&gt;", evento_enter)        # Mouse entra
+etiqueta.bind("&lt;Leave&gt;", evento_leave)        # Mouse sale
+
+ventana.mainloop()</code></pre>
+
+        <h3>Eventos comunes:</h3>
+        <ul>
+            <li><code>&lt;Button-1&gt;</code>: Clic izquierdo</li>
+            <li><code>&lt;Button-3&gt;</code>: Clic derecho</li>
+            <li><code>&lt;Double-Button-1&gt;</code>: Doble clic</li>
+            <li><code>&lt;Key&gt;</code>: Cualquier tecla</li>
+            <li><code>&lt;Return&gt;</code>: Tecla Enter</li>
+            <li><code>&lt;Enter&gt;</code>: Mouse entra al widget</li>
+            <li><code>&lt;Leave&gt;</code>: Mouse sale del widget</li>
+            <li><code>&lt;Motion&gt;</code>: Movimiento del mouse</li>
+        </ul>
+
+        <h2>6. Menús</h2>
+        
+        <p>Crear barras de menú y menús desplegables.</p>
+
+<pre><code class="language-python">import tkinter as tk
+from tkinter import messagebox
+
+def nuevo_archivo():
+    messagebox.showinfo("Nuevo", "Nuevo archivo creado")
+
+def abrir_archivo():
+    messagebox.showinfo("Abrir", "Abrir archivo")
+
+def salir():
+    ventana.quit()
+
+ventana = tk.Tk()
+ventana.title("Menús")
+ventana.geometry("400x300")
+
+# Crear barra de menú
+barra_menu = tk.Menu(ventana)
+ventana.config(menu=barra_menu)
+
+# Menú Archivo
+menu_archivo = tk.Menu(barra_menu, tearoff=0)
+barra_menu.add_cascade(label="Archivo", menu=menu_archivo)
+menu_archivo.add_command(label="Nuevo", command=nuevo_archivo)
+menu_archivo.add_command(label="Abrir", command=abrir_archivo)
+menu_archivo.add_separator()
+menu_archivo.add_command(label="Salir", command=salir)
+
+# Menú Ayuda
+menu_ayuda = tk.Menu(barra_menu, tearoff=0)
+barra_menu.add_cascade(label="Ayuda", menu=menu_ayuda)
+menu_ayuda.add_command(label="Acerca de", 
+                       command=lambda: messagebox.showinfo("Acerca de", "Mi Aplicación v1.0"))
+
+ventana.mainloop()</code></pre>
+
+        <h2>7. Cuadros de Diálogo</h2>
+        
+        <p>Mostrar mensajes y solicitar información al usuario.</p>
+
+<pre><code class="language-python">import tkinter as tk
+from tkinter import messagebox, filedialog, simpledialog, colorchooser
+
+def mostrar_info():
+    messagebox.showinfo("Información", "Este es un mensaje informativo")
+
+def mostrar_advertencia():
+    messagebox.showwarning("Advertencia", "Esto es una advertencia")
+
+def mostrar_error():
+    messagebox.showerror("Error", "Ha ocurrido un error")
+
+def preguntar():
+    respuesta = messagebox.askyesno("Pregunta", "¿Deseas continuar?")
+    print(f"Respuesta: {respuesta}")
+
+def abrir_archivo():
+    archivo = filedialog.askopenfilename(
+        title="Selecciona un archivo",
+        filetypes=(("Archivos de texto", "*.txt"), ("Todos los archivos", "*.*"))
+    )
+    print(f"Archivo seleccionado: {archivo}")
+
+def pedir_texto():
+    texto = simpledialog.askstring("Entrada", "Ingresa tu nombre:")
+    print(f"Nombre: {texto}")
+
+def elegir_color():
+    color = colorchooser.askcolor(title="Elige un color")
+    print(f"Color seleccionado: {color}")
+
+ventana = tk.Tk()
+ventana.title("Cuadros de Diálogo")
+ventana.geometry("300x400")
+
+tk.Button(ventana, text="Mostrar Info", command=mostrar_info, width=20).pack(pady=5)
+tk.Button(ventana, text="Mostrar Advertencia", command=mostrar_advertencia, width=20).pack(pady=5)
+tk.Button(ventana, text="Mostrar Error", command=mostrar_error, width=20).pack(pady=5)
+tk.Button(ventana, text="Hacer Pregunta", command=preguntar, width=20).pack(pady=5)
+tk.Button(ventana, text="Abrir Archivo", command=abrir_archivo, width=20).pack(pady=5)
+tk.Button(ventana, text="Pedir Texto", command=pedir_texto, width=20).pack(pady=5)
+tk.Button(ventana, text="Elegir Color", command=elegir_color, width=20).pack(pady=5)
+
+ventana.mainloop()</code></pre>
+
+        <h2>8. Frames (Marcos)</h2>
+        
+        <p>Los frames permiten organizar widgets en grupos y estructurar mejor la interfaz.</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+ventana = tk.Tk()
+ventana.title("Frames")
+ventana.geometry("400x300")
+
+# Frame superior
+frame_superior = tk.Frame(ventana, bg="lightblue", height=100)
+frame_superior.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
+
+tk.Label(frame_superior, text="Frame Superior", bg="lightblue", 
+         font=("Arial", 14)).pack(pady=20)
+
+# Frame inferior con dos columnas
+frame_inferior = tk.Frame(ventana, bg="lightgreen", height=150)
+frame_inferior.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
+
+# Columna izquierda
+frame_izq = tk.Frame(frame_inferior, bg="yellow", width=190)
+frame_izq.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5, pady=5)
+tk.Label(frame_izq, text="Izquierda", bg="yellow").pack(pady=20)
+
+# Columna derecha
+frame_der = tk.Frame(frame_inferior, bg="orange", width=190)
+frame_der.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=5, pady=5)
+tk.Label(frame_der, text="Derecha", bg="orange").pack(pady=20)
+
+ventana.mainloop()</code></pre>
+
+        <h2>9. Aplicación Completa: Calculadora</h2>
+        
+        <p>Ejemplo de una aplicación funcional completa.</p>
+
+<pre><code class="language-python">import tkinter as tk
+
+class Calculadora:
+    def __init__(self, ventana):
+        self.ventana = ventana
+        self.ventana.title("Calculadora")
+        self.ventana.geometry("300x400")
+        self.ventana.resizable(False, False)
+        
+        self.expresion = ""
+        
+        # Pantalla
+        self.pantalla = tk.Entry(ventana, font=("Arial", 20), 
+                                bd=10, justify="right")
+        self.pantalla.grid(row=0, column=0, columnspan=4, 
+                          padx=10, pady=10, sticky="nsew")
+        
+        # Botones
+        botones = [
+            ('7', 1, 0), ('8', 1, 1), ('9', 1, 2), ('/', 1, 3),
+            ('4', 2, 0), ('5', 2, 1), ('6', 2, 2), ('*', 2, 3),
+            ('1', 3, 0), ('2', 3, 1), ('3', 3, 2), ('-', 3, 3),
+            ('0', 4, 0), ('.', 4, 1), ('=', 4, 2), ('+', 4, 3),
+            ('C', 5, 0)
+        ]
+        
+        for (texto, fila, columna) in botones:
+            if texto == '=':
+                boton = tk.Button(ventana, text=texto, font=("Arial", 16),
+                                bg="lightgreen", command=self.calcular)
+            elif texto == 'C':
+                boton = tk.Button(ventana, text=texto, font=("Arial", 16),
+                                bg="lightcoral", command=self.limpiar)
+                boton.grid(row=fila, column=columna, columnspan=4, 
+                          padx=5, pady=5, sticky="nsew")
+                continue
+            else:
+                boton = tk.Button(ventana, text=texto, font=("Arial", 16),
+                                command=lambda t=texto: self.agregar(t))
+            
+            boton.grid(row=fila, column=columna, padx=5, pady=5, sticky="nsew")
+        
+        # Configurar pesos de filas y columnas
+        for i in range(6):
+            ventana.grid_rowconfigure(i, weight=1)
+        for i in range(4):
+            ventana.grid_columnconfigure(i, weight=1)
+    
+    def agregar(self, valor):
+        self.expresion += str(valor)
+        self.pantalla.delete(0, tk.END)
+        self.pantalla.insert(0, self.expresion)
+    
+    def calcular(self):
+        try:
+            resultado = eval(self.expresion)
+            self.pantalla.delete(0, tk.END)
+            self.pantalla.insert(0, str(resultado))
+            self.expresion = str(resultado)
+        except:
+            self.pantalla.delete(0, tk.END)
+            self.pantalla.insert(0, "Error")
+            self.expresion = ""
+    
+    def limpiar(self):
+        self.expresion = ""
+        self.pantalla.delete(0, tk.END)
+
+# Crear la aplicación
+ventana = tk.Tk()
+calculadora = Calculadora(ventana)
+ventana.mainloop()</code></pre>
+
+        <h2>10. Consejos y Buenas Prácticas</h2>
+
+        <h3>Recomendaciones:</h3>
+        <ol>
+            <li><strong>Usa clases para aplicaciones grandes</strong>: Organiza mejor el código</li>
+            <li><strong>Separa lógica de interfaz</strong>: No mezcles el código de negocio con la GUI</li>
+            <li><strong>Usa grid() para formularios</strong>: Es más limpio que pack()</li>
+            <li><strong>Valida entradas del usuario</strong>: Siempre verifica los datos ingresados</li>
+            <li><strong>Maneja excepciones</strong>: Usa try-except para evitar crashes</li>
+            <li><strong>Haz la interfaz responsive</strong>: Usa weight en grid para que se adapte</li>
+            <li><strong>Usa variables de control</strong>: StringVar, IntVar, BooleanVar para widgets</li>
+            <li><strong>Documenta tu código</strong>: Especialmente las funciones callback</li>
+        </ol>
+
+        <h3>Evita:</h3>
+        <ol>
+            <li>Mezclar pack(), grid() y place() en el mismo contenedor</li>
+            <li>Crear ventanas muy grandes sin scroll</li>
+            <li>Olvidar mainloop() al final</li>
+            <li>Usar eval() sin validación (riesgo de seguridad)</li>
+            <li>Bloquear la interfaz con operaciones largas</li>
+        </ol>
+
+        <h2>11. Recursos Adicionales</h2>
+
+        <ul>
+            <li><strong>Documentación oficial</strong>: <a href="https://docs.python.org/3/library/tkinter.html" target="_blank">https://docs.python.org/3/library/tkinter.html</a></li>
+            <li><strong>Tutorial oficial de Tkinter</strong>: <a href="https://tkdocs.com/" target="_blank">https://tkdocs.com/</a></li>
+            <li><strong>Alternativas modernas</strong>: Para aplicaciones más avanzadas considera:
+                <ul>
+                    <li><strong>PyQt/PySide</strong>: Interfaces más profesionales</li>
+                    <li><strong>Kivy</strong>: Para aplicaciones táctiles y móviles</li>
+                    <li><strong>CustomTkinter</strong>: Tkinter con diseño moderno</li>
+                </ul>
+            </li>
+        </ul>
+
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

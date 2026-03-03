@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 11: Conexión y Uso de Bases de Datos</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div>Tema 11: Conexión y Uso de Bases de Datos</div>
+    </header>
+
+    <section class="contenido-didactico">
+        <h1>Teoría y Ejemplos</h1>
+
+        <h2>1. Introducción a las Bases de Datos</h2>
+        <p>Una base de datos es un sistema organizado para almacenar, gestionar y recuperar información de manera eficiente y persistente.</p>
+
+        <h3>¿Por qué usar bases de datos?</h3>
+        <ul>
+            <li><strong>Persistencia:</strong> Los datos sobreviven al cierre del programa</li>
+            <li><strong>Organización:</strong> Estructura clara mediante tablas y relaciones</li>
+            <li><strong>Escalabilidad:</strong> Manejo eficiente de grandes volúmenes de datos</li>
+            <li><strong>Concurrencia:</strong> Múltiples usuarios accediendo simultáneamente</li>
+            <li><strong>Integridad:</strong> Validación y consistencia de los datos</li>
+            <li><strong>Seguridad:</strong> Control de acceso y permisos</li>
+        </ul>
+
+        <h3>1.1. Tipos de Bases de Datos</h3>
+        <p><strong>Bases de Datos Relacionales (SQL):</strong></p>
+        <ul>
+            <li>Datos organizados en <strong>tablas</strong> con filas y columnas</li>
+            <li>Relaciones entre tablas mediante <strong>claves foráneas</strong></li>
+            <li>Lenguaje estándar: <strong>SQL</strong> (Structured Query Language)</li>
+            <li>Ejemplos: SQLite, MySQL, PostgreSQL, Oracle, SQL Server</li>
+        </ul>
+
+        <p><strong>Bases de Datos NoSQL:</strong></p>
+        <ul>
+            <li>Datos no estructurados o semi-estructurados</li>
+            <li>Mayor flexibilidad en el esquema</li>
+            <li>Ejemplos: MongoDB (documentos), Redis (clave-valor), Cassandra (columnas)</li>
+        </ul>
+
+        <h2>2. SQLite: Base de Datos Integrada</h2>
+        <p>SQLite es una base de datos ligera que viene incluida con Python. No requiere servidor y los datos se almacenan en un único archivo.</p>
+
+        <h3>Ventajas de SQLite:</h3>
+        <ul>
+            <li>✅ No requiere instalación ni configuración</li>
+            <li>✅ Ideal para desarrollo y aplicaciones pequeñas</li>
+            <li>✅ Base de datos en un solo archivo</li>
+            <li>✅ Excelente para aprender SQL</li>
+            <li>✅ Muy rápida para operaciones locales</li>
+        </ul>
+
+        <h3>2.1. Conexión y Creación de Tablas</h3>
+        <pre><code class="language-python">import sqlite3
+
+# Conectar a la base de datos (se crea si no existe)
+conexion = sqlite3.connect('mi_base_datos.db')
+
+# Crear un cursor para ejecutar comandos SQL
+cursor = conexion.cursor()
+
+print("✅ Conexión establecida con la base de datos")</code></pre>
+
+        <pre><code class="language-python"># Crear una tabla
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS usuarios (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nombre TEXT NOT NULL,
+        email TEXT UNIQUE NOT NULL,
+        edad INTEGER,
+        fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+''')
+
+# Guardar los cambios
+conexion.commit()
+
+print("✅ Tabla 'usuarios' creada")</code></pre>
+
+        <p><strong>Tipos de datos en SQLite:</strong></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo SQL</th>
+                    <th>Descripción</th>
+                    <th>Equivalente Python</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>INTEGER</code></td>
+                    <td>Número entero</td>
+                    <td><code>int</code></td>
+                </tr>
+                <tr>
+                    <td><code>REAL</code></td>
+                    <td>Número decimal</td>
+                    <td><code>float</code></td>
+                </tr>
+                <tr>
+                    <td><code>TEXT</code></td>
+                    <td>Texto</td>
+                    <td><code>str</code></td>
+                </tr>
+                <tr>
+                    <td><code>BLOB</code></td>
+                    <td>Datos binarios</td>
+                    <td><code>bytes</code></td>
+                </tr>
+                <tr>
+                    <td><code>NULL</code></td>
+                    <td>Valor nulo</td>
+                    <td><code>None</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>2.2. Insertar Datos (CREATE)</h3>
+        <pre><code class="language-python"># Insertar un registro
+cursor.execute('''
+    INSERT INTO usuarios (nombre, email, edad)
+    VALUES (?, ?, ?)
+''', ('Ana García', 'ana@email.com', 25))
+
+conexion.commit()
+print("✅ Usuario insertado")
+print(f"   ID del usuario: {cursor.lastrowid}")</code></pre>
+
+        <pre><code class="language-python"># Insertar múltiples registros
+usuarios = [
+    ('Luis Martínez', 'luis@email.com', 30),
+    ('María López', 'maria@email.com', 28),
+    ('Carlos Ruiz', 'carlos@email.com', 35),
+    ('Laura Sánchez', 'laura@email.com', 22)
+]
+
+cursor.executemany('''
+    INSERT INTO usuarios (nombre, email, edad)
+    VALUES (?, ?, ?)
+''', usuarios)
+
+conexion.commit()
+print(f"✅ {cursor.rowcount} usuarios insertados")</code></pre>
+
+        <blockquote>
+            <p><strong>⚠️ Importante: Usar parámetros (?) previene SQL Injection</strong></p>
+            <pre><code class="language-python"># ❌ NUNCA hacer esto (vulnerable a SQL Injection)
+cursor.execute(f"INSERT INTO usuarios VALUES ('{nombre}', '{email}')")
+
+# ✅ SIEMPRE usar parámetros
+cursor.execute("INSERT INTO usuarios VALUES (?, ?)", (nombre, email))</code></pre>
+        </blockquote>
+
+        <h3>2.3. Consultar Datos (READ)</h3>
+        <pre><code class="language-python"># Consultar todos los usuarios
+cursor.execute('SELECT * FROM usuarios')
+usuarios = cursor.fetchall()
+
+print("\nTodos los usuarios:")
+for usuario in usuarios:
+    print(f"  ID: {usuario[0]}, Nombre: {usuario[1]}, Email: {usuario[2]}, Edad: {usuario[3]}")</code></pre>
+
+        <pre><code class="language-python"># Consultar con condiciones
+cursor.execute('''
+    SELECT nombre, email, edad
+    FROM usuarios
+    WHERE edad >= ?
+    ORDER BY edad DESC
+''', (25,))
+
+print("\nUsuarios mayores de 25 años:")
+for usuario in cursor.fetchall():
+    print(f"  {usuario[0]} ({usuario[2]} años) - {usuario[1]}")</code></pre>
+
+        <pre><code class="language-python"># Consultar un solo registro
+cursor.execute('''
+    SELECT * FROM usuarios
+    WHERE email = ?
+''', ('ana@email.com',))
+
+usuario = cursor.fetchone()
+if usuario:
+    print(f"\nUsuario encontrado: {usuario[1]}")
+else:
+    print("\nUsuario no encontrado")</code></pre>
+
+        <pre><code class="language-python"># Usar Row para acceder por nombre de columna
+conexion.row_factory = sqlite3.Row
+cursor = conexion.cursor()
+
+cursor.execute('SELECT * FROM usuarios LIMIT 3')
+
+print("\nUsuarios (acceso por nombre):")
+for row in cursor.fetchall():
+    print(f"  {row['nombre']} - {row['email']} - {row['edad']} años")</code></pre>
+
+        <h3>2.4. Actualizar Datos (UPDATE)</h3>
+        <pre><code class="language-python"># Actualizar un registro
+cursor.execute('''
+    UPDATE usuarios
+    SET edad = ?
+    WHERE email = ?
+''', (26, 'ana@email.com'))
+
+conexion.commit()
+print(f"✅ {cursor.rowcount} registro(s) actualizado(s)")</code></pre>
+
+        <pre><code class="language-python"># Actualizar múltiples registros
+cursor.execute('''
+    UPDATE usuarios
+    SET edad = edad + 1
+    WHERE edad < ?
+''', (30,))
+
+conexion.commit()
+print(f"✅ {cursor.rowcount} registro(s) actualizado(s)")</code></pre>
+
+        <h3>2.5. Eliminar Datos (DELETE)</h3>
+        <pre><code class="language-python"># Eliminar un registro específico
+cursor.execute('''
+    DELETE FROM usuarios
+    WHERE email = ?
+''', ('carlos@email.com',))
+
+conexion.commit()
+print(f"✅ {cursor.rowcount} registro(s) eliminado(s)")</code></pre>
+
+        <pre><code class="language-python"># ⚠️ Eliminar todos los registros (usar con precaución)
+# cursor.execute('DELETE FROM usuarios')
+# conexion.commit()
+
+print("Operación de eliminación masiva comentada por seguridad")</code></pre>
+
+        <h2>3. Consultas SQL Avanzadas</h2>
+
+        <h3>3.1. Funciones de Agregación</h3>
+        <pre><code class="language-python"># Contar registros
+cursor.execute('SELECT COUNT(*) FROM usuarios')
+total = cursor.fetchone()[0]
+print(f"Total de usuarios: {total}")
+
+# Promedio de edad
+cursor.execute('SELECT AVG(edad) FROM usuarios')
+promedio = cursor.fetchone()[0]
+print(f"Edad promedio: {promedio:.1f} años")
+
+# Edad mínima y máxima
+cursor.execute('SELECT MIN(edad), MAX(edad) FROM usuarios')
+min_edad, max_edad = cursor.fetchone()
+print(f"Edad mínima: {min_edad}, Edad máxima: {max_edad}")</code></pre>
+
+        <h3>3.2. Agrupamiento y Filtrado</h3>
+        <pre><code class="language-python"># Primero creamos una tabla de pedidos
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS pedidos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        usuario_id INTEGER,
+        producto TEXT,
+        cantidad INTEGER,
+        precio REAL,
+        FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    )
+''')
+
+# Insertar datos de ejemplo
+pedidos = [
+    (1, 'Laptop', 1, 999.99),
+    (1, 'Mouse', 2, 25.50),
+    (2, 'Teclado', 1, 75.00),
+    (2, 'Monitor', 2, 299.99),
+    (3, 'USB', 5, 10.00)
+]
+
+cursor.executemany('''
+    INSERT INTO pedidos (usuario_id, producto, cantidad, precio)
+    VALUES (?, ?, ?, ?)
+''', pedidos)
+
+conexion.commit()
+print("✅ Tabla de pedidos creada")</code></pre>
+
+        <pre><code class="language-python"># Agrupar por usuario
+cursor.execute('''
+    SELECT usuario_id, COUNT(*) as total_pedidos, SUM(cantidad * precio) as total_gastado
+    FROM pedidos
+    GROUP BY usuario_id
+    HAVING total_gastado > 100
+    ORDER BY total_gastado DESC
+''')
+
+print("\nUsuarios con gasto mayor a $100:")
+for row in cursor.fetchall():
+    print(f"  Usuario {row['usuario_id']}: {row['total_pedidos']} pedidos, ${row['total_gastado']:.2f}")</code></pre>
+
+        <h3>3.3. Joins (Uniones de Tablas)</h3>
+        <pre><code class="language-python"># INNER JOIN: Combina datos de ambas tablas
+cursor.execute('''
+    SELECT u.nombre, u.email, p.producto, p.cantidad, p.precio
+    FROM usuarios u
+    INNER JOIN pedidos p ON u.id = p.usuario_id
+    ORDER BY u.nombre, p.id
+''')
+
+print("\nPedidos por usuario:")
+for row in cursor.fetchall():
+    print(f"  {row['nombre']}: {row['cantidad']}x {row['producto']} (${row['precio']})")</code></pre>
+
+        <pre><code class="language-python"># LEFT JOIN: Incluye usuarios sin pedidos
+cursor.execute('''
+    SELECT u.nombre, COUNT(p.id) as num_pedidos
+    FROM usuarios u
+    LEFT JOIN pedidos p ON u.id = p.usuario_id
+    GROUP BY u.id, u.nombre
+''')
+
+print("\nNúmero de pedidos por usuario:")
+for row in cursor.fetchall():
+    print(f"  {row['nombre']}: {row['num_pedidos']} pedido(s)")</code></pre>
+
+        <h2>4. Transacciones y Manejo de Errores</h2>
+
+        <h3>4.1. Context Manager (Uso Recomendado)</h3>
+        <pre><code class="language-python"># ✅ Forma recomendada: con context manager
+def insertar_usuario_seguro(nombre, email, edad):
+    """Inserta un usuario manejando errores."""
+    try:
+        with sqlite3.connect('mi_base_datos.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                INSERT INTO usuarios (nombre, email, edad)
+                VALUES (?, ?, ?)
+            ''', (nombre, email, edad))
+            # commit() se hace automáticamente si no hay errores
+            print(f"✅ Usuario {nombre} insertado correctamente")
+            return cursor.lastrowid
+    
+    except sqlite3.IntegrityError as e:
+        print(f"❌ Error: El email {email} ya existe")
+        return None
+    
+    except sqlite3.Error as e:
+        print(f"❌ Error de base de datos: {e}")
+        return None
+
+# Intentar insertar usuario
+insertar_usuario_seguro('Pedro Gómez', 'pedro@email.com', 27)
+
+# Intentar insertar email duplicado
+insertar_usuario_seguro('Juan Pérez', 'pedro@email.com', 30)</code></pre>
+
+        <h3>4.2. Transacciones Manuales</h3>
+        <pre><code class="language-python">def transferir_dinero(usuario_origen, usuario_destino, cantidad):
+    """Ejemplo de transacción: todo o nada."""
+    
+    # Primero creamos una tabla de cuentas
+    with sqlite3.connect('mi_base_datos.db') as conn:
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS cuentas (
+                usuario TEXT PRIMARY KEY,
+                saldo REAL DEFAULT 0
+            )
+        ''')
+        
+        # Datos iniciales
+        cursor.execute('INSERT OR IGNORE INTO cuentas VALUES (?, ?)', ('Ana', 1000.0))
+        cursor.execute('INSERT OR IGNORE INTO cuentas VALUES (?, ?)', ('Luis', 500.0))
+    
+    try:
+        conn = sqlite3.connect('mi_base_datos.db')
+        cursor = conn.cursor()
+        
+        # Desactivar auto-commit
+        conn.isolation_level = None
+        cursor.execute('BEGIN TRANSACTION')
+        
+        # Restar del origen
+        cursor.execute('''
+            UPDATE cuentas
+            SET saldo = saldo - ?
+            WHERE usuario = ? AND saldo >= ?
+        ''', (cantidad, usuario_origen, cantidad))
+        
+        if cursor.rowcount == 0:
+            raise ValueError("Saldo insuficiente")
+        
+        # Sumar al destino
+        cursor.execute('''
+            UPDATE cuentas
+            SET saldo = saldo + ?
+            WHERE usuario = ?
+        ''', (cantidad, usuario_destino))
+        
+        # Confirmar transacción
+        cursor.execute('COMMIT')
+        print(f"✅ Transferencia exitosa: ${cantidad} de {usuario_origen} a {usuario_destino}")
+        
+    except Exception as e:
+        cursor.execute('ROLLBACK')
+        print(f"❌ Error en transferencia: {e}")
+    
+    finally:
+        conn.close()
+
+# Ejemplo de uso
+transferir_dinero('Ana', 'Luis', 200)
+transferir_dinero('Ana', 'Luis', 2000)  # Fallará por saldo insuficiente</code></pre>
+
+        <h2>5. Clase Gestora de Base de Datos</h2>
+        <pre><code class="language-python">from pathlib import Path
+from typing import List, Dict, Any, Optional
+
+class GestorBD:
+    """Clase para gestionar operaciones de base de datos."""
+    
+    def __init__(self, nombre_bd: str = 'aplicacion.db'):
+        self.ruta_bd = Path(nombre_bd)
+        self.inicializar_bd()
+    
+    def obtener_conexion(self):
+        """Obtiene una nueva conexión a la base de datos."""
+        conn = sqlite3.connect(self.ruta_bd)
+        conn.row_factory = sqlite3.Row
+        return conn
+    
+    def inicializar_bd(self):
+        """Crea las tablas necesarias."""
+        with self.obtener_conexion() as conn:
+            cursor = conn.cursor()
+            
+            # Tabla de productos
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS productos (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    nombre TEXT NOT NULL,
+                    categoria TEXT,
+                    precio REAL NOT NULL,
+                    stock INTEGER DEFAULT 0,
+                    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+            
+            # Índice para búsquedas más rápidas
+            cursor.execute('''
+                CREATE INDEX IF NOT EXISTS idx_categoria
+                ON productos(categoria)
+            ''')
+    
+    def agregar_producto(self, nombre: str, categoria: str, precio: float, stock: int = 0) -> Optional[int]:
+        """Agrega un nuevo producto."""
+        try:
+            with self.obtener_conexion() as conn:
+                cursor = conn.cursor()
+                cursor.execute('''
+                    INSERT INTO productos (nombre, categoria, precio, stock)
+                    VALUES (?, ?, ?, ?)
+                ''', (nombre, categoria, precio, stock))
+                return cursor.lastrowid
+        except sqlite3.Error as e:
+            print(f"❌ Error al agregar producto: {e}")
+            return None
+    
+    def obtener_productos(self, categoria: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Obtiene todos los productos o filtrados por categoría."""
+        with self.obtener_conexion() as conn:
+            cursor = conn.cursor()
+            
+            if categoria:
+                cursor.execute('''
+                    SELECT * FROM productos
+                    WHERE categoria = ?
+                    ORDER BY nombre
+                ''', (categoria,))
+            else:
+                cursor.execute('SELECT * FROM productos ORDER BY nombre')
+            
+            return [dict(row) for row in cursor.fetchall()]
+    
+    def actualizar_stock(self, producto_id: int, cantidad: int) -> bool:
+        """Actualiza el stock de un producto."""
+        try:
+            with self.obtener_conexion() as conn:
+                cursor = conn.cursor()
+                cursor.execute('''
+                    UPDATE productos
+                    SET stock = stock + ?
+                    WHERE id = ?
+                ''', (cantidad, producto_id))
+                return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            print(f"❌ Error al actualizar stock: {e}")
+            return False
+    
+    def buscar_productos(self, termino: str) -> List[Dict[str, Any]]:
+        """Busca productos por nombre."""
+        with self.obtener_conexion() as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                SELECT * FROM productos
+                WHERE nombre LIKE ?
+                ORDER BY nombre
+            ''', (f'%{termino}%',))
+            return [dict(row) for row in cursor.fetchall()]
+    
+    def estadisticas(self) -> Dict[str, Any]:
+        """Obtiene estadísticas de la base de datos."""
+        with self.obtener_conexion() as conn:
+            cursor = conn.cursor()
+            
+            cursor.execute('SELECT COUNT(*) FROM productos')
+            total_productos = cursor.fetchone()[0]
+            
+            cursor.execute('SELECT SUM(stock) FROM productos')
+            total_stock = cursor.fetchone()[0] or 0
+            
+            cursor.execute('SELECT AVG(precio) FROM productos')
+            precio_promedio = cursor.fetchone()[0] or 0
+            
+            cursor.execute('''
+                SELECT categoria, COUNT(*) as cantidad
+                FROM productos
+                GROUP BY categoria
+            ''')
+            por_categoria = {row['categoria']: row['cantidad'] for row in cursor.fetchall()}
+            
+            return {
+                'total_productos': total_productos,
+                'total_stock': total_stock,
+                'precio_promedio': precio_promedio,
+                'por_categoria': por_categoria
+            }
+    
+    def mostrar_productos(self, productos: Optional[List[Dict]] = None):
+        """Muestra productos en formato tabla."""
+        if productos is None:
+            productos = self.obtener_productos()
+        
+        if not productos:
+            print("\nNo hay productos para mostrar")
+            return
+        
+        print("\n" + "="*80)
+        print(f"{'ID':<5} {'Nombre':<25} {'Categoría':<15} {'Precio':<10} {'Stock':<8}")
+        print("="*80)
+        
+        for p in productos:
+            print(f"{p['id']:<5} {p['nombre']:<25} {p['categoria']:<15} ${p['precio']:<9.2f} {p['stock']:<8}")
+        
+        print("="*80)
+
+# Ejemplo de uso
+gestor = GestorBD('inventario.db')
+
+# Agregar productos
+print("\n📦 Agregando productos...")
+gestor.agregar_producto('Laptop Dell', 'Electrónica', 999.99, 10)
+gestor.agregar_producto('Mouse Logitech', 'Electrónica', 25.50, 50)
+gestor.agregar_producto('Teclado Mecánico', 'Electrónica', 75.00, 30)
+gestor.agregar_producto('Silla Gamer', 'Muebles', 299.99, 15)
+gestor.agregar_producto('Escritorio', 'Muebles', 450.00, 8)
+
+# Mostrar todos los productos
+print("\n📋 Todos los productos:")
+gestor.mostrar_productos()
+
+# Filtrar por categoría
+print("\n🔍 Productos de Electrónica:")
+electronicos = gestor.obtener_productos('Electrónica')
+gestor.mostrar_productos(electronicos)
+
+# Buscar productos
+print("\n🔎 Buscar 'Mouse':")
+resultados = gestor.buscar_productos('Mouse')
+gestor.mostrar_productos(resultados)
+
+# Actualizar stock
+print("\n📊 Actualizando stock...")
+gestor.actualizar_stock(1, -2)  # Vender 2 laptops
+gestor.actualizar_stock(2, 20)   # Agregar 20 mouses
+
+# Estadísticas
+print("\n📈 Estadísticas:")
+stats = gestor.estadisticas()
+print(f"  Total de productos: {stats['total_productos']}")
+print(f"  Stock total: {stats['total_stock']} unidades")
+print(f"  Precio promedio: ${stats['precio_promedio']:.2f}")
+print(f"  Por categoría: {stats['por_categoria']}")</code></pre>
+
+        <h2>6. Conexión a MySQL y PostgreSQL</h2>
+        <p>Para bases de datos más robustas, puedes usar MySQL o PostgreSQL.</p>
+
+        <h3>6.1. MySQL con mysql-connector-python</h3>
+        <pre><code class="language-bash"># Instalación
+pip install mysql-connector-python</code></pre>
+
+        <pre><code class="language-python">import mysql.connector
+
+# Conectar a MySQL
+conexion = mysql.connector.connect(
+    host='localhost',
+    user='tu_usuario',
+    password='tu_contraseña',
+    database='mi_base_datos'
+)
+
+cursor = conexion.cursor()
+
+# Crear tabla
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS usuarios (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nombre VARCHAR(100),
+        email VARCHAR(100) UNIQUE
+    )
+''')
+
+# Insertar datos
+cursor.execute(
+    "INSERT INTO usuarios (nombre, email) VALUES (%s, %s)",
+    ('Ana', 'ana@email.com')
+)
+
+conexion.commit()
+cursor.close()
+conexion.close()</code></pre>
+
+        <h3>6.2. PostgreSQL con psycopg2</h3>
+        <pre><code class="language-bash"># Instalación
+pip install psycopg2-binary</code></pre>
+
+        <pre><code class="language-python">import psycopg2
+
+# Conectar a PostgreSQL
+conexion = psycopg2.connect(
+    host='localhost',
+    database='mi_base_datos',
+    user='tu_usuario',
+    password='tu_contraseña'
+)
+
+cursor = conexion.cursor()
+
+# Crear tabla
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS usuarios (
+        id SERIAL PRIMARY KEY,
+        nombre VARCHAR(100),
+        email VARCHAR(100) UNIQUE
+    )
+''')
+
+# Insertar datos
+cursor.execute(
+    "INSERT INTO usuarios (nombre, email) VALUES (%s, %s)",
+    ('Ana', 'ana@email.com')
+)
+
+conexion.commit()
+cursor.close()
+conexion.close()</code></pre>
+
+        <h2>7. ORM: SQLAlchemy</h2>
+        <p>SQLAlchemy es un ORM (Object-Relational Mapping) que permite trabajar con bases de datos usando objetos Python.</p>
+
+        <h3>7.1. Instalación y Configuración</h3>
+        <pre><code class="language-bash">pip install sqlalchemy</code></pre>
+
+        <pre><code class="language-python">from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from datetime import datetime
+
+# Crear engine (motor de base de datos)
+engine = create_engine('sqlite:///sqlalchemy_ejemplo.db', echo=False)
+
+# Para MySQL:
+# engine = create_engine('mysql://usuario:contraseña@localhost:3306/nombre_base_datos', echo=False)
+
+# Base para los modelos
+Base = declarative_base()
+
+# Definir modelo
+class Producto(Base):
+    __tablename__ = 'productos'
+    
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(100), nullable=False)
+    precio = Column(Float, nullable=False)
+    stock = Column(Integer, default=0)
+    fecha_registro = Column(DateTime, default=datetime.now)
+    
+    def __repr__(self):
+        return f"<Producto(nombre='{self.nombre}', precio={self.precio}, stock={self.stock})>"
+
+# Crear tablas
+Base.metadata.create_all(engine)
+
+# Crear sesión
+Session = sessionmaker(bind=engine)
+session = Session()
+
+print("✅ SQLAlchemy configurado")</code></pre>
+
+        <h3>7.2. Operaciones CRUD con SQLAlchemy</h3>
+        <pre><code class="language-python"># CREATE: Agregar productos
+productos = [
+    Producto(nombre='Laptop HP', precio=899.99, stock=5),
+    Producto(nombre='Mouse Inalámbrico', precio=29.99, stock=25),
+    Producto(nombre='Monitor 24"', precio=199.99, stock=10)
+]
+
+session.add_all(productos)
+session.commit()
+
+print("✅ Productos agregados con SQLAlchemy")</code></pre>
+
+        <pre><code class="language-python"># READ: Consultar productos
+print("\nTodos los productos:")
+productos = session.query(Producto).all()
+for p in productos:
+    print(f"  {p}")</code></pre>
+
+        <pre><code class="language-python"># Filtrar con WHERE
+print("\nProductos con precio < $100:")
+productos_baratos = session.query(Producto).filter(Producto.precio < 100).all()
+for p in productos_baratos:
+    print(f"  {p.nombre}: ${p.precio}")</code></pre>
+
+        <pre><code class="language-python"># UPDATE: Actualizar producto
+laptop = session.query(Producto).filter(Producto.nombre.like('%Laptop%')).first()
+if laptop:
+    laptop.stock = laptop.stock - 1
+    session.commit()
+    print(f"\n✅ Stock actualizado: {laptop}")</code></pre>
+
+        <pre><code class="language-python"># DELETE: Eliminar producto
+producto_eliminar = session.query(Producto).filter(Producto.id == 2).first()
+if producto_eliminar:
+    session.delete(producto_eliminar)
+    session.commit()
+    print(f"\n✅ Producto eliminado: {producto_eliminar.nombre}")</code></pre>
+
+        <h2>8. Buenas Prácticas</h2>
+
+        <h3>8.1. Seguridad</h3>
+        <ul>
+            <li>✅ <strong>Siempre</strong> usar parámetros (<code>?</code> o <code>%s</code>) en las consultas</li>
+            <li>❌ <strong>Nunca</strong> concatenar strings en consultas SQL</li>
+            <li>✅ Validar entrada de usuarios</li>
+            <li>✅ Usar transacciones para operaciones críticas</li>
+            <li>✅ Encriptar contraseñas (bcrypt, argon2)</li>
+        </ul>
+
+        <h3>8.2. Rendimiento</h3>
+        <ul>
+            <li>✅ Crear índices en columnas frecuentemente consultadas</li>
+            <li>✅ Usar <code>LIMIT</code> para consultas grandes</li>
+            <li>✅ Evitar <code>SELECT *</code>, especificar columnas necesarias</li>
+            <li>✅ Usar conexiones pool para aplicaciones web</li>
+        </ul>
+
+        <h3>8.3. Mantenimiento</h3>
+        <ul>
+            <li>✅ Hacer backups regulares</li>
+            <li>✅ Documentar el esquema de la base de datos</li>
+            <li>✅ Usar migraciones para cambios de esquema</li>
+            <li>✅ Cerrar siempre las conexiones (usar <code>with</code> statement)</li>
+        </ul>
+
+        <h2>9. Ejemplo Final: Sistema Completo</h2>
+        <pre><code class="language-python"># Cerrar conexión anterior si existe
+if 'conexion' in locals():
+    conexion.close()
+
+class SistemaInventario:
+    """Sistema completo de gestión de inventario."""
+    
+    def __init__(self, db_name='inventario_completo.db'):
+        self.db_name = db_name
+        self.inicializar()
+    
+    def obtener_conexion(self):
+        conn = sqlite3.connect(self.db_name)
+        conn.row_factory = sqlite3.Row
+        return conn
+    
+    def inicializar(self):
+        with self.obtener_conexion() as conn:
+            cursor = conn.cursor()
+            
+            # Tabla de productos
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS productos (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    codigo TEXT UNIQUE NOT NULL,
+                    nombre TEXT NOT NULL,
+                    categoria TEXT,
+                    precio REAL NOT NULL CHECK(precio > 0),
+                    stock INTEGER DEFAULT 0 CHECK(stock >= 0),
+                    stock_minimo INTEGER DEFAULT 5,
+                    activo BOOLEAN DEFAULT 1,
+                    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+            
+            # Tabla de movimientos
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS movimientos (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    producto_id INTEGER NOT NULL,
+                    tipo TEXT NOT NULL CHECK(tipo IN ('entrada', 'salida')),
+                    cantidad INTEGER NOT NULL,
+                    motivo TEXT,
+                    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (producto_id) REFERENCES productos(id)
+                )
+            ''')
+            
+            # Índices
+            cursor.execute('CREATE INDEX IF NOT EXISTS idx_codigo ON productos(codigo)')
+            cursor.execute('CREATE INDEX IF NOT EXISTS idx_categoria ON productos(categoria)')
+    
+    def agregar_producto(self, codigo, nombre, categoria, precio, stock=0, stock_minimo=5):
+        try:
+            with self.obtener_conexion() as conn:
+                cursor = conn.cursor()
+                cursor.execute('''
+                    INSERT INTO productos (codigo, nombre, categoria, precio, stock, stock_minimo)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                ''', (codigo, nombre, categoria, precio, stock, stock_minimo))
+                
+                # Registrar movimiento inicial
+                if stock > 0:
+                    cursor.execute('''
+                        INSERT INTO movimientos (producto_id, tipo, cantidad, motivo)
+                        VALUES (?, 'entrada', ?, 'Stock inicial')
+                    ''', (cursor.lastrowid, stock))
+                
+                print(f"✅ Producto '{nombre}' agregado (Código: {codigo})")
+                return cursor.lastrowid
+        except sqlite3.IntegrityError:
+            print(f"❌ Error: El código '{codigo}' ya existe")
+            return None
+    
+    def registrar_entrada(self, codigo, cantidad, motivo='Compra'):
+        with self.obtener_conexion() as conn:
+            cursor = conn.cursor()
+            
+            cursor.execute('SELECT id, stock FROM productos WHERE codigo = ?', (codigo,))
+            producto = cursor.fetchone()
+            
+            if not producto:
+                print(f"❌ Producto con código '{codigo}' no encontrado")
+                return False
+            
+            cursor.execute('''
+                UPDATE productos
+                SET stock = stock + ?
+                WHERE id = ?
+            ''', (cantidad, producto['id']))
+            
+            cursor.execute('''
+                INSERT INTO movimientos (producto_id, tipo, cantidad, motivo)
+                VALUES (?, 'entrada', ?, ?)
+            ''', (producto['id'], cantidad, motivo))
+            
+            print(f"✅ Entrada registrada: +{cantidad} unidades")
+            return True
+    
+    def registrar_salida(self, codigo, cantidad, motivo='Venta'):
+        with self.obtener_conexion() as conn:
+            cursor = conn.cursor()
+            
+            cursor.execute('SELECT id, stock, nombre FROM productos WHERE codigo = ?', (codigo,))
+            producto = cursor.fetchone()
+            
+            if not producto:
+                print(f"❌ Producto con código '{codigo}' no encontrado")
+                return False
+            
+            if producto['stock'] < cantidad:
+                print(f"❌ Stock insuficiente. Disponible: {producto['stock']}")
+                return False
+            
+            cursor.execute('''
+                UPDATE productos
+                SET stock = stock - ?
+                WHERE id = ?
+            ''', (cantidad, producto['id']))
+            
+            cursor.execute('''
+                INSERT INTO movimientos (producto_id, tipo, cantidad, motivo)
+                VALUES (?, 'salida', ?, ?)
+            ''', (producto['id'], cantidad, motivo))
+            
+            print(f"✅ Salida registrada: -{cantidad} unidades de '{producto['nombre']}'")
+            return True
+    
+    def productos_bajo_stock(self):
+        with self.obtener_conexion() as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                SELECT codigo, nombre, stock, stock_minimo
+                FROM productos
+                WHERE stock <= stock_minimo AND activo = 1
+                ORDER BY stock
+            ''')
+            return cursor.fetchall()
+    
+    def historial_movimientos(self, codigo, limite=10):
+        with self.obtener_conexion() as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                SELECT m.tipo, m.cantidad, m.motivo, m.fecha
+                FROM movimientos m
+                JOIN productos p ON m.producto_id = p.id
+                WHERE p.codigo = ?
+                ORDER BY m.fecha DESC
+                LIMIT ?
+            ''', (codigo, limite))
+            return cursor.fetchall()
+    
+    def reporte_ventas(self, dias=30):
+        with self.obtener_conexion() as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                SELECT 
+                    p.nombre,
+                    SUM(m.cantidad) as total_vendido,
+                    SUM(m.cantidad * p.precio) as ingresos
+                FROM movimientos m
+                JOIN productos p ON m.producto_id = p.id
+                WHERE m.tipo = 'salida'
+                    AND m.fecha >= datetime('now', '-' || ? || ' days')
+                GROUP BY p.id, p.nombre
+                ORDER BY total_vendido DESC
+            ''', (dias,))
+            return cursor.fetchall()
+
+# Ejemplo de uso completo
+sistema = SistemaInventario()
+
+print("\n" + "="*60)
+print("SISTEMA DE INVENTARIO")
+print("="*60)
+
+# Agregar productos
+print("\n📦 Agregando productos...")
+sistema.agregar_producto('LAP001', 'Laptop Dell XPS', 'Electrónica', 1299.99, 10, 3)
+sistema.agregar_producto('MOU001', 'Mouse Logitech', 'Accesorios', 29.99, 50, 10)
+sistema.agregar_producto('TEC001', 'Teclado Mecánico', 'Accesorios', 89.99, 25, 5)
+
+# Registrar movimientos
+print("\n📊 Registrando movimientos...")
+sistema.registrar_entrada('LAP001', 5, 'Reabastecimiento')
+sistema.registrar_salida('LAP001', 7, 'Venta')
+sistema.registrar_salida('MOU001', 15, 'Venta')
+
+# Productos bajo stock
+print("\n⚠️ Productos con stock bajo:")
+bajo_stock = sistema.productos_bajo_stock()
+if bajo_stock:
+    for p in bajo_stock:
+        print(f"  {p['codigo']} - {p['nombre']}: {p['stock']} unidades (Mínimo: {p['stock_minimo']})")
+else:
+    print("  ✅ Todos los productos tienen stock suficiente")
+
+# Historial de movimientos
+print("\n📋 Historial de LAP001:")
+historial = sistema.historial_movimientos('LAP001', 5)
+for mov in historial:
+    simbolo = '+' if mov['tipo'] == 'entrada' else '-'
+    print(f"  {mov['fecha'][:16]} | {simbolo}{mov['cantidad']} | {mov['motivo']}")
+
+# Reporte de ventas
+print("\n💰 Reporte de ventas (últimos 30 días):")
+ventas = sistema.reporte_ventas(30)
+total_ingresos = 0
+for venta in ventas:
+    print(f"  {venta['nombre']}: {venta['total_vendido']} unidades - ${venta['ingresos']:.2f}")
+    total_ingresos += venta['ingresos']
+print(f"\n  TOTAL INGRESOS: ${total_ingresos:.2f}")
+print("\n" + "="*60)</code></pre>
+
+        <pre><code class="language-python"># Cerrar todas las conexiones al final
+if 'conexion' in locals() and conexion:
+    conexion.close()
+    print("Conexiones cerradas correctamente")</code></pre>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
